@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -6,19 +6,29 @@ gsap.registerPlugin(ScrollTrigger)
 
 const words = ['Vivre', 'Investir', 'Construire']
 
-const shapes = [
+const desktopShapes = [
   { width: 300, height: 600, radius: 0, rotate: -5, polygon: '0% 0%, 100% 0%, 100% 100%, 0% 100%' },
   { width: 450, height: 450, radius: 50, rotate: 5, polygon: '0% 0%, 100% 0%, 100% 100%, 0% 100%' },
-  { width: 400, height: 650, radius: 100, rotate: -2, polygon: '0% 0%, 100% 0%, 75% 100%, 25% 100%' },
+  { width: 400, height: 650, radius: 100, rotate: -2, polygon: '0% 0%, 100% 0%, 100% 100%, 0% 100%' },
   { width: 600, height: 400, radius: 0, rotate: 0, polygon: '25% 0%, 75% 0%, 100% 100%, 0% 100%' },
   { width: 600, height: 600, radius: 10, rotate: 0, polygon: '50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%' },
   { width: 800, height: 500, radius: 0, rotate: 0, polygon: '0% 0%, 100% 0%, 100% 100%, 0% 100%' },
+]
+
+const mobileShapes = [
+  { width: 200, height: 350, radius: 0, rotate: -3, polygon: '0% 0%, 100% 0%, 100% 100%, 0% 100%' },
+  { width: 260, height: 260, radius: 30, rotate: 3, polygon: '0% 0%, 100% 0%, 100% 100%, 0% 100%' },
+  { width: 240, height: 380, radius: 60, rotate: -1, polygon: '0% 0%, 100% 0%, 100% 100%, 0% 100%' },
+  { width: 300, height: 220, radius: 0, rotate: 0, polygon: '25% 0%, 75% 0%, 100% 100%, 0% 100%' },
+  { width: 280, height: 280, radius: 10, rotate: 0, polygon: '50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%' },
+  { width: 320, height: 240, radius: 0, rotate: 0, polygon: '0% 0%, 100% 0%, 100% 100%, 0% 100%' },
 ]
 
 export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([])
 
   useEffect(() => {
@@ -26,6 +36,12 @@ export default function Experience() {
     const track = trackRef.current
     const video = videoRef.current
     if (!section || !track || !video) return
+
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
+    const shapes = window.innerWidth <= 768 ? mobileShapes : desktopShapes
 
     const ctx = gsap.context(() => {
       // Set initial video state
@@ -99,7 +115,10 @@ export default function Experience() {
       })
     }, section)
 
-    return () => ctx.revert()
+    return () => {
+      ctx.revert()
+      window.removeEventListener('resize', checkMobile)
+    }
   }, [])
 
   return (
@@ -114,7 +133,7 @@ export default function Experience() {
       {/* Track for scroll */}
       <div
         ref={trackRef}
-        style={{ height: `${shapes.length * 100}vh` }}
+        style={{ height: `${desktopShapes.length * 100}vh` }}
       >
         <div
           className="sticky-container"

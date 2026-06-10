@@ -78,7 +78,7 @@ function ProjectCarousel({
         ref={trackRef}
         style={{
           display: 'flex',
-          gap: 24,
+          gap: 'clamp(12px, 2vw, 24px)',
           willChange: 'transform',
         }}
       >
@@ -87,7 +87,7 @@ function ProjectCarousel({
             key={`${project.id}-${i}`}
             style={{
               flexShrink: 0,
-              width: 380,
+              width: 'clamp(260px, 45vw, 380px)',
               position: 'relative',
             }}
           >

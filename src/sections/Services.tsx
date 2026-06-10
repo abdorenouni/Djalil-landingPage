@@ -118,12 +118,12 @@ function ServiceItem({
       onMouseLeave={onDeactivate}
     >
       <div
-        className="cursor-hover"
+        className="cursor-hover service-item-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: '80px 1fr 200px',
           alignItems: 'center',
-          padding: 'clamp(32px, 4vw, 56px) 0',
+          padding: 'clamp(24px, 4vw, 56px) 0',
           cursor: 'pointer',
           transition: 'padding 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
           position: 'relative',
@@ -200,6 +200,7 @@ function ServiceItem({
 
       {/* Description (shows on active) */}
       <div
+        className="service-description"
         style={{
           maxHeight: isActive ? 100 : 0,
           overflow: 'hidden',
@@ -221,9 +222,10 @@ function ServiceItem({
         </p>
       </div>
 
-      {/* Image reveal */}
+      {/* Image reveal (hidden on mobile) */}
       <div
         ref={revealRef}
+        className="service-image-reveal"
         style={{
           position: 'fixed',
           top: '50%',
@@ -370,6 +372,19 @@ export default function Services() {
           ))}
         </ul>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          .service-item-grid {
+            grid-template-columns: 40px 1fr 48px !important;
+          }
+          .service-description {
+            padding-left: 40px !important;
+          }
+          .service-image-reveal {
+            display: none !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }
