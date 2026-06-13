@@ -1,44 +1,24 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 
 export default function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
-  const glowRef = useRef<HTMLDivElement>(null)
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 })
-
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect()
-      const x = (e.clientX - rect.left) / rect.width
-      const y = (e.clientY - rect.top) / rect.height
-      setMousePos({ x, y })
-    }
-
-    container.addEventListener('mousemove', handleMouseMove)
-    return () => container.removeEventListener('mousemove', handleMouseMove)
-  }, [])
 
   useEffect(() => {
     if (!textRef.current) return
-
     const chars = textRef.current.querySelectorAll('.char')
     gsap.fromTo(
       chars,
-      { opacity: 0, y: 100, rotateX: -90 },
+      { opacity: 0, y: 50, rotateX: -90 },
       {
         opacity: 1,
         y: 0,
         rotateX: 0,
-        duration: 1.2,
-        stagger: 0.04,
+        duration: 0.6,
+        stagger: 0.02,
         ease: 'power4.out',
-        delay: 0.3,
+        delay: 4.5,
       }
     )
   }, [])
@@ -48,28 +28,16 @@ export default function Hero() {
     const subtitleChars = subtitleRef.current.querySelectorAll('.sub-char')
     gsap.fromTo(
       subtitleChars,
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 10 },
       {
         opacity: 0.8,
         y: 0,
-        duration: 0.8,
-        stagger: 0.02,
+        duration: 0.4,
+        stagger: 0.01,
         ease: 'power3.out',
-        delay: 1.2,
+        delay: 4.8,
       }
     )
-  }, [])
-
-  useEffect(() => {
-    if (!glowRef.current) return
-    gsap.to(glowRef.current, {
-      opacity: 0.6,
-      scale: 1.1,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
-    })
   }, [])
 
   const title = "L'EXCELLENCE"
@@ -77,11 +45,10 @@ export default function Hero() {
 
   return (
     <section
-      ref={containerRef}
       id="hero"
       style={{
         position: 'relative',
-        width: '100vw',
+        width: '100%',
         height: '100vh',
         overflow: 'hidden',
         background: '#000',
@@ -89,7 +56,6 @@ export default function Hero() {
     >
       {/* Video background */}
       <video
-        ref={videoRef}
         autoPlay
         muted
         loop
@@ -101,74 +67,25 @@ export default function Hero() {
           minWidth: '100%',
           minHeight: '100%',
           objectFit: 'cover',
-          transform: `translate(-50%, -50%) scale(1.1)`,
+          transform: 'translate(-50%, -50%)',
           zIndex: 1,
-          opacity: 0.8,
         }}
       >
         <source src="/videos/hero-bg.mp4" type="video/mp4" />
       </video>
 
-      {/* Gradient overlay */}
+      {/* Dark cinematic overlay */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
           zIndex: 2,
-          background: `radial-gradient(ellipse at ${mousePos.x * 100}% ${mousePos.y * 100}%, transparent 0%, rgba(5,5,5,0.4) 70%)`,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.5) 100%)',
           pointerEvents: 'none',
-          transition: 'background 0.5s ease',
         }}
       />
 
-      {/* Animated glow behind text */}
-      <div
-        ref={glowRef}
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 600,
-          height: 400,
-          background: 'radial-gradient(ellipse, rgba(212,175,55,0.08) 0%, transparent 70%)',
-          filter: 'blur(80px)',
-          zIndex: 2,
-          pointerEvents: 'none',
-          opacity: 0.3,
-        }}
-      />
-
-      {/* Floating particles */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: 2,
-          pointerEvents: 'none',
-          overflow: 'hidden',
-        }}
-      >
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="hero-particle"
-            style={{
-              position: 'absolute',
-              width: 2 + Math.random() * 3,
-              height: 2 + Math.random() * 3,
-              borderRadius: '50%',
-              background: 'rgba(212, 175, 55, 0.4)',
-              left: `${10 + Math.random() * 80}%`,
-              top: `${10 + Math.random() * 80}%`,
-              animation: `floatParticle ${8 + Math.random() * 8}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Text container */}
+      {/* Hero content */}
       <div
         ref={textRef}
         style={{
@@ -187,10 +104,10 @@ export default function Hero() {
         }}
       >
         <h1
-          className="font-display"
           style={{
+            fontFamily: "'Playfair Display', serif",
             fontSize: 'clamp(32px, 8vw, 130px)',
-            fontWeight: 900,
+            fontWeight: 700,
             color: '#ffffff',
             textTransform: 'uppercase',
             letterSpacing: '0.05em',
@@ -198,7 +115,7 @@ export default function Hero() {
             lineHeight: 1,
             whiteSpace: 'nowrap',
             margin: 0,
-            textShadow: '0 0 80px rgba(212,175,55,0.3)',
+            textShadow: '0 2px 40px rgba(0,0,0,0.5)',
           }}
         >
           {title.split('').map((char, i) => (
@@ -211,7 +128,7 @@ export default function Hero() {
           ref={subtitleRef}
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 'clamp(12px, 1.8vw, 24px)',
+            fontSize: 'clamp(10px, 1.5vw, 20px)',
             fontWeight: 300,
             letterSpacing: '0.3em',
             color: '#d4af37',
@@ -228,6 +145,43 @@ export default function Hero() {
         </p>
       </div>
 
+      {/* Scroll hint */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 40,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 8,
+          opacity: 0,
+          animation: 'fadeInUp 0.8s ease-out 5.2s forwards',
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: 9,
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            color: 'rgba(212, 175, 55, 0.6)',
+          }}
+        >
+          Défiler
+        </span>
+        <div
+          style={{
+            width: 1,
+            height: 32,
+            background: 'linear-gradient(to bottom, #d4af37, transparent)',
+            animation: 'scrollPulse 2s ease-in-out infinite',
+          }}
+        />
+      </div>
+
       {/* Gold accent line at bottom */}
       <div
         style={{
@@ -241,8 +195,6 @@ export default function Hero() {
           opacity: 0.3,
         }}
       />
-
-
     </section>
   )
 }

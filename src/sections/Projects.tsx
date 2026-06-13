@@ -182,17 +182,17 @@ export default function Projects() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         heading.querySelectorAll('.reveal-item'),
-        { opacity: 0, y: 60 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
-          stagger: 0.15,
+          duration: 0.5,
+          stagger: 0.08,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: heading,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
+            start: 'top 95%',
+            toggleActions: 'play none none none',
           },
         }
       )

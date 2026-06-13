@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import gsap from 'gsap'
+
 
 const navItems = [
   { label: 'Accueil', href: '#hero' },
@@ -11,51 +11,18 @@ const navItems = [
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
-  const lastScrollY = useRef(0)
 
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY
-      const heroHeight = window.innerHeight
-
-      // Show/hide based on scroll position
-      if (currentY > heroHeight * 0.8) {
-        setIsScrolled(true)
-        setIsVisible(true)
-      } else {
-        setIsScrolled(false)
-        setIsVisible(false)
-      }
-
-      // Hide on scroll down, show on scroll up (after hero)
-      if (currentY > heroHeight) {
-        if (currentY > lastScrollY.current && currentY - lastScrollY.current > 10) {
-          setIsVisible(false)
-        } else if (currentY < lastScrollY.current && lastScrollY.current - currentY > 10) {
-          setIsVisible(true)
-        }
-      }
-
-      lastScrollY.current = currentY
+      setIsScrolled(currentY > 80)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  useEffect(() => {
-    const header = headerRef.current
-    if (!header) return
-
-    gsap.to(header, {
-      y: isVisible ? 0 : -100,
-      duration: 0.5,
-      ease: 'power3.out',
-    })
-  }, [isVisible])
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -95,7 +62,7 @@ export default function Header() {
           backdropFilter: isScrolled ? 'blur(20px)' : 'none',
           borderBottom: isScrolled ? '1px solid rgba(212, 175, 55, 0.1)' : 'none',
           transition: 'background 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease',
-          transform: 'translateY(-100%)',
+
         }}
       >
         {/* Logo */}
@@ -115,7 +82,7 @@ export default function Header() {
                 letterSpacing: '0.1em',
               }}
             >
-              DJALIL
+              ELITE
             </span>
             <span
               style={{
@@ -123,7 +90,7 @@ export default function Header() {
                 fontSize: 9,
                 fontWeight: 400,
                 letterSpacing: '0.3em',
-                color: '#d4af37',
+                color: '#2bbdb0',
                 textTransform: 'uppercase',
               }}
             >

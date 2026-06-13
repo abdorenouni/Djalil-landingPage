@@ -18,17 +18,17 @@ export default function Footer() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         content.querySelectorAll('.footer-reveal'),
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.1,
+          duration: 0.4,
+          stagger: 0.05,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
+            start: 'top 95%',
+            toggleActions: 'play none none none',
           },
         }
       )

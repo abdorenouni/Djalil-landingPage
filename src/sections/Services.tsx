@@ -271,17 +271,17 @@ export default function Services() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         heading.querySelectorAll('.reveal-anim'),
-        { opacity: 0, y: 50 },
+        { opacity: 0, y: 25 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.12,
+          duration: 0.4,
+          stagger: 0.06,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: heading,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
+            start: 'top 95%',
+            toggleActions: 'play none none none',
           },
         }
       )

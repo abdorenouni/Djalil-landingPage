@@ -25,17 +25,17 @@ export default function About() {
       // 3D scene reveal with scale and fade
       gsap.fromTo(
         scene,
-        { scale: 0.85, opacity: 0, rotateY: -15 },
+        { scale: 0.9, opacity: 0, rotateY: -10 },
         {
           scale: 1,
           opacity: 1,
           rotateY: 0,
-          duration: 1.4,
+          duration: 0.7,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 70%',
-            toggleActions: 'play none none reverse',
+            start: 'top 90%',
+            toggleActions: 'play none none none',
           },
         }
       )
@@ -44,18 +44,18 @@ export default function About() {
       const chars = title.querySelectorAll('.char')
       gsap.fromTo(
         chars,
-        { opacity: 0, x: -30, skewX: 15 },
+        { opacity: 0, x: -20, skewX: 10 },
         {
           opacity: 1,
           x: 0,
           skewX: 0,
-          duration: 0.8,
-          stagger: 0.03,
+          duration: 0.4,
+          stagger: 0.015,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: title,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
+            start: 'top 95%',
+            toggleActions: 'play none none none',
           },
         }
       )
@@ -63,16 +63,16 @@ export default function About() {
       // Text fade in
       gsap.fromTo(
         text,
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 0.5,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: text,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
+            start: 'top 95%',
+            toggleActions: 'play none none none',
           },
         }
       )
@@ -80,16 +80,16 @@ export default function About() {
       // CTA fade in
       gsap.fromTo(
         cta,
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 10 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: 0.4,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: cta,
-            start: 'top 90%',
-            toggleActions: 'play none none reverse',
+            start: 'top 95%',
+            toggleActions: 'play none none none',
           },
         }
       )
@@ -106,7 +106,7 @@ export default function About() {
       ref={sectionRef}
       id="about"
       style={{
-        background: '#0a0a0a',
+        background: '#0c1220',
         padding: 'clamp(80px, 12vw, 160px) 0',
         position: 'relative',
         overflow: 'hidden',
