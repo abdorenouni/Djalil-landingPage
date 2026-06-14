@@ -72,49 +72,16 @@ export default function Header() {
           className="cursor-hover"
           style={{ textDecoration: 'none', zIndex: 1001 }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            {/* House icon — solid fill with evenodd cutout */}
-            <svg
-              viewBox="0 0 200 240"
-              width="30"
-              height="36"
-              style={{ flexShrink: 0 }}
-            >
-              <path
-                d="M 100 8 L 188 78 L 188 172 L 125 172 L 125 232 L 12 232 L 12 78 Z M 100 52 L 148 88 L 148 135 L 95 135 L 95 100 L 52 100 L 52 88 Z"
-                fill="#2bbdb0"
-                fillRule="evenodd"
-              />
-            </svg>
-            {/* ELITE + subtitle stacked */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <span
-                className="font-display"
-                style={{
-                  fontSize: 17,
-                  fontWeight: 700,
-                  color: '#f3f4f1',
-                  letterSpacing: '0.1em',
-                  lineHeight: 1,
-                }}
-              >
-                ELITE
-              </span>
-              <span
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: 7,
-                  fontWeight: 300,
-                  letterSpacing: '0.28em',
-                  color: 'rgba(255,255,255,0.5)',
-                  textTransform: 'uppercase',
-                  lineHeight: 1,
-                }}
-              >
-                Promotion Immobilière
-              </span>
-            </div>
-          </div>
+          <img
+            src="/images/elite-logo.png"
+            alt="Elite Promotion Immobilière"
+            style={{
+              height: 40,
+              width: 'auto',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+          />
         </a>
 
         {/* Desktop Navigation */}
