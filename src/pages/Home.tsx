@@ -1,51 +1,86 @@
-import { useEffect } from 'react'
+import { motion } from 'framer-motion'
 import Header from '@/components/custom/Header'
 import Preloader from '@/components/custom/Preloader'
 import Hero from '@/sections/Hero'
 import About from '@/sections/About'
 import Projects from '@/sections/Projects'
-import Services from '@/sections/Services'
-import Experience from '@/sections/Experience'
-import Footer from '@/sections/Footer'
+import { useLenis } from '@/hooks/useLenis'
 
 export default function Home() {
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth'
-    return () => { document.documentElement.style.scrollBehavior = '' }
-  }, [])
+  useLenis()
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+    >
       <Preloader />
       <Header />
 
-      {/* 
-        CURTAIN REVEAL: 
-        Hero is sticky inside this wrapper. As you scroll through the wrapper,
-        the hero stays pinned. The content div slides over it.
+      {/*
+        CURTAIN REVEAL: Hero is sticky behind. As you scroll, the About + Projects
+        sections slide over it. Content uses zIndex > 0 to ensure it layers correctly.
       */}
       <div style={{ position: 'relative' }}>
-        {/* Sticky Hero — pinned behind */}
+        {/* Sticky hero — stays pinned at top while content scrolls over */}
         <div style={{ position: 'sticky', top: 0, zIndex: 0, height: '100vh' }}>
           <Hero />
         </div>
 
-        {/* Content slides over the hero */}
+        {/* Scrolling content — slides over the pinned hero */}
         <div style={{ position: 'relative', zIndex: 10 }}>
-          <div
+          <About />
+          <Projects />
+
+          {/* ── MINIMAL FOOTER BRIDGE — Phase 3 will replace this ── */}
+          <footer
+            id="contact"
             style={{
-              background: '#0c1220',
-              position: 'relative',
+              background: '#050505',
+              borderTop: '1px solid rgba(212,175,55,0.08)',
+              padding: 'clamp(40px, 6vw, 80px) clamp(24px, 5vw, 80px)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 24,
             }}
           >
-            <About />
-          </div>
-          <Projects />
-          <Services />
-          <Experience />
-          <Footer />
+            <img
+              src="/images/elite-logo.png"
+              alt="Elite Promotion Immobilière"
+              style={{
+                height: 36,
+                width: 'auto',
+                display: 'block',
+                mixBlendMode: 'screen',
+                opacity: 0.6,
+              }}
+            />
+            <div
+              style={{
+                width: 40,
+                height: 0.5,
+                background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent)',
+              }}
+            />
+            <p
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: 11,
+                letterSpacing: '0.2em',
+                color: 'rgba(243,244,241,0.25)',
+                textTransform: 'uppercase',
+                margin: 0,
+                textAlign: 'center',
+              }}
+            >
+              © {new Date().getFullYear()} Elite Promotion Immobilière — Tous droits réservés
+            </p>
+          </footer>
         </div>
       </div>
-    </>
+    </motion.div>
   )
 }

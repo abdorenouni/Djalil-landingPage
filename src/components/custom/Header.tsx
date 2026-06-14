@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 
-
 const navItems = [
   { label: 'Accueil', href: '#hero' },
   { label: 'À Propos', href: '#about' },
   { label: 'Projets', href: '#projects' },
-  { label: 'Services', href: '#services' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -15,22 +13,13 @@ export default function Header() {
   const headerRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY
-      setIsScrolled(currentY > 80)
-    }
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 80)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [isMobileMenuOpen])
 
@@ -38,9 +27,7 @@ export default function Header() {
     e.preventDefault()
     setIsMobileMenuOpen(false)
     const target = document.querySelector(href)
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' })
-    }
+    if (target) target.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -49,103 +36,99 @@ export default function Header() {
         ref={headerRef}
         style={{
           position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
+          top: 0, left: 0, right: 0,
           zIndex: 1000,
           padding: '0 clamp(24px, 5vw, 80px)',
           height: 72,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: isScrolled ? 'rgba(5, 5, 5, 0.85)' : 'transparent',
-          backdropFilter: isScrolled ? 'blur(20px)' : 'none',
-          borderBottom: isScrolled ? '1px solid rgba(212, 175, 55, 0.1)' : 'none',
-          transition: 'background 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease',
-
+          background: isScrolled ? 'rgba(5,5,5,0.88)' : 'transparent',
+          backdropFilter: isScrolled ? 'blur(24px)' : 'none',
+          borderBottom: isScrolled ? '1px solid rgba(212,175,55,0.08)' : 'none',
+          transition: 'background 0.45s ease, backdrop-filter 0.45s ease, border-bottom 0.45s ease',
         }}
       >
-        {/* Logo */}
+        {/* ── LOGO ── */}
         <a
           href="#hero"
           onClick={(e) => handleNavClick(e, '#hero')}
-          className="cursor-hover"
-          style={{ textDecoration: 'none', zIndex: 1001 }}
+          style={{
+            textDecoration: 'none',
+            zIndex: 1001,
+            display: 'flex',
+            alignItems: 'center',
+          }}
         >
           <img
             src="/images/elite-logo.png"
             alt="Elite Promotion Immobilière"
             style={{
-              height: 40,
+              height: 'clamp(32px, 4vw, 46px)',
               width: 'auto',
-              objectFit: 'contain',
               display: 'block',
+              // screen blend removes the black PNG background on any dark surface
+              mixBlendMode: 'screen',
             }}
           />
         </a>
 
-        {/* Desktop Navigation */}
-        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
+        {/* ── DESKTOP NAV ── */}
+        <nav className="header-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
-              className="cursor-hover"
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: 11,
                 fontWeight: 400,
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
-                color: 'rgba(243, 244, 241, 0.7)',
+                color: 'rgba(243,244,241,0.65)',
                 textDecoration: 'none',
-                position: 'relative',
                 transition: 'color 0.3s ease',
-                paddingBottom: 4,
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#d4af37'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'rgba(243, 244, 241, 0.7)'
-              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#d4af37' }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(243,244,241,0.65)' }}
             >
               {item.label}
             </a>
           ))}
+
+          {/* CTA button */}
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
-            className="cursor-hover"
             style={{
-              padding: '10px 24px',
-              border: '1px solid rgba(212, 175, 55, 0.4)',
+              padding: '9px 22px',
+              border: '1px solid rgba(212,175,55,0.4)',
               color: '#d4af37',
               fontFamily: "'Inter', sans-serif",
               fontSize: 10,
-              letterSpacing: '0.2em',
+              letterSpacing: '0.22em',
               textTransform: 'uppercase',
               textDecoration: 'none',
-              borderRadius: 3,
+              borderRadius: 2,
               transition: 'all 0.3s ease',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#d4af37'
+              e.currentTarget.style.background = '#d4af37'
               e.currentTarget.style.color = '#050505'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent'
+              e.currentTarget.style.background = 'transparent'
               e.currentTarget.style.color = '#d4af37'
             }}
           >
-            Contact
+            Nous Contacter
           </a>
         </nav>
 
-        {/* Mobile Hamburger */}
+        {/* ── MOBILE HAMBURGER ── */}
         <button
-          className="mobile-menu-btn"
+          className="header-mobile-btn"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
           style={{
@@ -158,65 +141,40 @@ export default function Header() {
           }}
         >
           <div style={{ width: 24, height: 18, position: 'relative' }}>
-            <span
-              style={{
-                display: 'block',
-                width: '100%',
-                height: 1.5,
-                background: '#d4af37',
-                position: 'absolute',
-                left: 0,
-                transition: 'all 0.3s ease',
-                top: isMobileMenuOpen ? '50%' : 0,
-                transform: isMobileMenuOpen ? 'rotate(45deg)' : 'none',
-              }}
-            />
-            <span
-              style={{
-                display: 'block',
-                width: '100%',
-                height: 1.5,
-                background: '#d4af37',
-                position: 'absolute',
-                left: 0,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                opacity: isMobileMenuOpen ? 0 : 1,
-                transition: 'opacity 0.3s ease',
-              }}
-            />
-            <span
-              style={{
-                display: 'block',
-                width: '100%',
-                height: 1.5,
-                background: '#d4af37',
-                position: 'absolute',
-                left: 0,
-                transition: 'all 0.3s ease',
-                bottom: isMobileMenuOpen ? 'auto' : 0,
-                top: isMobileMenuOpen ? '50%' : 'auto',
-                transform: isMobileMenuOpen ? 'rotate(-45deg)' : 'none',
-              }}
-            />
+            {[
+              { top: isMobileMenuOpen ? '50%' : 0, transform: isMobileMenuOpen ? 'rotate(45deg)' : 'none' },
+              { top: '50%', transform: 'translateY(-50%)', opacity: isMobileMenuOpen ? 0 : 1 },
+              { top: isMobileMenuOpen ? '50%' : 'auto', bottom: isMobileMenuOpen ? 'auto' : 0, transform: isMobileMenuOpen ? 'rotate(-45deg)' : 'none' },
+            ].map((s, i) => (
+              <span
+                key={i}
+                style={{
+                  display: 'block', position: 'absolute',
+                  width: '100%', height: 1.5,
+                  background: '#d4af37', left: 0,
+                  transition: 'all 0.3s ease',
+                  ...s,
+                }}
+              />
+            ))}
           </div>
         </button>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* ── MOBILE MENU OVERLAY ── */}
       <div
-        className="mobile-menu-overlay"
+        className="header-mobile-overlay"
         style={{
           position: 'fixed',
           inset: 0,
           zIndex: 999,
-          background: 'rgba(5, 5, 5, 0.97)',
-          backdropFilter: 'blur(20px)',
+          background: 'rgba(5,5,5,0.97)',
+          backdropFilter: 'blur(24px)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 32,
+          gap: 28,
           opacity: isMobileMenuOpen ? 1 : 0,
           pointerEvents: isMobileMenuOpen ? 'auto' : 'none',
           transition: 'opacity 0.4s ease',
@@ -229,45 +187,39 @@ export default function Header() {
             onClick={(e) => handleNavClick(e, item.href)}
             style={{
               fontFamily: "'Cinzel', serif",
-              fontSize: 'clamp(24px, 6vw, 36px)',
+              fontSize: 'clamp(22px, 5.5vw, 34px)',
               fontWeight: 400,
               color: '#f3f4f1',
               textDecoration: 'none',
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
               opacity: isMobileMenuOpen ? 1 : 0,
-              transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
-              transition: `opacity 0.4s ease ${i * 0.08}s, transform 0.4s ease ${i * 0.08}s`,
+              transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(18px)',
+              transition: `opacity 0.4s ease ${i * 0.07}s, transform 0.4s ease ${i * 0.07}s`,
             }}
           >
             {item.label}
           </a>
         ))}
-        <div
-          style={{
-            width: 40,
-            height: 1,
-            background: '#d4af37',
-            opacity: 0.3,
-            margin: '8px 0',
-          }}
-        />
+
+        <div style={{ width: 36, height: 0.5, background: '#d4af37', opacity: 0.3 }} />
+
         <a
           href="#contact"
           onClick={(e) => handleNavClick(e, '#contact')}
           style={{
-            padding: '14px 40px',
-            border: '1px solid rgba(212, 175, 55, 0.4)',
+            padding: '13px 40px',
+            border: '1px solid rgba(212,175,55,0.35)',
             color: '#d4af37',
             fontFamily: "'Inter', sans-serif",
-            fontSize: 12,
-            letterSpacing: '0.2em',
+            fontSize: 11,
+            letterSpacing: '0.22em',
             textTransform: 'uppercase',
             textDecoration: 'none',
-            borderRadius: 3,
+            borderRadius: 2,
             opacity: isMobileMenuOpen ? 1 : 0,
-            transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
-            transition: `opacity 0.4s ease ${navItems.length * 0.08}s, transform 0.4s ease ${navItems.length * 0.08}s`,
+            transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(18px)',
+            transition: `opacity 0.4s ease ${navItems.length * 0.07}s, transform 0.4s ease ${navItems.length * 0.07}s`,
           }}
         >
           Nous Contacter
@@ -276,12 +228,12 @@ export default function Header() {
 
       <style>{`
         @media (max-width: 768px) {
-          .desktop-nav {
-            display: none !important;
-          }
-          .mobile-menu-btn {
-            display: block !important;
-          }
+          .header-desktop-nav { display: none !important; }
+          .header-mobile-btn  { display: block !important; }
+        }
+        .header-mobile-overlay { display: flex; }
+        @media (min-width: 769px) {
+          .header-mobile-overlay { display: none !important; }
         }
       `}</style>
     </>
