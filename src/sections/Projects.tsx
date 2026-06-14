@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react'
+import { Link } from 'react-router'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -270,8 +271,8 @@ export default function Projects() {
             <span style={{ color: '#d4af37' }}>de Demain</span>
           </h2>
         </div>
-        <a
-          href="#contact"
+        <Link
+          to="/projets/asteria"
           className="reveal-item cursor-hover"
           style={{
             display: 'inline-flex',
@@ -298,11 +299,11 @@ export default function Projects() {
             e.currentTarget.style.color = '#d4af37'
           }}
         >
-          <span>Voir tous les projets</span>
+          <span>Découvrir ASTERIA</span>
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" />
           </svg>
-        </a>
+        </Link>
       </div>
 
       {/* Carousel rows */}
