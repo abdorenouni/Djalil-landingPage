@@ -49,10 +49,11 @@ export default function Home() {
               src="/images/elite-logo.png"
               alt="Elite Promotion Immobilière"
               style={{
-                height: 36,
+                height: 'clamp(40px, 5vw, 56px)',
                 width: 'auto',
                 display: 'block',
-                opacity: 0.55,
+                mixBlendMode: 'screen',
+                opacity: 0.8,
               }}
             />
             <div

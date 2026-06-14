@@ -64,9 +64,11 @@ export default function Header() {
             src="/images/elite-logo.png"
             alt="Elite Promotion Immobilière"
             style={{
-              height: 'clamp(32px, 4vw, 46px)',
+              height: 'clamp(34px, 4.5vw, 52px)',
               width: 'auto',
               display: 'block',
+              // real logo is teal+white on pure black — screen blend drops the black
+              mixBlendMode: 'screen',
             }}
           />
         </a>
