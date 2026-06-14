@@ -4,10 +4,8 @@ import Preloader from '@/components/custom/Preloader'
 import Hero from '@/sections/Hero'
 import About from '@/sections/About'
 import Projects from '@/sections/Projects'
-import { useLenis } from '@/hooks/useLenis'
 
 export default function Home() {
-  useLenis()
 
   return (
     <motion.div
