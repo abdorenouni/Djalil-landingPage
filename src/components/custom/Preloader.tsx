@@ -11,8 +11,8 @@ export default function Preloader() {
   const [phase, setPhase] = useState<Phase>('in')
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('out'), 5000)
-    const t2 = setTimeout(() => setPhase('done'), 6400)
+    const t1 = setTimeout(() => setPhase('out'), 5200)
+    const t2 = setTimeout(() => setPhase('done'), 6600)
     return () => { clearTimeout(t1); clearTimeout(t2) }
   }, [])
 
@@ -37,37 +37,39 @@ export default function Preloader() {
         pointerEvents: isOut ? 'none' : 'all',
       }}
     >
-
-      {/* ── ASTERIA CINEMATIC BACKGROUND ── */}
+      {/* ── ASTERIA CINEMATIC BACKGROUND — more visible this time ── */}
       <motion.img
         src="/images/asteria/building-hero.png"
         alt=""
         aria-hidden="true"
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={{ opacity: isOut ? 0 : 0.28, scale: 1 }}
-        transition={{ duration: 3.5, ease: 'easeOut' }}
+        initial={{ opacity: 0, scale: 1.08 }}
+        animate={{ opacity: isOut ? 0 : 0.5, scale: 1 }}
+        transition={{ duration: 3, ease: 'easeOut', delay: 0.1 }}
         style={{
           position: 'absolute',
           inset: 0,
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          filter: 'brightness(0.45) saturate(0.7)',
+          filter: 'brightness(0.62) saturate(0.75)',
           pointerEvents: 'none',
         }}
       />
-      {/* Deep vignette — keeps center readable */}
+      {/* Cinematic gradient overlay — dark center for readability */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'radial-gradient(ellipse 80% 80% at center, rgba(6,6,6,0.55) 0%, rgba(6,6,6,0.93) 100%)',
+        background: [
+          'radial-gradient(ellipse 70% 70% at center, rgba(6,6,6,0.60) 0%, rgba(6,6,6,0.92) 100%)',
+          'linear-gradient(to bottom, rgba(6,6,6,0.55) 0%, rgba(6,6,6,0.1) 40%, rgba(6,6,6,0.75) 100%)',
+        ].join(', '),
         pointerEvents: 'none',
       }} />
 
-      {/* ── ALL CONTENT ── fades + lifts on exit */}
+      {/* ── CONTENT — fades + lifts on exit ── */}
       <motion.div
-        animate={{ opacity: isOut ? 0 : 1, y: isOut ? -14 : 0, filter: isOut ? 'blur(5px)' : 'blur(0px)' }}
-        transition={{ duration: 0.28, ease: 'easeIn' }}
+        animate={{ opacity: isOut ? 0 : 1, y: isOut ? -16 : 0, filter: isOut ? 'blur(6px)' : 'blur(0px)' }}
+        transition={{ duration: 0.25, ease: 'easeIn' }}
         style={{
           position: 'relative',
           zIndex: 2,
@@ -78,69 +80,58 @@ export default function Preloader() {
         }}
       >
 
-        {/* ── LOGO BLOCK: icon + text side by side ── */}
+        {/* ── LOGO BLOCK: SVG icon + text ── */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: 'clamp(18px, 2.5vw, 36px)',
+          gap: 'clamp(16px, 2.2vw, 32px)',
         }}>
 
-          {/* SVG HOUSE ICON — drawn path by path */}
+          {/*
+            SVG ICON — single continuous path tracing the actual Elite logo mark.
+            The path traces: bottom-left → up left wall → roof peak →
+            down outer right wall → step inward → down inner right wall →
+            left along inner bottom → down to base → close along bottom.
+            This creates the teal C/E-in-house silhouette.
+          */}
           <svg
-            viewBox="0 0 116 128"
+            viewBox="0 0 202 232"
             fill="none"
             style={{
-              width: 'clamp(52px, 7vw, 92px)',
+              width: 'clamp(58px, 8.5vw, 108px)',
               height: 'auto',
               flexShrink: 0,
+              overflow: 'visible',
             }}
           >
-            {/* Outer house outline — drawn first */}
             <motion.path
-              d="M 4 126 L 4 62 L 58 4 L 112 62 L 112 126"
+              d="M 10 222 L 10 98 L 100 10 L 192 98 L 192 148 L 135 148 L 135 192 L 50 192 L 50 222 L 10 222"
               stroke="#2bbdb0"
-              strokeWidth="5.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.3, ease: EASE_OUT, delay: 0.4 }}
-            />
-            {/* Inner house outline — drawn second */}
-            <motion.path
-              d="M 24 126 L 24 70 L 58 22 L 92 70 L 92 126"
-              stroke="#2bbdb0"
-              strokeWidth="5.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.0, ease: EASE_OUT, delay: 1.0 }}
-            />
-            {/* Bottom left connector — closes the E base */}
-            <motion.line
-              x1="4" y1="126" x2="24" y2="126"
-              stroke="#2bbdb0"
-              strokeWidth="5.5"
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 0.22, ease: 'easeOut', delay: 1.75 }}
+              strokeWidth="22"
+              strokeLinecap="square"
+              strokeLinejoin="miter"
+              fill="none"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{
+                pathLength: { duration: 2.0, ease: [0.4, 0, 0.2, 1], delay: 0.3 },
+                opacity: { duration: 0.01, delay: 0.3 },
+              }}
             />
           </svg>
 
-          {/* TEXT SIDE */}
+          {/* ── TEXT BLOCK ── */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
 
             {/* ELITE — slides up from below */}
             <div style={{ overflow: 'hidden', lineHeight: 1 }}>
               <motion.h1
-                initial={{ y: '108%' }}
+                initial={{ y: '110%' }}
                 animate={{ y: '0%' }}
-                transition={{ duration: 0.9, ease: EASE_OUT, delay: 2.0 }}
+                transition={{ duration: 0.9, ease: EASE_OUT, delay: 2.45 }}
                 style={{
                   fontFamily: "'Cinzel', serif",
-                  fontSize: 'clamp(40px, 6.8vw, 90px)',
+                  fontSize: 'clamp(42px, 7vw, 94px)',
                   fontWeight: 700,
                   color: '#ffffff',
                   margin: 0,
@@ -152,15 +143,15 @@ export default function Preloader() {
               </motion.h1>
             </div>
 
-            {/* Gold separator line */}
+            {/* Gold separator — scales in from left */}
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: 0.55, ease: 'easeOut', delay: 2.55 }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 3.0 }}
               style={{
                 height: 1,
-                background: 'linear-gradient(90deg, rgba(212,175,55,0.7), rgba(212,175,55,0.2))',
-                margin: 'clamp(6px, 1vw, 12px) 0',
+                background: 'linear-gradient(90deg, rgba(212,175,55,0.8), rgba(212,175,55,0.15))',
+                margin: 'clamp(8px, 1.2vw, 14px) 0',
                 transformOrigin: 'left',
               }}
             />
@@ -170,15 +161,16 @@ export default function Preloader() {
               <motion.p
                 initial={{ y: '110%' }}
                 animate={{ y: '0%' }}
-                transition={{ duration: 0.75, ease: EASE_OUT, delay: 2.65 }}
+                transition={{ duration: 0.75, ease: EASE_OUT, delay: 3.1 }}
                 style={{
                   fontFamily: "'Cinzel', serif",
-                  fontSize: 'clamp(9px, 1.15vw, 15px)',
+                  fontSize: 'clamp(9px, 1.1vw, 15px)',
                   fontWeight: 400,
                   color: '#d4af37',
                   margin: 0,
                   letterSpacing: '0.3em',
                   textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 PROMOTION IMMOBILIÈRE
@@ -189,20 +181,19 @@ export default function Preloader() {
 
         {/* ── TAGLINE — character by character ── */}
         <div style={{
-          marginTop: 'clamp(28px, 4vh, 52px)',
+          marginTop: 'clamp(32px, 5vh, 56px)',
           display: 'flex',
-          flexWrap: 'wrap',
           justifyContent: 'center',
         }}>
           {TAGLINE.split('').map((char, i) => (
             <motion.span
               key={i}
               initial={{ opacity: 0 }}
-              animate={{ opacity: char === ' ' ? 0 : 0.38 }}
-              transition={{ duration: 0.2, ease: 'easeOut', delay: 3.3 + i * 0.028 }}
+              animate={{ opacity: char === ' ' ? 0 : 0.35 }}
+              transition={{ duration: 0.18, ease: 'easeOut', delay: 3.6 + i * 0.028 }}
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: 'clamp(7px, 0.75vw, 10px)',
+                fontSize: 'clamp(7px, 0.72vw, 10px)',
                 letterSpacing: '0.38em',
                 color: '#f3f4f1',
                 display: 'inline-block',
@@ -215,13 +206,51 @@ export default function Preloader() {
         </div>
       </motion.div>
 
+      {/* ── SCROLL HOOK — appears near end, exits with curtain ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isOut ? 0 : 1 }}
+        transition={{ duration: 0.6, delay: isOut ? 0 : 4.8 }}
+        style={{
+          position: 'absolute',
+          bottom: 36,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 8,
+          zIndex: 3,
+          pointerEvents: 'none',
+        }}
+      >
+        <span style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 8,
+          letterSpacing: '0.42em',
+          color: 'rgba(212,175,55,0.45)',
+          textTransform: 'uppercase',
+        }}>
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            width: 1,
+            height: 26,
+            background: 'linear-gradient(to bottom, rgba(212,175,55,0.55), transparent)',
+          }}
+        />
+      </motion.div>
+
       {/* ── GOLD CUTTING EDGE at bottom of curtain ── */}
       <div style={{
         position: 'absolute',
         bottom: 0, left: 0, right: 0,
         height: 2,
         background: 'linear-gradient(90deg, transparent 0%, #d4af37 25%, #d4af37 75%, transparent 100%)',
-        zIndex: 3,
+        zIndex: 4,
       }} />
 
       {/* ── PROGRESS BAR ── */}
@@ -230,12 +259,12 @@ export default function Preloader() {
         bottom: 2, left: 0, right: 0,
         height: 1,
         background: 'rgba(255,255,255,0.04)',
-        zIndex: 3,
+        zIndex: 4,
       }}>
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ duration: 5.0, ease: 'linear' }}
+          transition={{ duration: 5.2, ease: 'linear' }}
           style={{
             height: '100%',
             background: 'rgba(212,175,55,0.45)',
