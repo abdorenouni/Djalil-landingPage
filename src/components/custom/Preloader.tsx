@@ -31,9 +31,36 @@ export default function Preloader() {
         pointerEvents: isSplit ? 'none' : 'all',
       }}
     >
+      {/* ── CURTAINS (z:1) ── dark panels, bottom layer, split apart on exit */}
+      <motion.div
+        animate={{ y: isSplit ? '-100%' : '0%' }}
+        transition={{ duration: 1.5, ease: EASE, delay: 0.05 }}
+        style={{
+          position: 'absolute',
+          top: 0, left: 0, right: 0,
+          height: '50.5%',
+          background: '#030303',
+          zIndex: 1,
+        }}
+      />
+      <motion.div
+        animate={{ y: isSplit ? '100%' : '0%' }}
+        transition={{ duration: 1.5, ease: EASE }}
+        style={{
+          position: 'absolute',
+          bottom: 0, left: 0, right: 0,
+          height: '50.5%',
+          background: '#030303',
+          zIndex: 1,
+        }}
+      />
 
-      {/* ── VIDEO BACKGROUND ── */}
-      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0 }}>
+      {/* ── VIDEO BACKGROUND (z:2) ── above curtains, fades out before split */}
+      <motion.div
+        animate={{ opacity: isSplit ? 0 : 1 }}
+        transition={{ duration: 0.4, ease: 'easeIn' }}
+        style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 2 }}
+      >
         <motion.video
           autoPlay
           muted
@@ -55,7 +82,6 @@ export default function Preloader() {
           <source src="/videos/apartment-walkthrough.mp4" type="video/mp4" />
         </motion.video>
 
-        {/* Cinematic dark overlay — darkens video for readability */}
         <div
           style={{
             position: 'absolute',
@@ -65,7 +91,6 @@ export default function Preloader() {
           }}
         />
 
-        {/* Subtle teal vignette at bottom */}
         <div
           style={{
             position: 'absolute',
@@ -78,35 +103,9 @@ export default function Preloader() {
             pointerEvents: 'none',
           }}
         />
-      </div>
+      </motion.div>
 
-      {/* ── TOP CURTAIN ── slides up on split */}
-      <motion.div
-        animate={{ y: isSplit ? '-100%' : '0%' }}
-        transition={{ duration: 1.5, ease: EASE, delay: 0.05 }}
-        style={{
-          position: 'absolute',
-          top: 0, left: 0, right: 0,
-          height: '50.5%',
-          background: '#030303',
-          zIndex: 5,
-        }}
-      />
-
-      {/* ── BOTTOM CURTAIN ── slides down on split */}
-      <motion.div
-        animate={{ y: isSplit ? '100%' : '0%' }}
-        transition={{ duration: 1.5, ease: EASE }}
-        style={{
-          position: 'absolute',
-          bottom: 0, left: 0, right: 0,
-          height: '50.5%',
-          background: '#030303',
-          zIndex: 5,
-        }}
-      />
-
-      {/* ── TEAL SEAM FLASH at the split line ── */}
+      {/* ── TEAL SEAM FLASH (z:4) ── top layer, flashes along split line */}
       <motion.div
         initial={{ scaleX: 0, opacity: 0 }}
         animate={isSplit ? { scaleX: [0, 1, 1, 0], opacity: [0, 1, 0.7, 0] } : {}}
@@ -119,11 +118,11 @@ export default function Preloader() {
           boxShadow: '0 0 24px 6px #2bbdb0, 0 0 80px 20px rgba(43,189,176,0.25)',
           transformOrigin: 'center',
           transform: 'translateY(-50%)',
-          zIndex: 6,
+          zIndex: 4,
         }}
       />
 
-      {/* ── CONTENT LAYER ── fades out just before the split */}
+      {/* ── CONTENT (z:3) ── above video, fades out before split */}
       <motion.div
         animate={{ opacity: isSplit ? 0 : 1, y: isSplit ? -6 : 0 }}
         transition={{ duration: 0.3, ease: 'easeIn' }}
@@ -135,11 +134,10 @@ export default function Preloader() {
           alignItems: 'center',
           justifyContent: 'center',
           gap: 20,
-          zIndex: 4,
+          zIndex: 3,
           pointerEvents: 'none',
         }}
       >
-        {/* "Bienvenue" — large italic, like Aymen but with depth */}
         <motion.h1
           initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -159,7 +157,6 @@ export default function Preloader() {
           Bienvenue
         </motion.h1>
 
-        {/* "DANS L'IMMOBILIER DE LUXE" — staggered lines */}
         <div
           style={{
             display: 'flex',
@@ -189,7 +186,6 @@ export default function Preloader() {
           ))}
         </div>
 
-        {/* Teal separator */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
@@ -202,7 +198,6 @@ export default function Preloader() {
           }}
         />
 
-        {/* Brand tagline */}
         <motion.p
           initial={{ opacity: 0, letterSpacing: '0.5em' }}
           animate={{ opacity: 0.55, letterSpacing: '0.28em' }}
@@ -221,7 +216,7 @@ export default function Preloader() {
         </motion.p>
       </motion.div>
 
-      {/* ── PROGRESS BAR at bottom ── fills in sync with the reveal phase */}
+      {/* ── PROGRESS BAR (z:3) ── fills during reveal, fades before split */}
       <motion.div
         animate={{ opacity: isSplit ? 0 : 1 }}
         transition={{ duration: 0.2 }}
@@ -230,7 +225,7 @@ export default function Preloader() {
           bottom: 0, left: 0, right: 0,
           height: 2,
           background: 'rgba(255,255,255,0.06)',
-          zIndex: 4,
+          zIndex: 3,
           pointerEvents: 'none',
         }}
       >
@@ -245,7 +240,6 @@ export default function Preloader() {
           }}
         />
       </motion.div>
-
     </div>
   )
 }
