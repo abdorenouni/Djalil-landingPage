@@ -28,34 +28,8 @@ export default function Preloader() {
         pointerEvents: isExit ? 'none' : 'all',
       }}
     >
-      {/* ── GHOST BACKGROUND — building render at low opacity ── */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: '#050505' }}>
-        <motion.img
-          src="/images/asteria/building-hero.png"
-          alt=""
-          aria-hidden="true"
-          initial={{ opacity: 0, scale: 1.06 }}
-          animate={{ opacity: isExit ? 0 : 0.11, scale: isExit ? 1.02 : 1 }}
-          transition={{ duration: 2.5, ease: 'easeOut', delay: 0.6 }}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            filter: 'grayscale(20%) brightness(0.55)',
-          }}
-        />
-        {/* Heavy vignette keeps edges pure black */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'radial-gradient(ellipse at center, transparent 25%, rgba(5,5,5,0.92) 100%)',
-          }}
-        />
-      </div>
+      {/* ── SOLID BACKGROUND ── */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: '#050505' }} />
 
       {/* ── TOP PANEL — exits upward ── */}
       <motion.div
@@ -198,7 +172,6 @@ export default function Preloader() {
               width: 'clamp(220px, 28vw, 420px)',
               height: 'auto',
               display: 'block',
-              mixBlendMode: 'screen',
             }}
           />
         </motion.div>

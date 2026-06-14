@@ -43,7 +43,7 @@ export default function Header() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: isScrolled ? 'rgba(5,5,5,0.88)' : 'transparent',
+          background: isScrolled ? 'rgba(5,5,5,0.88)' : 'rgba(0,0,0,0.25)',
           backdropFilter: isScrolled ? 'blur(24px)' : 'none',
           borderBottom: isScrolled ? '1px solid rgba(212,175,55,0.08)' : 'none',
           transition: 'background 0.45s ease, backdrop-filter 0.45s ease, border-bottom 0.45s ease',
@@ -67,8 +67,6 @@ export default function Header() {
               height: 'clamp(32px, 4vw, 46px)',
               width: 'auto',
               display: 'block',
-              // screen blend removes the black PNG background on any dark surface
-              mixBlendMode: 'screen',
             }}
           />
         </a>

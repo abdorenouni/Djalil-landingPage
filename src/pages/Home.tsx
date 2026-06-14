@@ -54,8 +54,7 @@ export default function Home() {
                 height: 36,
                 width: 'auto',
                 display: 'block',
-                mixBlendMode: 'screen',
-                opacity: 0.6,
+                opacity: 0.55,
               }}
             />
             <div

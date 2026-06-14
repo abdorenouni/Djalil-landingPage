@@ -80,7 +80,7 @@ export default function Hero() {
           position: 'absolute',
           inset: 0,
           zIndex: 2,
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.5) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.55) 100%)',
           pointerEvents: 'none',
         }}
       />
