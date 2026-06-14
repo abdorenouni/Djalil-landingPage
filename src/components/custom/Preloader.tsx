@@ -7,7 +7,6 @@ type Phase = 'reveal' | 'split' | 'done'
 
 export default function Preloader() {
   const [phase, setPhase] = useState<Phase>('reveal')
-  const [videoReady, setVideoReady] = useState(false)
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase('split'), 4200)
@@ -39,9 +38,9 @@ export default function Preloader() {
           autoPlay
           muted
           playsInline
-          onCanPlay={() => setVideoReady(true)}
+          loop
           initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: videoReady ? 1 : 0, scale: videoReady ? 1 : 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 2, ease: 'easeOut', delay: 0.3 }}
           style={{
             position: 'absolute',
