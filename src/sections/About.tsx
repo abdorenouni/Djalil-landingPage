@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Building3D from '@/components/custom/Building3D'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -149,11 +150,7 @@ export default function About() {
               border: '1px solid rgba(212, 175, 55, 0.1)',
             }}
           >
-            <img
-              src="/images/asteria/building-detail.jpg"
-              alt="Résidence ASTERIA par Elite Promotion Immobilière"
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-            />
+            <Building3D />
             {/* Gold border accent */}
             <div
               style={{
