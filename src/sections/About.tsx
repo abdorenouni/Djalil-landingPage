@@ -1,7 +1,6 @@
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Building3D from '@/components/custom/Building3D'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -98,7 +97,7 @@ export default function About() {
     return () => ctx.revert()
   }, [])
 
-  const titleText = 'DJALIL'
+  const titleText = 'ELITE'
   const titleText2 = 'PROMOTION'
 
   return (
@@ -150,7 +149,11 @@ export default function About() {
               border: '1px solid rgba(212, 175, 55, 0.1)',
             }}
           >
-            <Building3D />
+            <img
+              src="/images/asteria/building-detail.jpg"
+              alt="Résidence ASTERIA par Elite Promotion Immobilière"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+            />
             {/* Gold border accent */}
             <div
               style={{
@@ -237,7 +240,7 @@ export default function About() {
                 maxWidth: 520,
               }}
             >
-              Depuis plus de dix ans, Djalil Promotion façonne le paysage immobilier algérien
+              Elite Promotion Immobilière façonne le paysage immobilier algérien
               avec une vision audacieuse : créer des espaces de vie qui transcendent l'ordinaire.
               Chaque projet est une promesse d'excellence, du choix des matériaux à la remise des clés.
             </p>

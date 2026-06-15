@@ -3,6 +3,7 @@ import { useLocation, Routes, Route } from 'react-router'
 import { AnimatePresence } from 'framer-motion'
 import Home from './pages/Home'
 import Asteria from './pages/Asteria'
+import APropos from './pages/APropos'
 
 /* Scroll to top on every route change (and honour /#contact hash) */
 function ScrollManager() {
@@ -26,6 +27,7 @@ export default function App() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
+          <Route path="/a-propos" element={<APropos />} />
           <Route path="/projets/asteria" element={<Asteria />} />
         </Routes>
       </AnimatePresence>

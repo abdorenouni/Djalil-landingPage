@@ -1,330 +1,117 @@
-import { useRef, useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Reveal, Eyebrow, ParallaxImage, TEAL, GOLD } from '@/components/custom/lux'
 
-gsap.registerPlugin(ScrollTrigger)
-
-interface ProjectCard {
-  id: number
-  title: string
-  location: string
-  image: string
-  year: string
-}
-
-const projects: ProjectCard[] = [
-  { id: 1, title: 'Résidence Les Oliviers', location: 'Hydra, Alger', image: '/images/carousel-1.jpg', year: '2024' },
-  { id: 2, title: 'Tour El Djazaïr', location: 'Bab Ezzouar, Alger', image: '/images/carousel-2.jpg', year: '2023' },
-  { id: 3, title: 'Villa Palmeraie', location: 'Staoueli, Alger', image: '/images/carousel-3.jpg', year: '2024' },
-  { id: 4, title: 'Résidence Les Oliviers II', location: 'Hydra, Alger', image: '/images/carousel-1.jpg', year: '2025' },
-  { id: 5, title: 'Tour El Djazaïr II', location: 'Bab Ezzouar, Alger', image: '/images/carousel-2.jpg', year: '2025' },
-  { id: 6, title: 'Complexe Marina', location: 'Sidi Fredj, Alger', image: '/images/carousel-3.jpg', year: '2024' },
+const SPECS = [
+  { label: 'Typologie', value: 'F3 — 3 pièces' },
+  { label: 'Surfaces', value: '103 – 110 m²' },
+  { label: 'Standing', value: 'Très haut de gamme' },
+  { label: 'Statut', value: 'En commercialisation' },
 ]
 
-function ProjectCarousel({
-  items,
-  direction,
-  speed,
-}: {
-  items: ProjectCard[]
-  direction: 'left' | 'right'
-  speed: number
-}) {
-  const trackRef = useRef<HTMLDivElement>(null)
-  const positionRef = useRef(0)
-  const rafRef = useRef<number | undefined>(undefined)
-
-  const animate = useCallback(() => {
-    const track = trackRef.current
-    if (!track) return
-
-    const itemWidth = track.children[0]?.clientWidth || 400
-    const totalWidth = itemWidth * items.length
-
-    if (direction === 'left') {
-      positionRef.current -= speed
-      if (Math.abs(positionRef.current) >= totalWidth) {
-        positionRef.current = 0
-      }
-    } else {
-      positionRef.current += speed
-      if (positionRef.current >= 0) {
-        positionRef.current = -totalWidth
-      }
-    }
-
-    track.style.transform = `translateX(${positionRef.current}px)`
-    rafRef.current = requestAnimationFrame(animate)
-  }, [direction, speed, items.length])
-
-  useEffect(() => {
-    rafRef.current = requestAnimationFrame(animate)
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    }
-  }, [animate])
-
-  const doubledItems = [...items, ...items]
-
-  return (
-    <div
-      style={{
-        overflow: 'hidden',
-        width: '100%',
-        position: 'relative',
-      }}
-    >
-      <div
-        ref={trackRef}
-        style={{
-          display: 'flex',
-          gap: 'clamp(12px, 2vw, 24px)',
-          willChange: 'transform',
-        }}
-      >
-        {doubledItems.map((project, i) => (
-          <div
-            key={`${project.id}-${i}`}
-            style={{
-              flexShrink: 0,
-              width: 'clamp(260px, 45vw, 380px)',
-              position: 'relative',
-            }}
-          >
-            <div
-              style={{
-                width: '100%',
-                aspectRatio: '3/4',
-                overflow: 'hidden',
-                borderRadius: 3,
-                position: 'relative',
-              }}
-            >
-              <img
-                src={project.image}
-                alt={project.title}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.08)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)'
-                }}
-              />
-              {/* Overlay */}
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(to top, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0.1) 50%, transparent 100%)',
-                  pointerEvents: 'none',
-                }}
-              />
-              {/* Info */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  padding: '32px 24px',
-                  pointerEvents: 'none',
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: 11,
-                    letterSpacing: '0.2em',
-                    color: '#d4af37',
-                    textTransform: 'uppercase',
-                    display: 'block',
-                    marginBottom: 8,
-                  }}
-                >
-                  {project.year} — {project.location}
-                </span>
-                <h3
-                  className="font-display"
-                  style={{
-                    fontSize: 22,
-                    fontWeight: 400,
-                    color: '#f3f4f1',
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {project.title}
-                </h3>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+const THUMBS = [
+  { src: '/images/asteria/living-1.jpg', label: 'Séjour' },
+  { src: '/images/asteria/common-pool.jpg', label: 'Piscine' },
+  { src: '/images/asteria/balcony-1.jpg', label: 'Terrasse' },
+  { src: '/images/asteria/bedroom-1.jpg', label: 'Chambre' },
+]
 
 export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const headingRef = useRef<HTMLDivElement>(null)
-  const [isPaused, setIsPaused] = useState(false)
-
-  useEffect(() => {
-    const section = sectionRef.current
-    const heading = headingRef.current
-    if (!section || !heading) return
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        heading.querySelectorAll('.reveal-item'),
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: heading,
-            start: 'top 95%',
-            toggleActions: 'play none none none',
-          },
-        }
-      )
-    }, section)
-
-    return () => ctx.revert()
-  }, [])
-
-  const row1 = projects.slice(0, 3)
-  const row2 = projects.slice(3, 6)
-
   return (
     <section
-      ref={sectionRef}
       id="projects"
-      style={{
-        background: '#050505',
-        padding: 'clamp(80px, 12vw, 160px) 0',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      style={{ background: '#050505', padding: 'clamp(80px, 12vw, 160px) clamp(24px, 5vw, 80px)', position: 'relative', overflow: 'hidden' }}
     >
-      {/* Section heading */}
-      <div
-        ref={headingRef}
-        style={{
-          maxWidth: 1400,
-          margin: '0 auto',
-          padding: '0 clamp(24px, 5vw, 80px)',
-          marginBottom: 80,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-          gap: 32,
-          flexWrap: 'wrap',
-        }}
-      >
-        <div>
-          <div
-            className="reveal-item"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 16,
-              marginBottom: 24,
-            }}
-          >
-            <div style={{ width: 40, height: 1, background: '#d4af37' }} />
-            <span
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: 12,
-                letterSpacing: '0.3em',
-                textTransform: 'uppercase',
-                color: '#d4af37',
-              }}
-            >
-              Nos Projets
-            </span>
+      {/* Ambient glow */}
+      <div style={{ position: 'absolute', top: '20%', right: '-15%', width: '55%', height: '60%', background: `radial-gradient(circle, ${GOLD}0d 0%, transparent 65%)`, pointerEvents: 'none' }} />
+
+      <div style={{ maxWidth: 1400, margin: '0 auto', position: 'relative' }}>
+        {/* Heading */}
+        <Reveal>
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(48px, 7vw, 90px)' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 14, marginBottom: 22 }}>
+              <div style={{ width: 38, height: 1, background: GOLD }} />
+              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase', color: GOLD }}>Nos Réalisations</span>
+              <div style={{ width: 38, height: 1, background: GOLD }} />
+            </div>
+            <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(32px, 5vw, 68px)', fontWeight: 400, color: '#f3f4f1', lineHeight: 1.1, letterSpacing: '-0.02em', margin: 0 }}>
+              Le Projet Signature
+            </h2>
           </div>
-          <h2
-            className="reveal-item font-display"
-            style={{
-              fontSize: 'clamp(32px, 5vw, 64px)',
-              fontWeight: 400,
-              color: '#f3f4f1',
-              lineHeight: 1.1,
-              letterSpacing: '-0.02em',
-            }}
-          >
-            L'Architecture
-            <br />
-            <span style={{ color: '#d4af37' }}>de Demain</span>
-          </h2>
+        </Reveal>
+
+        {/* Featured ASTERIA */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center' }} className="proj-feature">
+          <Reveal>
+            <Link to="/projets/asteria" style={{ display: 'block', textDecoration: 'none' }}>
+              <ParallaxImage src="/images/asteria/building-front.jpg" alt="ASTERIA — résidence de luxe" aspect="4/5" />
+            </Link>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <div>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: TEAL }}>Alger, Algérie · En cours</span>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(48px, 8vw, 110px)', fontWeight: 700, color: '#f3f4f1', lineHeight: 0.95, margin: '14px 0 22px', letterSpacing: '0.02em' }}>
+                ASTERIA
+              </h3>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 'clamp(15px, 1.1vw, 17px)', lineHeight: 1.8, color: 'rgba(243,244,241,0.6)', maxWidth: 460, margin: '0 0 36px' }}>
+                Une tour résidentielle d'exception aux balcons ondulants, cascades suspendues et
+                piscines à débordement. Le nouveau repère du luxe immobilier algérien.
+              </p>
+
+              {/* Specs */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 32px', marginBottom: 40 }}>
+                {SPECS.map((s) => (
+                  <div key={s.label}>
+                    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(243,244,241,0.4)', marginBottom: 6 }}>{s.label}</div>
+                    <div style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(15px, 1.3vw, 19px)', color: '#f3f4f1' }}>{s.value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <Link
+                to="/projets/asteria"
+                className="cursor-hover"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 12, padding: '16px 40px',
+                  background: GOLD, color: '#050505', fontFamily: "'Inter', sans-serif",
+                  fontSize: 12, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase',
+                  textDecoration: 'none', borderRadius: 3, transition: 'opacity 0.3s ease',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.88' }}
+                onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
+              >
+                Découvrir la résidence
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" /></svg>
+              </Link>
+            </div>
+          </Reveal>
         </div>
-        <Link
-          to="/projets/asteria"
-          className="reveal-item cursor-hover"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '14px 32px',
-            border: '1px solid rgba(212, 175, 55, 0.3)',
-            color: '#d4af37',
-            fontFamily: "'Inter', sans-serif",
-            fontSize: 11,
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            textDecoration: 'none',
-            borderRadius: 3,
-            transition: 'all 0.4s ease',
-            whiteSpace: 'nowrap',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#d4af37'
-            e.currentTarget.style.color = '#050505'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent'
-            e.currentTarget.style.color = '#d4af37'
-          }}
-        >
-          <span>Découvrir ASTERIA</span>
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" />
-          </svg>
-        </Link>
+
+        {/* Render thumbnails → showroom */}
+        <Reveal delay={0.1}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'clamp(12px, 2vw, 24px)', marginTop: 'clamp(40px, 6vw, 80px)' }} className="proj-thumbs">
+            {THUMBS.map((t) => (
+              <Link key={t.src} to="/projets/asteria" style={{ textDecoration: 'none', display: 'block' }} className="proj-thumb cursor-hover">
+                <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden', borderRadius: 4 }}>
+                  <img src={t.src} alt={t.label} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.7s cubic-bezier(0.16,1,0.3,1)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.07)' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
+                  />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(5,5,5,0.85), transparent 55%)' }} />
+                  <span style={{ position: 'absolute', bottom: 16, left: 18, fontFamily: "'Inter', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#f3f4f1' }}>{t.label}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </Reveal>
       </div>
 
-      {/* Carousel rows */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <ProjectCarousel items={row1} direction="left" speed={isPaused ? 0.2 : 0.7} />
-        <ProjectCarousel items={row2} direction="right" speed={isPaused ? 0.15 : 0.5} />
-      </div>
-
-      {/* Bottom fade */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 200,
-          background: 'linear-gradient(to top, #050505, transparent)',
-          pointerEvents: 'none',
-          zIndex: 2,
-        }}
-      />
+      <style>{`
+        @media (max-width: 860px) {
+          .proj-feature { grid-template-columns: 1fr !important; }
+          .proj-thumbs { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
     </section>
   )
 }
