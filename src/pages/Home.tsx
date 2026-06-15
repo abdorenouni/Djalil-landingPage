@@ -4,6 +4,7 @@ import Preloader from '@/components/custom/Preloader'
 import Hero from '@/sections/Hero'
 import About from '@/sections/About'
 import Projects from '@/sections/Projects'
+import Contact from '@/sections/Contact'
 
 export default function Home() {
 
@@ -31,52 +32,7 @@ export default function Home() {
         <div style={{ position: 'relative', zIndex: 10 }}>
           <About />
           <Projects />
-
-          {/* ── MINIMAL FOOTER BRIDGE — Phase 3 will replace this ── */}
-          <footer
-            id="contact"
-            style={{
-              background: '#050505',
-              borderTop: '1px solid rgba(212,175,55,0.08)',
-              padding: 'clamp(40px, 6vw, 80px) clamp(24px, 5vw, 80px)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 24,
-            }}
-          >
-            <img
-              src="/images/elite-logo.png"
-              alt="Elite Promotion Immobilière"
-              style={{
-                height: 'clamp(40px, 5vw, 56px)',
-                width: 'auto',
-                display: 'block',
-                mixBlendMode: 'screen',
-                opacity: 0.8,
-              }}
-            />
-            <div
-              style={{
-                width: 40,
-                height: 0.5,
-                background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent)',
-              }}
-            />
-            <p
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: 11,
-                letterSpacing: '0.2em',
-                color: 'rgba(243,244,241,0.25)',
-                textTransform: 'uppercase',
-                margin: 0,
-                textAlign: 'center',
-              }}
-            >
-              © {new Date().getFullYear()} Elite Promotion Immobilière — Tous droits réservés
-            </p>
-          </footer>
+          <Contact />
         </div>
       </div>
     </motion.div>
