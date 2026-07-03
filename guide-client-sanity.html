@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Guide d'utilisation — Elite Promotion CMS</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Segoe UI, Tahoma, Geneva, Verdana, Arial, Helvetica, sans-serif; color: #111; line-height: 1.8; padding: 0; font-size: 15px; }
+
+  .cover {
+    background: #060606;
+    color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 50px;
+    page-break-after: always;
+  }
+  .cover .logo-text { font-family: Georgia, 'Times New Roman', serif; font-size: 52px; font-weight: 400; letter-spacing: 0.1em; margin-bottom: 12px; color: #fff; }
+  .cover .teal-line { width: 80px; height: 3px; background: #2bbdb0; margin: 36px auto; }
+  .cover h1 { font-family: Georgia, 'Times New Roman', serif; font-size: 30px; font-weight: 400; color: #2bbdb0; margin-bottom: 14px; }
+  .cover .subtitle { font-size: 17px; color: #aaa; margin-bottom: 50px; }
+  .cover .url { font-size: 16px; color: #2bbdb0; background: rgba(43,189,176,0.15); padding: 14px 34px; border-radius: 8px; border: 1px solid rgba(43,189,176,0.3); display: inline-block; font-weight: 600; letter-spacing: 0.02em; }
+  .cover .footer { margin-top: auto; font-size: 13px; color: #666; }
+
+  .page { max-width: 700px; margin: 0 auto; padding: 50px 44px; page-break-after: always; }
+  .page:last-child { page-break-after: avoid; }
+
+  h2 { font-family: Georgia, 'Times New Roman', serif; font-size: 26px; font-weight: 700; color: #111; margin-bottom: 26px; padding-bottom: 14px; border-bottom: 3px solid #2bbdb0; }
+  h3 { font-size: 17px; font-weight: 700; color: #1a8a80; margin: 30px 0 12px; }
+  p { margin-bottom: 16px; font-size: 15px; color: #222; }
+
+  .step { display: flex; gap: 18px; margin-bottom: 22px; align-items: flex-start; }
+  .step-num { flex-shrink: 0; width: 36px; height: 36px; background: #2bbdb0; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; margin-top: 2px; }
+  .step-content { flex: 1; font-size: 15px; color: #222; }
+  .step-content strong { color: #000; }
+
+  .tip { background: #e8f7f5; border-left: 4px solid #2bbdb0; padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0; font-size: 14.5px; color: #1a1a1a; }
+  .tip strong { color: #1a8a80; }
+
+  .warning { background: #fef2e2; border-left: 4px solid #d4940a; padding: 16px 20px; margin: 22px 0; border-radius: 0 8px 8px 0; font-size: 14.5px; color: #1a1a1a; }
+  .warning strong { color: #9a6d00; }
+
+  .section-list { list-style: none; padding: 0; }
+  .section-list li { padding: 12px 18px; margin-bottom: 10px; background: #f4f4f4; border-radius: 8px; font-size: 15px; display: flex; align-items: center; gap: 14px; color: #222; }
+  .section-list .icon { font-size: 20px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14.5px; }
+  th { text-align: left; padding: 12px 16px; background: #1a1a1a; color: #fff; font-weight: 700; font-size: 14px; }
+  td { padding: 12px 16px; border-bottom: 1px solid #ddd; color: #222; }
+  tr:last-child td { border-bottom: none; }
+
+  .toc { list-style: none; padding: 0; }
+  .toc li { padding: 10px 0; border-bottom: 1px dotted #ccc; font-size: 16px; color: #222; }
+  .toc li span { color: #1a8a80; font-weight: 700; margin-right: 12px; }
+
+  code { background: #e8e8e8; padding: 4px 12px; border-radius: 4px; font-size: 15px; color: #1a8a80; font-weight: 600; }
+
+  ul li { color: #222; }
+
+  @media print {
+    body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .cover { min-height: auto; padding: 140px 50px; }
+    .page { padding: 44px 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <div class="logo-text">ELITE</div>
+  <div style="font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(243,244,241,0.4);">Promotion Immobilière</div>
+  <div class="teal-line"></div>
+  <h1>Guide d'utilisation du CMS</h1>
+  <p class="subtitle">Comment gérer le contenu de votre site web en toute autonomie</p>
+  <div class="url">elite-promotion.sanity.studio</div>
+  <p class="footer">Document confidentiel — Elite Promotion © 2026</p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="page">
+  <h2>Sommaire</h2>
+  <ul class="toc">
+    <li><span>01</span> Qu'est-ce que le CMS ?</li>
+    <li><span>02</span> Se connecter</li>
+    <li><span>03</span> L'interface en un coup d'œil</li>
+    <li><span>04</span> Modifier les Paramètres du site</li>
+    <li><span>05</span> Gérer les Projets</li>
+    <li><span>06</span> Écrire un Article (Le Journal)</li>
+    <li><span>07</span> Gérer les Univers (catégories)</li>
+    <li><span>08</span> Gérer la FAQ</li>
+    <li><span>09</span> Ajouter et gérer les images</li>
+    <li><span>10</span> Publier vos modifications</li>
+    <li><span>11</span> Bonnes pratiques</li>
+  </ul>
+</div>
+
+<!-- SECTION 01 -->
+<div class="page">
+  <h2>01 — Qu'est-ce que le CMS ?</h2>
+  <p>Le <strong>CMS</strong> (Content Management System) est votre espace d'administration. Il vous permet de modifier tout le contenu de votre site web — textes, images, projets, articles — <strong>sans toucher au code</strong> et sans intervention de votre développeur.</p>
+  <p>Chaque modification que vous publiez apparaît <strong>instantanément</strong> sur le site en ligne.</p>
+
+  <h3>Ce que vous pouvez faire</h3>
+  <ul class="section-list">
+    <li><span class="icon">🏗️</span> Ajouter, modifier ou supprimer des <strong>projets</strong> (ASTERIA, futurs projets…)</li>
+    <li><span class="icon">📝</span> Écrire et publier des <strong>articles de blog</strong> (Le Journal)</li>
+    <li><span class="icon">❓</span> Modifier les <strong>questions fréquentes</strong> (FAQ)</li>
+    <li><span class="icon">🏠</span> Gérer les pages <strong>Univers</strong> (Intérieurs, Terrasses, Design)</li>
+    <li><span class="icon">⚙️</span> Mettre à jour les <strong>informations de contact</strong>, téléphone, réseaux sociaux</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Bon à savoir :</strong> Vous n'avez besoin d'aucune compétence technique. Si vous savez utiliser Word ou un formulaire en ligne, vous savez utiliser le CMS.
+  </div>
+</div>
+
+<!-- SECTION 02 -->
+<div class="page">
+  <h2>02 — Se connecter</h2>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>Ouvrez votre navigateur</strong> (Chrome, Safari, Edge…) et allez à l'adresse :<br>
+      <code style="background:#f0f0f0;padding:4px 10px;border-radius:4px;font-size:14px;color:#2bbdb0;">https://elite-promotion.sanity.studio</code>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>Connectez-vous</strong> avec l'adresse email qui vous a été communiquée (Google, GitHub, ou email/mot de passe selon votre compte).
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>Vous êtes dans le CMS.</strong> Le menu de gauche affiche toutes les sections que vous pouvez gérer.
+    </div>
+  </div>
+
+  <div class="tip">
+    <strong>Astuce :</strong> Ajoutez cette adresse en favori dans votre navigateur pour y accéder en un clic.
+  </div>
+</div>
+
+<!-- SECTION 03 -->
+<div class="page">
+  <h2>03 — L'interface en un coup d'œil</h2>
+  <p>L'interface est organisée en <strong>3 colonnes</strong> :</p>
+
+  <table>
+    <tr><th>Zone</th><th>Description</th></tr>
+    <tr><td><strong>Menu gauche</strong></td><td>Les catégories de contenu (Projets, Le Journal, FAQ…). Cliquez pour naviguer.</td></tr>
+    <tr><td><strong>Liste centrale</strong></td><td>La liste des documents dans la catégorie sélectionnée. Cliquez sur un document pour l'ouvrir.</td></tr>
+    <tr><td><strong>Éditeur droit</strong></td><td>Le formulaire d'édition. C'est ici que vous modifiez le contenu.</td></tr>
+  </table>
+
+  <h3>Les boutons importants</h3>
+  <table>
+    <tr><th>Bouton</th><th>Action</th></tr>
+    <tr><td><strong>+ (en haut de la liste)</strong></td><td>Créer un nouveau document (projet, article, question…)</td></tr>
+    <tr><td><strong>Publish</strong> (vert, en bas)</td><td>Mettre en ligne vos modifications — le site se met à jour immédiatement</td></tr>
+    <tr><td><strong>Discard changes</strong></td><td>Annuler toutes les modifications non publiées</td></tr>
+    <tr><td><strong>…</strong> (trois points)</td><td>Options avancées : dupliquer, supprimer, voir l'historique</td></tr>
+  </table>
+
+  <div class="warning">
+    <strong>Important :</strong> Vos modifications ne sont <strong>pas visibles sur le site</strong> tant que vous n'avez pas cliqué sur <strong>Publish</strong>. Vous pouvez modifier et prévisualiser en toute sécurité avant de publier.
+  </div>
+</div>
+
+<!-- SECTION 04 -->
+<div class="page">
+  <h2>04 — Modifier les Paramètres du site</h2>
+  <p>Cliquez sur <strong>Paramètres du site</strong> dans le menu gauche. C'est un document unique qui contient les informations générales.</p>
+
+  <h3>Accueil / Hero</h3>
+  <p>Modifiez le titre et le sous-titre qui apparaissent en grand sur la page d'accueil.</p>
+
+  <h3>Contact & Réseaux</h3>
+  <p>Mettez à jour vos coordonnées. Ces informations apparaissent dans le footer et la section Contact :</p>
+  <ul style="padding-left:20px;margin-bottom:14px;font-size:14px;">
+    <li>Téléphone(s)</li>
+    <li>Email</li>
+    <li>Adresse</li>
+    <li>WhatsApp (numéro sans espaces ni +)</li>
+    <li>Liens Instagram et Facebook</li>
+  </ul>
+
+  <h3>SEO</h3>
+  <p>Le titre et la description qui apparaissent dans les résultats Google. L'image de partage est celle affichée quand quelqu'un partage votre site sur les réseaux sociaux.</p>
+
+  <div class="tip">
+    <strong>Astuce :</strong> N'oubliez pas de cliquer <strong>Publish</strong> en bas à droite après vos modifications.
+  </div>
+</div>
+
+<!-- SECTION 05 -->
+<div class="page">
+  <h2>05 — Gérer les Projets</h2>
+  <p>Cliquez sur <strong>Projets</strong> dans le menu gauche.</p>
+
+  <h3>Ajouter un nouveau projet</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">Cliquez sur le bouton <strong>+</strong> en haut de la liste.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">Remplissez les champs : <strong>Nom</strong>, <strong>Accroche</strong>, <strong>Localisation</strong>, <strong>Année</strong>, <strong>Statut</strong> (En cours / Livré / À venir).</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content"><strong>Slug :</strong> cliquez sur « Generate » pour créer l'URL automatiquement à partir du nom.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">Ajoutez l'<strong>image principale</strong> et les images de la <strong>galerie</strong>.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-content">Remplissez la <strong>description</strong> et les <strong>chiffres clés</strong>.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">6</div>
+    <div class="step-content">Cochez <strong>Projet phare</strong> si c'est votre projet principal (un seul à la fois).</div>
+  </div>
+  <div class="step">
+    <div class="step-num">7</div>
+    <div class="step-content">Cliquez <strong>Publish</strong>.</div>
+  </div>
+
+  <h3>Modifier un projet existant</h3>
+  <p>Cliquez sur le projet dans la liste → modifiez les champs souhaités → <strong>Publish</strong>.</p>
+
+  <h3>Supprimer un projet</h3>
+  <p>Ouvrez le projet → cliquez sur <strong>…</strong> (trois points en haut) → <strong>Delete</strong>. Cette action est irréversible.</p>
+</div>
+
+<!-- SECTION 06 -->
+<div class="page">
+  <h2>06 — Écrire un Article (Le Journal)</h2>
+  <p>Cliquez sur <strong>Le Journal</strong> dans le menu gauche.</p>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">Cliquez <strong>+</strong> pour créer un nouvel article.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      Remplissez :<br>
+      • <strong>Titre</strong> — le titre de l'article<br>
+      • <strong>Slug</strong> — cliquez « Generate »<br>
+      • <strong>Catégorie</strong> — ASTERIA, Architecture, Art de vivre, Marché…<br>
+      • <strong>Extrait</strong> — un résumé court (2-3 lignes) affiché sur la page d'accueil<br>
+      • <strong>Image de couverture</strong> — l'image principale de l'article
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      Rédigez le <strong>contenu</strong> dans l'éditeur riche :<br>
+      • Écrivez du texte normalement<br>
+      • Utilisez les boutons de formatage pour les <strong>titres</strong> (H2), le <strong>gras</strong>, l'<em>italique</em><br>
+      • Insérez des <strong>images</strong> dans le corps de l'article via le bouton +<br>
+      • Pour une <strong>citation</strong>, sélectionnez le texte et choisissez « Quote »
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">Cochez <strong>Article à la une</strong> pour le mettre en avant sur la page d'accueil (un seul à la fois).</div>
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-content">Cliquez <strong>Publish</strong>.</div>
+  </div>
+
+  <div class="tip">
+    <strong>Astuce :</strong> Vous pouvez rédiger un brouillon et le publier plus tard. Tant que vous ne cliquez pas sur Publish, rien n'apparaît sur le site.
+  </div>
+</div>
+
+<!-- SECTION 07 -->
+<div class="page">
+  <h2>07 — Gérer les Univers (catégories)</h2>
+  <p>Les <strong>Univers</strong> sont les pages détaillées accessibles via les boutons « Découvrir » sur la page d'accueil : Nos Intérieurs, Nos Terrasses, Nos Design.</p>
+
+  <p>Cliquez sur <strong>Univers (catégories)</strong> dans le menu gauche, puis sur l'univers à modifier.</p>
+
+  <h3>Champs principaux</h3>
+  <table>
+    <tr><th>Champ</th><th>Description</th></tr>
+    <tr><td><strong>Titre</strong></td><td>Le nom affiché en grand (ex: « Nos Intérieurs »)</td></tr>
+    <tr><td><strong>Sous-titre</strong></td><td>La phrase sous le titre (ex: « L'art de l'espace et de la lumière »)</td></tr>
+    <tr><td><strong>Image hero</strong></td><td>La grande image de fond en haut de la page</td></tr>
+    <tr><td><strong>Introduction</strong></td><td>Le texte de présentation (2 paragraphes)</td></tr>
+    <tr><td><strong>Points forts</strong></td><td>Les caractéristiques clés (titre + description chacun)</td></tr>
+    <tr><td><strong>Galerie</strong></td><td>Les images avec légendes</td></tr>
+    <tr><td><strong>Citation</strong></td><td>La phrase mise en avant en bas de page</td></tr>
+    <tr><td><strong>Statistiques</strong></td><td>Les chiffres affichés (ex: 103 m², F3…)</td></tr>
+  </table>
+
+  <div class="warning">
+    <strong>Attention :</strong> Ne modifiez pas la <strong>Mise en page galerie</strong> (gallery/cinematic/editorial) sans en parler à votre développeur — cela change la structure visuelle de la page.
+  </div>
+</div>
+
+<!-- SECTION 08 -->
+<div class="page">
+  <h2>08 — Gérer la FAQ</h2>
+  <p>Cliquez sur <strong>FAQ</strong> dans le menu gauche.</p>
+
+  <h3>Ajouter une question</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">Cliquez <strong>+</strong>.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">Écrivez la <strong>question</strong> et la <strong>réponse</strong>.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">Définissez l'<strong>ordre d'affichage</strong> (1 = première question affichée, 2 = deuxième, etc.).</div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">Cliquez <strong>Publish</strong>.</div>
+  </div>
+
+  <div class="tip">
+    <strong>Astuce :</strong> Pour réordonner les questions, modifiez simplement le numéro dans le champ « Ordre d'affichage » de chaque question.
+  </div>
+</div>
+
+<!-- SECTION 09 -->
+<div class="page">
+  <h2>09 — Ajouter et gérer les images</h2>
+
+  <h3>Ajouter une image</h3>
+  <p>Cliquez sur le champ image → <strong>Upload</strong> → sélectionnez un fichier depuis votre ordinateur. Vous pouvez aussi <strong>glisser-déposer</strong> une image directement sur le champ.</p>
+
+  <h3>Recadrer une image (Hotspot)</h3>
+  <p>Après avoir ajouté une image, cliquez dessus pour accéder au <strong>recadrage</strong>. Placez le point focal sur la zone la plus importante — le site adaptera automatiquement le cadrage selon l'écran (ordinateur, tablette, téléphone).</p>
+
+  <h3>Remplacer une image</h3>
+  <p>Cliquez sur l'image existante → <strong>Clear</strong> → uploadez la nouvelle image.</p>
+
+  <h3>Recommandations</h3>
+  <table>
+    <tr><th>Type d'image</th><th>Taille recommandée</th></tr>
+    <tr><td>Image principale / Hero</td><td>1920 × 1080 px minimum</td></tr>
+    <tr><td>Galerie</td><td>1200 × 800 px minimum</td></tr>
+    <tr><td>Couverture d'article</td><td>1600 × 900 px minimum</td></tr>
+    <tr><td>Format</td><td>JPG ou WebP (évitez les PNG pour les photos)</td></tr>
+  </table>
+</div>
+
+<!-- SECTION 10 -->
+<div class="page">
+  <h2>10 — Publier vos modifications</h2>
+
+  <p>Le système distingue <strong>deux états</strong> :</p>
+
+  <table>
+    <tr><th>État</th><th>Ce que ça veut dire</th></tr>
+    <tr><td><strong>Brouillon (Draft)</strong></td><td>Vos modifications sont enregistrées dans le CMS mais ne sont <strong>pas visibles</strong> sur le site. Vous pouvez continuer à travailler dessus.</td></tr>
+    <tr><td><strong>Publié (Published)</strong></td><td>Le contenu est <strong>en ligne</strong>. Les visiteurs du site voient cette version.</td></tr>
+  </table>
+
+  <h3>Comment publier</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">Faites vos modifications dans le formulaire.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">Vérifiez que tout est correct.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">Cliquez sur le bouton vert <strong>Publish</strong> en bas de l'éditeur.</div>
+  </div>
+
+  <div class="tip">
+    <strong>Pas de panique :</strong> Vous pouvez toujours revenir en arrière. Le CMS conserve un <strong>historique complet</strong> de toutes les versions. Cliquez sur l'icône horloge (en haut à droite) pour voir et restaurer une version précédente.
+  </div>
+</div>
+
+<!-- SECTION 11 -->
+<div class="page">
+  <h2>11 — Bonnes pratiques</h2>
+
+  <h3>Avant de publier</h3>
+  <ul style="padding-left:20px;margin-bottom:14px;font-size:14px;line-height:2;">
+    <li>Relisez vos textes pour les fautes d'orthographe</li>
+    <li>Vérifiez que les images sont nettes et bien cadrées</li>
+    <li>Assurez-vous que le slug (URL) est généré</li>
+  </ul>
+
+  <h3>Images</h3>
+  <ul style="padding-left:20px;margin-bottom:14px;font-size:14px;line-height:2;">
+    <li>Utilisez des photos de <strong>haute qualité</strong> (minimum 1200px de large)</li>
+    <li>Privilégiez le format <strong>JPG</strong> pour les photos</li>
+    <li>Évitez les images trop lourdes (max 2-3 Mo par image)</li>
+    <li>Utilisez le <strong>hotspot</strong> pour indiquer le point d'intérêt de chaque photo</li>
+  </ul>
+
+  <h3>Textes</h3>
+  <ul style="padding-left:20px;margin-bottom:14px;font-size:14px;line-height:2;">
+    <li>Gardez un <strong>ton cohérent</strong> : professionnel, élégant, sobre</li>
+    <li>Les descriptions courtes sont plus efficaces que les textes longs</li>
+    <li>Les chiffres et statistiques attirent l'attention des visiteurs</li>
+  </ul>
+
+  <h3>Besoin d'aide ?</h3>
+  <p>Pour toute question sur l'utilisation du CMS, contactez votre développeur. Pour les modifications structurelles du site (nouvelles pages, nouvelles fonctionnalités), une intervention technique est nécessaire.</p>
+
+  <div style="text-align:center;margin-top:40px;padding-top:30px;border-top:2px solid #2bbdb0;">
+    <div style="font-family:'Cinzel',serif;font-size:20px;color:#060606;margin-bottom:6px;">ELITE</div>
+    <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#999;">Promotion Immobilière</div>
+    <div style="font-size:12px;color:#2bbdb0;margin-top:12px;">elite-promotion.sanity.studio</div>
+  </div>
+</div>
+
+</body>
+</html>
