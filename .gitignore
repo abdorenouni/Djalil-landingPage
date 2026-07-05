@@ -35,10 +35,6 @@ pnpm-debug.log*
 # Hosting
 .vercel
 
-# Local tooling
-.claude/
-.agents/
-
 # Sanity Studio local runtime
 studio/.sanity/
 studio/dist/
