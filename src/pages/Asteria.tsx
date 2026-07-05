@@ -78,7 +78,7 @@ const FALLBACK_WHATSAPP = '213779527948'
 
 /* ASTERIA F3 residences. */
 const PLANS = [
-  { ref: 'A-103', surface: '103.88', img: '/images/asteria/plan-103.jpg', pieces: 'F3 · 3 pièces', chambres: 2, sdb: 2, etage: '3ᵉ au 6ᵉ étage', orientation: 'Sud · Baie d'Alger', terrasse: '16 m²', exposition: 'Double exposition' },
+  { ref: 'A-103', surface: '103.88', img: '/images/asteria/plan-103.jpg', pieces: 'F3 · 3 pièces', chambres: 2, sdb: 2, etage: '3ᵉ au 6ᵉ étage', orientation: "Sud · Baie d'Alger", terrasse: '16 m²', exposition: 'Double exposition' },
   { ref: 'A-104', surface: '104.93', img: '/images/asteria/plan-104.jpg', pieces: 'F3 · 3 pièces', chambres: 2, sdb: 2, etage: '4ᵉ au 7ᵉ étage', orientation: 'Sud-Est', terrasse: '18 m²', exposition: 'Traversant' },
   { ref: 'A-109', surface: '109.42', img: '/images/asteria/plan-109.jpg', pieces: 'F3 · 3 pièces', chambres: 2, sdb: 2, etage: '8ᵉ au 10ᵉ étage', orientation: 'Sud-Ouest · Couchant', terrasse: '22 m²', exposition: 'Traversant' },
   { ref: 'A-110', surface: '110.48', img: '/images/asteria/plan-110.jpg', pieces: 'F3 · 3 pièces', chambres: 3, sdb: 2, etage: '11ᵉ au 12ᵉ étage', orientation: 'Panoramique · Baie et ville', terrasse: '26 m²', exposition: 'Angle premium' },
