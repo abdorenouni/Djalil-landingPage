@@ -330,7 +330,7 @@ export default function Asteria() {
           <h1 style={{
             position: 'relative', display: 'flex', justifyContent: 'center',
             fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700,
-            fontSize: 'clamp(64px, 16vw, 240px)', lineHeight: 0.92,
+            fontSize: 'clamp(48px, 11vw, 160px)', lineHeight: 0.92,
             letterSpacing: '0.04em', margin: 0, color: '#fff', textShadow: '0 8px 60px rgba(0,0,0,0.6)',
           }}>
             {heroTitle.split('').map((c: string, i: number) => (
