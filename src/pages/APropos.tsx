@@ -64,7 +64,6 @@ const FALLBACK_MISSION = {
     "Avec ASTERIA, nous signons une première : une résidence où l'eau, la lumière et la végétation composent un paysage vertical inédit.",
   ],
 }
-const FALLBACK_QUOTE = 'Nous ne livrons pas des appartements. Nous remettons des clés de vie, une promesse tenue, pierre après pierre.'
 const FALLBACK_CTA = { title: 'Découvrez nos projets', label: 'Explorer nos résidences', link: '/projets', img: '/images/asteria/balcony-1.jpg' }
 
 export default function APropos() {
@@ -102,11 +101,6 @@ export default function APropos() {
   const valuesEyebrow = ap?.valuesEyebrow || 'Nos Valeurs'
   const valuesTitle = ap?.valuesTitle || 'Ce qui nous distingue'
   const values = ap?.values?.length ? ap.values : FALLBACK_VALUES
-
-  const founderQuote = ap?.founderQuote || FALLBACK_QUOTE
-  const founderAccent = ap?.founderQuoteAccent || ''
-  const founderName = ap?.founderName || 'La Direction'
-  const founderOrg = ap?.founderOrg || 'Elite Promotion Immobilière'
 
   const stats = ap?.stats?.length ? ap.stats.map((s: any) => ({ n: s.number, l: s.label })) : FALLBACK_STATS
 
@@ -251,28 +245,6 @@ export default function APropos() {
         </div>
       </section>
 
-      {/* ── FOUNDER QUOTE ── */}
-      <section style={{ position: 'relative', padding: 'clamp(80px, 13vw, 180px) clamp(24px, 5vw, 64px)', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '60%', height: '120%', background: `radial-gradient(ellipse, ${TEAL}0c 0%, transparent 65%)`, pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-          <Reveal>
-            <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(80px, 12vw, 160px)', lineHeight: 0.5, color: TEAL, opacity: 0.25, marginBottom: 10 }}>“</div>
-          </Reveal>
-          <blockquote style={{ margin: 0 }}>
-            <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontStyle: 'italic', fontSize: 'clamp(24px, 4vw, 52px)', lineHeight: 1.4, color: 'var(--text)', margin: 0, fontWeight: 400 }}>
-              <WordReveal segments={accentSegments(founderQuote, founderAccent)} />
-            </p>
-          </blockquote>
-          <Reveal delay={0.2}>
-            <div style={{ marginTop: 'clamp(32px, 4vw, 48px)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-              <div style={{ width: 40, height: 1, background: GOLD, marginBottom: 8 }} />
-              <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(13px, 1.4vw, 16px)', letterSpacing: '0.1em', color: 'var(--text)' }}>{founderName}</span>
-              <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.45)' }}>{founderOrg}</span>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       {/* ── STATS band — moving marquee ── */}
       <section style={{ background: 'var(--bg-2)', borderTop: '1px solid rgba(var(--line-rgb),0.04)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)', padding: 'clamp(56px, 8vw, 100px) 0' }}>
         <StatMarquee items={stats} speed={38} />
@@ -303,15 +275,6 @@ export default function APropos() {
       `}</style>
     </motion.div>
   )
-}
-
-/* Split a quote around the accented phrase so the editor can highlight key words in CMS. */
-function accentSegments(quote: string, accent: string) {
-  if (!accent || !quote.includes(accent)) return [{ t: quote }]
-  const idx = quote.indexOf(accent)
-  const before = quote.slice(0, idx)
-  const after = quote.slice(idx + accent.length)
-  return [before && { t: before }, { t: accent, accent: true }, after && { t: after }].filter(Boolean) as { t: string; accent?: boolean }[]
 }
 
 /* Section index marker — e.g. "01 ——" */

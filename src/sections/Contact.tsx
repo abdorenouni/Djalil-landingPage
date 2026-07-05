@@ -55,7 +55,7 @@ export default function Contact() {
   const ADDRESS = settings?.address || FALLBACK_ADDRESS
   const INSTAGRAM = settings?.instagram || FALLBACK_INSTAGRAM
 
-  const [form, setForm] = useState<FormState>({ nom: '', telephone: '', email: '', sujet: 'Information ASTERIA', message: '' })
+  const [form, setForm] = useState<FormState>({ nom: '', telephone: '', email: '', sujet: 'Visite privée', message: '' })
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<Status>('idle')
   const sent = status === 'sent'
@@ -225,7 +225,7 @@ export default function Contact() {
                       {CONTACT_ENDPOINT ? 'Discuter sur WhatsApp' : 'Ouvrir WhatsApp'}
                     </a>
                     <div>
-                      <button onClick={() => { setStatus('idle'); setForm({ nom: '', telephone: '', email: '', sujet: 'Information ASTERIA', message: '' }) }} style={{ marginTop: 20, background: 'none', border: 'none', color: 'rgba(var(--text-rgb),0.5)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.15em', textTransform: 'uppercase', cursor: 'pointer' }}>
+                      <button onClick={() => { setStatus('idle'); setForm({ nom: '', telephone: '', email: '', sujet: 'Visite privée', message: '' }) }} style={{ marginTop: 20, background: 'none', border: 'none', color: 'rgba(var(--text-rgb),0.5)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.15em', textTransform: 'uppercase', cursor: 'pointer' }}>
                         Envoyer une autre demande
                       </button>
                     </div>
@@ -254,10 +254,7 @@ export default function Contact() {
                     <div style={{ marginBottom: 22 }}>
                       <label htmlFor="cf-sujet" style={labelStyle}>Sujet</label>
                       <select id="cf-sujet" name="subject" style={{ ...inputStyle, cursor: 'pointer' }} value={form.sujet} onChange={(e) => update('sujet', e.target.value)} onFocus={focusOn} onBlur={focusOff}>
-                        <option style={{ background: 'var(--bg-2)' }}>Information ASTERIA</option>
                         <option style={{ background: 'var(--bg-2)' }}>Visite privée</option>
-                        <option style={{ background: 'var(--bg-2)' }}>Réservation d'une résidence</option>
-                        <option style={{ background: 'var(--bg-2)' }}>Autre demande</option>
                       </select>
                     </div>
 
