@@ -77,18 +77,62 @@ export default defineType({
       ], preview: { select: { title: 'title', media: 'image' } } }],
     }),
 
-    // ── PLANS ──
-    defineField({ name: 'plansEyebrow', title: 'Éyebrow', type: 'string', group: 'plans' }),
-    defineField({ name: 'plansTitle', title: 'Titre', type: 'string', group: 'plans' }),
+    // ── F3 UNITS ──
+    defineField({ name: 'f3UnitsEyebrow', title: 'Éyebrow F3', type: 'string', group: 'plans', initialValue: 'Les Résidences F3' }),
+    defineField({ name: 'f3UnitsTitle', title: 'Titre F3', type: 'string', group: 'plans', initialValue: 'Choisissez votre F3' }),
     defineField({
-      name: 'plans', title: 'Plans (F3, F4, Villas...)', type: 'array', group: 'plans',
-      of: [{ type: 'object', fields: [
-        { name: 'name', title: 'Nom (ex: F3 — 103 m²)', type: 'string' },
-        { name: 'surface', title: 'Surface', type: 'string' },
-        { name: 'rooms', title: 'Pièces', type: 'string' },
+      name: 'f3Units', title: 'Résidences F3', type: 'array', group: 'plans',
+      of: [{ type: 'object', name: 'f3Unit', fields: [
+        { name: 'ref', title: 'Référence (ex: A-103)', type: 'string' },
+        { name: 'surface', title: 'Surface (m²)', type: 'string' },
         { name: 'image', title: 'Plan (image)', type: 'image' },
-        { name: 'description', title: 'Description', type: 'text', rows: 3 },
-      ], preview: { select: { title: 'name', subtitle: 'surface', media: 'image' } } }],
+        { name: 'chambres', title: 'Chambres', type: 'number' },
+        { name: 'sdb', title: 'Salles de bain', type: 'number' },
+        { name: 'etage', title: 'Étage', type: 'string' },
+        { name: 'orientation', title: 'Orientation', type: 'string' },
+        { name: 'terrasse', title: 'Terrasse', type: 'string' },
+        { name: 'exposition', title: 'Exposition', type: 'string' },
+      ], preview: { select: { title: 'ref', subtitle: 'surface', media: 'image' } } }],
+    }),
+
+    // ── F4 UNITS ──
+    defineField({ name: 'f4UnitsEyebrow', title: 'Éyebrow F4', type: 'string', group: 'plans', initialValue: 'Les Résidences F4' }),
+    defineField({ name: 'f4UnitsTitle', title: 'Titre F4', type: 'string', group: 'plans', initialValue: 'Choisissez votre F4' }),
+    defineField({
+      name: 'f4Units', title: 'Résidences F4', type: 'array', group: 'plans',
+      of: [{ type: 'object', name: 'f4Unit', fields: [
+        { name: 'ref', title: 'Référence (ex: A-154)', type: 'string' },
+        { name: 'surface', title: 'Surface (m²)', type: 'string' },
+        { name: 'image', title: 'Plan (image)', type: 'image' },
+        { name: 'chambres', title: 'Chambres', type: 'number' },
+        { name: 'sdb', title: 'Salles de bain', type: 'number' },
+        { name: 'etage', title: 'Étage', type: 'string' },
+        { name: 'orientation', title: 'Orientation', type: 'string' },
+        { name: 'terrasse', title: 'Terrasse', type: 'string' },
+        { name: 'exposition', title: 'Exposition', type: 'string' },
+      ], preview: { select: { title: 'ref', subtitle: 'surface', media: 'image' } } }],
+    }),
+
+    // ── VILLAS ──
+    defineField({ name: 'villasEyebrow', title: 'Éyebrow Villas', type: 'string', group: 'plans', initialValue: 'Exclusivité Totale' }),
+    defineField({ name: 'villasTitle', title: 'Titre Villas', type: 'string', group: 'plans', initialValue: 'Les Villas ASTERIA' }),
+    defineField({
+      name: 'villas', title: 'Villas', type: 'array', group: 'plans',
+      of: [{ type: 'object', name: 'villa', fields: [
+        { name: 'ref', title: 'Référence (ex: V-01)', type: 'string' },
+        { name: 'chambres', title: 'Chambres', type: 'number' },
+        { name: 'sdb', title: 'Salles de bain', type: 'number' },
+        { name: 'piscine', title: 'Piscine (ex: Piscine privée 36 m²)', type: 'string' },
+        { name: 'exposition', title: 'Exposition', type: 'string' },
+        {
+          name: 'levels', title: 'Niveaux', type: 'array',
+          of: [{ type: 'object', name: 'level', fields: [
+            { name: 'label', title: 'Nom du niveau (ex: Niveau 8)', type: 'string' },
+            { name: 'sub', title: 'Description courte', type: 'string' },
+            { name: 'image', title: 'Plan (image)', type: 'image' },
+          ], preview: { select: { title: 'label', subtitle: 'sub', media: 'image' } } }],
+        },
+      ], preview: { select: { title: 'ref', subtitle: 'piscine' } } }],
     }),
 
     // ── CTA ──

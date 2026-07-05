@@ -209,14 +209,10 @@ export async function fetchApropos() {
 
 const ASTERIA_QUERY = `*[_type == "asteria"][0]{
   heroEyebrow, heroTitle, heroSubtitle, heroImage,
-  introText, stats,
-  ctaTitle, ctaLabel, ctaLink,
-  villaGallery[] {
-    mediaType,
-    image, alt,
-    "videoUrl": videoFile.asset->url,
-    poster
-  }
+  f3UnitsEyebrow, f3UnitsTitle, f3Units,
+  f4UnitsEyebrow, f4UnitsTitle, f4Units,
+  villasEyebrow, villasTitle, villas,
+  ctaTitle, ctaLabel, ctaLink
 }`
 
 export async function fetchAsteria() {
