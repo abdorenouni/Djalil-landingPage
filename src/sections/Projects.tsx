@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -38,27 +38,26 @@ function ProjectCarousel({
   const positionRef = useRef(0)
   const rafRef = useRef<number | undefined>(undefined)
 
-  const animate = useCallback(() => {
-    const track = trackRef.current
-    if (!track) return
-    const itemWidth = track.children[0]?.clientWidth || 400
-    const totalWidth = itemWidth * items.length
-
-    if (direction === 'left') {
-      positionRef.current -= speed
-      if (Math.abs(positionRef.current) >= totalWidth) positionRef.current = 0
-    } else {
-      positionRef.current += speed
-      if (positionRef.current >= 0) positionRef.current = -totalWidth
-    }
-    track.style.transform = `translateX(${positionRef.current}px)`
-    rafRef.current = requestAnimationFrame(animate)
-  }, [direction, speed, items.length])
-
   useEffect(() => {
+    const animate = () => {
+      const track = trackRef.current
+      if (!track) return
+      const itemWidth = track.children[0]?.clientWidth || 400
+      const totalWidth = itemWidth * items.length
+
+      if (direction === 'left') {
+        positionRef.current -= speed
+        if (Math.abs(positionRef.current) >= totalWidth) positionRef.current = 0
+      } else {
+        positionRef.current += speed
+        if (positionRef.current >= 0) positionRef.current = -totalWidth
+      }
+      track.style.transform = `translateX(${positionRef.current}px)`
+      rafRef.current = requestAnimationFrame(animate)
+    }
     rafRef.current = requestAnimationFrame(animate)
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
-  }, [animate])
+  }, [direction, speed, items.length])
 
   const doubledItems = [...items, ...items]
 

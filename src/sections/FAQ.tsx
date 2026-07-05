@@ -39,7 +39,7 @@ const STATIC_QUESTIONS: FaqItem[] = [
   },
 ]
 
-function AccordionItem({ item, isOpen, toggle, index }: { item: typeof QUESTIONS[0]; isOpen: boolean; toggle: () => void; index: number }) {
+function AccordionItem({ item, isOpen, toggle, index }: { item: FaqItem; isOpen: boolean; toggle: () => void; index: number }) {
   return (
     <div
       style={{

@@ -1,5 +1,5 @@
 import { client, urlFor } from './sanity'
-import { ARTICLES, type Article, type Block, formatDate as fmtDate } from '@/data/journal'
+import { ARTICLES, type Article, type Block } from '@/data/journal'
 import { PROJECTS, type Project } from '@/data/projects'
 import { UNIVERS, type Univers } from '@/data/univers'
 

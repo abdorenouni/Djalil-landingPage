@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router'
-import { Reveal, TEAL, EASE } from '@/components/custom/lux'
+import { Reveal, TEAL } from '@/components/custom/lux'
 import { ARTICLES, formatDate, type Article } from '@/data/journal'
 import { fetchArticles } from '@/lib/queries'
 

@@ -15,13 +15,9 @@ export default function Article() {
   // Articles that only exist in Sanity (not in the static fallback) start with
   // `article` undefined — only redirect once fetchArticle() confirms the slug
   // truly doesn't exist anywhere, not before the CMS fetch has had a chance to resolve.
-  const [notFound, setNotFound] = useState(false)
+  const [notFound, setNotFound] = useState(!slug)
   useEffect(() => {
-    if (slug) {
-      fetchArticle(slug).then((a) => (a ? setArticle(a) : setNotFound(true)))
-    } else {
-      setNotFound(true)
-    }
+    if (slug) fetchArticle(slug).then((a) => (a ? setArticle(a) : setNotFound(true)))
     fetchArticles().then((list) => list?.length && setAllArticles(list))
   }, [slug])
 

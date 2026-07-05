@@ -18,10 +18,9 @@ export default function ProjectDetail() {
   // Projects that only exist in Sanity (not in the static fallback) start with
   // `project` undefined — only redirect once fetchProject() confirms the slug
   // truly doesn't exist anywhere, not before the CMS fetch has had a chance to resolve.
-  const [notFound, setNotFound] = useState(false)
+  const [notFound, setNotFound] = useState(!slug)
   useEffect(() => {
-    if (!slug) { setNotFound(true); return }
-    fetchProject(slug).then((p) => (p ? setProject(p) : setNotFound(true)))
+    if (slug) fetchProject(slug).then((p) => (p ? setProject(p) : setNotFound(true)))
   }, [slug])
 
   const heroRef = useRef<HTMLDivElement>(null)

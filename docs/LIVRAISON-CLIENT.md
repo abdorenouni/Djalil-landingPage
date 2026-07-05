@@ -156,5 +156,5 @@ vercel.json       Config de déploiement + en-têtes de sécurité
 
 ---
 
-*Livré par Abdou Renouni. Pour toute question technique, se référer également à
-`README.md`, `HANDOFF_BRIEF.md` et `SANITY_SETUP.md`.*
+*Livré par Abdou Renouni. Pour toute question technique, se référer également au
+`README.md` à la racine du projet.*

@@ -19,28 +19,6 @@
     --bg-rgb: 255, 255, 255;
     --teal: #2bbdb0;
     --gold: #2bbdb0;
-
-    /* shadcn tokens (light) */
-    --background: 40 20% 99%;
-    --foreground: 220 6% 11%;
-    --card: 40 20% 99%;
-    --card-foreground: 220 6% 11%;
-    --popover: 40 20% 99%;
-    --popover-foreground: 220 6% 11%;
-    --primary: 43 56% 46%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 40 10% 94%;
-    --secondary-foreground: 220 6% 11%;
-    --muted: 40 10% 94%;
-    --muted-foreground: 220 4% 40%;
-    --accent: 174 64% 45%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 88%;
-    --input: 220 13% 88%;
-    --ring: 174 64% 45%;
-    --radius: 3px;
   }
 
   html[data-theme='dark'] {
@@ -53,22 +31,6 @@
     --header-rgb: 8, 8, 8;
     --bg-rgb: 6, 6, 6;
     --gold: #2bbdb0;
-
-    /* shadcn tokens (dark) */
-    --background: 0 0% 2%;
-    --foreground: 60 5% 95%;
-    --card: 0 0% 4%;
-    --card-foreground: 60 5% 95%;
-    --popover: 0 0% 4%;
-    --popover-foreground: 60 5% 95%;
-    --primary: 43 56% 52%;
-    --primary-foreground: 0 0% 2%;
-    --secondary: 0 0% 8%;
-    --secondary-foreground: 60 5% 95%;
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 55%;
-    --border: 0 0% 12%;
-    --input: 0 0% 12%;
   }
 
   body {

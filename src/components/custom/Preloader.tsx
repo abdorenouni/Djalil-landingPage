@@ -51,7 +51,7 @@ export default function Preloader() {
     // network issue), the user must not be trapped on a black panel.
     const safety = setTimeout(exit, 5000)
     return () => clearTimeout(safety)
-  }, [skipped])
+  }, [skipped]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (phase !== 'out') return
@@ -76,7 +76,7 @@ export default function Preloader() {
       v.removeEventListener('ended', onEnd)
       v.removeEventListener('error', onErr)
     }
-  }, [skipped])
+  }, [skipped]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (skipped || phase === 'done') return null
   const isOut = phase === 'out'

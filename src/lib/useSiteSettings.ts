@@ -70,7 +70,8 @@ function getSettings(): Promise<SiteSettings | null> {
 export function useSiteSettings(): SiteSettings | null {
   const [settings, setSettings] = useState<SiteSettings | null>(cached)
   useEffect(() => {
-    if (cached) { setSettings(cached); return }
+    // getSettings() resolves immediately from the module cache when populated,
+    // so a single async path covers both the cached and first-fetch cases.
     getSettings().then((s) => s && setSettings(s))
   }, [])
   return settings

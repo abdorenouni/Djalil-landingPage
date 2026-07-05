@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, type ReactNode } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ShieldCheck, Gem, Handshake, Compass } from 'lucide-react'
-import { Reveal, Eyebrow, ParallaxImage, StatMarquee, BezelCard, MagneticCTA, WordReveal, Marquee, TEAL, GOLD, EASE, useIsMobile } from '@/components/custom/lux'
+import { Reveal, Eyebrow, ParallaxImage, StatMarquee, BezelCard, MagneticCTA, WordReveal, Marquee, TEAL, EASE, useIsMobile } from '@/components/custom/lux'
 import Header from '@/components/custom/Header'
 import SiteFooter from '@/components/custom/SiteFooter'
 import { Seo, breadcrumbLd } from '@/lib/seo'
@@ -274,15 +274,5 @@ export default function APropos() {
         }
       `}</style>
     </motion.div>
-  )
-}
-
-/* Section index marker — e.g. "01 ——" */
-function SectionIndex({ n, centered = false }: { n: string; centered?: boolean }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18, justifyContent: centered ? 'center' : 'flex-start' }}>
-      <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontVariantNumeric: 'tabular-nums', fontSize: 13, fontWeight: 600, letterSpacing: '0.1em', color: GOLD }}>{n}</span>
-      <span style={{ width: 'clamp(24px, 3vw, 44px)', height: 1, background: 'rgba(212,175,55,0.4)' }} />
-    </div>
   )
 }

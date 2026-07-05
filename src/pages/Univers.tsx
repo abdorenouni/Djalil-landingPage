@@ -16,11 +16,10 @@ export default function Univers() {
   // Univers pages that only exist in Sanity (not in the static fallback) start
   // with `u` undefined — only redirect once fetchUnivers() confirms the slug
   // truly doesn't exist anywhere, not before the CMS fetch has had a chance to resolve.
-  const [notFound, setNotFound] = useState(false)
+  const [notFound, setNotFound] = useState(!slug)
 
   useEffect(() => {
     if (slug) fetchUnivers(slug).then((data) => (data ? setU(data) : setNotFound(true)))
-    else setNotFound(true)
     fetchUniversList().then((list) => list?.length && setAll(list))
   }, [slug])
 
