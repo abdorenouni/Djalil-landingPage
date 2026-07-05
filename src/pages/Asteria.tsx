@@ -76,22 +76,21 @@ function ParallaxImage({ src, alt, aspect = '3/4', range = 14 }: { src: string; 
 
 const FALLBACK_WHATSAPP = '213779527948'
 
-/* ASTERIA F3 residences. Étages / orientations are indicative — confirm with client. */
+/* ASTERIA F3 residences. */
 const PLANS = [
-  { ref: 'A-103', surface: '103.88', img: '/images/asteria/plan-103.jpg', pieces: 'F3 · 3 pièces', chambres: 2, sdb: 2, etage: '3ᵉ au 6ᵉ étage', orientation: 'Sud · Baie d’Alger', terrasse: '16 m²', exposition: 'Double exposition' },
+  { ref: 'A-103', surface: '103.88', img: '/images/asteria/plan-103.jpg', pieces: 'F3 · 3 pièces', chambres: 2, sdb: 2, etage: '3ᵉ au 6ᵉ étage', orientation: 'Sud · Baie d'Alger', terrasse: '16 m²', exposition: 'Double exposition' },
   { ref: 'A-104', surface: '104.93', img: '/images/asteria/plan-104.jpg', pieces: 'F3 · 3 pièces', chambres: 2, sdb: 2, etage: '4ᵉ au 7ᵉ étage', orientation: 'Sud-Est', terrasse: '18 m²', exposition: 'Traversant' },
   { ref: 'A-109', surface: '109.42', img: '/images/asteria/plan-109.jpg', pieces: 'F3 · 3 pièces', chambres: 2, sdb: 2, etage: '8ᵉ au 10ᵉ étage', orientation: 'Sud-Ouest · Couchant', terrasse: '22 m²', exposition: 'Traversant' },
   { ref: 'A-110', surface: '110.48', img: '/images/asteria/plan-110.jpg', pieces: 'F3 · 3 pièces', chambres: 3, sdb: 2, etage: '11ᵉ au 12ᵉ étage', orientation: 'Panoramique · Baie et ville', terrasse: '26 m²', exposition: 'Angle premium' },
 ]
 
-/* F4 residences — 4 pièces (154–171 m²). Étages / orientations indicatifs. */
+/* F4 residences */
 const PLANS_F4 = [
   { ref: 'A-154', surface: '154.55', img: '/images/asteria/plan-f4-154.png', pieces: 'F4 · 4 pièces', chambres: 3, sdb: 2, etage: '2ᵉ au 6ᵉ étage', orientation: "Sud · Baie d'Alger", terrasse: '30 m²', exposition: 'Double exposition' },
   { ref: 'A-171', surface: '171.76', img: '/images/asteria/plan-f4-171.png', pieces: 'F4 · 4 pièces', chambres: 3, sdb: 2, etage: '7ᵉ au 11ᵉ étage', orientation: 'Panoramique · Baie et ville', terrasse: '40 m²', exposition: 'Angle premium' },
 ]
 
-/* Les 4 Villas ASTERIA — niveaux 8 et 9 + terrasse-piscine privée.
-   Chaque villa dispose de 3 niveaux : Niveau 8 (séjour), Niveau 9 (chambres), Terrasse (piscine/toit). */
+/* Les 4 Villas ASTERIA */
 const VILLAS_PLANS = [
   {
     ref: 'V-01', pieces: 'Villa · Duplex', chambres: 4, sdb: 3, piscine: 'Piscine privée 36 m²', exposition: 'Plein sud',
@@ -138,8 +137,7 @@ const waResidenceF4 = (whatsapp: string, ref: string, surface: string) =>
 const waVilla = (whatsapp: string, ref: string) =>
   `https://wa.me/${cleanWaNumber(whatsapp)}?text=${encodeURIComponent(`Bonjour Elite, je suis intéressé par la Villa ASTERIA — réf ${ref}. Pourriez-vous me communiquer la surface, les disponibilités et les conditions ?`)}`
 
-/* Points of interest around ASTERIA. x/y are % positions on the radial map.
-   Travel times are indicative — confirm with the client before final delivery. */
+/* Points of interest around ASTERIA. */
 const POIS = [
   { icon: <ShoppingBag size={18} />, label: 'Garden City Mall', time: '5 min', x: 64, y: 22 },
   { icon: <GraduationCap size={18} />, label: 'Écoles internationales', time: '5 min', x: 26, y: 20 },
@@ -163,11 +161,10 @@ function Spec({ icon, label, value }: { icon: ReactNode; label: string; value: s
   )
 }
 
-/* Bespoke radial "location" graphic — concentric rings + POI dots, no map API. */
+/* Bespoke radial "location" graphic */
 function QuartierMap() {
   return (
     <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', maxWidth: 520, margin: '0 auto' }}>
-      {/* concentric rings */}
       {[1, 0.68, 0.36].map((scale, i) => (
         <motion.div
           key={i}
@@ -182,10 +179,7 @@ function QuartierMap() {
           }}
         />
       ))}
-      {/* soft glow at centre */}
       <div style={{ position: 'absolute', top: '50%', left: '50%', width: '60%', height: '60%', transform: 'translate(-50%, -50%)', borderRadius: '50%', background: `radial-gradient(circle, ${TEAL}1a 0%, transparent 70%)`, pointerEvents: 'none' }} />
-
-      {/* centre marker — ASTERIA */}
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 3 }}>
         <span style={{ position: 'relative', width: 14, height: 14 }}>
           <motion.span animate={{ scale: [1, 2.4, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2.6, repeat: Infinity, ease: 'easeOut' }} style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: TEAL }} />
@@ -193,8 +187,6 @@ function QuartierMap() {
         </span>
         <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, letterSpacing: '0.2em', color: 'var(--text)', marginTop: 10, whiteSpace: 'nowrap' }}>ASTERIA</span>
       </div>
-
-      {/* POI dots */}
       {POIS.map((p, i) => (
         <motion.div
           key={p.label}
@@ -212,6 +204,13 @@ function QuartierMap() {
   )
 }
 
+/* ── Type selector items ── */
+const TYPE_ITEMS = [
+  { id: 'f3', label: 'F3', sub: '103–110 m² · 3 Pièces', detail: '4 résidences' },
+  { id: 'f4', label: 'F4', sub: '154–171 m² · 4 Pièces', detail: '2 résidences' },
+  { id: 'villas', label: 'Villas', sub: 'Duplex · Piscine privée', detail: '4 villas' },
+]
+
 export default function Asteria() {
   const heroRef = useRef<HTMLDivElement>(null)
   const isMobile = useIsMobile()
@@ -226,6 +225,8 @@ export default function Asteria() {
   const [villa, setVilla] = useState(0)
   const [villaLevel, setVillaLevel] = useState(0)
   const [doc, setDoc] = useState<any>(null)
+  const [activeType, setActiveType] = useState<string>('f3')
+
   useEffect(() => { fetchAsteria().then((d) => d && setDoc(d)) }, [])
 
   const settings = useSiteSettings()
@@ -237,14 +238,12 @@ export default function Asteria() {
   const heroSubtitle = doc?.heroSubtitle || 'Luxury Living'
   const heroImgSrc = img(doc?.heroImage, 2000) || '/images/asteria/building-hero.jpg'
 
-  const introText = (doc?.introText?.[0]?.children?.map((c: any) => c.text).join('') as string) || ''
-  const introTextAccent = (doc?.introText?.[1]?.children?.map((c: any) => c.text).join('') as string) || ''
   const introStats = doc?.stats?.length
     ? doc.stats.map((s: any) => ({ n: s.number, l: s.label }))
     : [
         { n: '12', l: 'Étages signature' },
-        { n: 'F3', l: 'Résidences 103–110 m²' },
-        { n: '∞', l: 'Piscines et cascades' },
+        { n: 'F3·F4', l: 'Résidences 103–171 m²' },
+        { n: '4', l: 'Villas avec piscine' },
         { n: '24/7', l: 'Conciergerie privée' },
       ]
 
@@ -252,43 +251,30 @@ export default function Asteria() {
   const ctaLabel = doc?.ctaLabel || ''
   const ctaLink = doc?.ctaLink || '/#contact'
 
-  /* ── Villa gallery: CMS items or static fallback ── */
-  type GalleryItem = { type: 'photo' | 'video'; src: string; alt?: string; poster?: string }
-  const STATIC_GALLERY: GalleryItem[] = [
-    { type: 'photo', src: '/images/asteria/villa-photo-01.png', alt: 'Hall entrée avec escalier et aquarium' },
-    { type: 'photo', src: '/images/asteria/villa-photo-02.png', alt: 'Vue sur le sol vitré et piscine' },
-    { type: 'photo', src: '/images/asteria/villa-photo-03.png', alt: 'Grand séjour plafond étoilé' },
-    { type: 'video', src: '/videos/villa-clip-01.mp4', poster: '/images/asteria/villa-photo-01.png' },
-    { type: 'photo', src: '/images/asteria/villa-photo-04.png', alt: 'Salon avec aquarium mural' },
-    { type: 'photo', src: '/images/asteria/villa-photo-05.png', alt: 'Terrasse-piscine de nuit' },
-    { type: 'photo', src: '/images/asteria/villa-photo-06.png', alt: 'Vue aérienne des deux niveaux' },
-    { type: 'photo', src: '/images/asteria/villa-photo-07.png', alt: 'Suite parentale avec jacuzzi et skylight' },
-    { type: 'video', src: '/videos/villa-clip-02.mp4', poster: '/images/asteria/villa-photo-07.png' },
-    { type: 'photo', src: '/images/asteria/villa-photo-08.png', alt: 'Suite parentale vue large' },
-    { type: 'photo', src: '/images/asteria/villa-photo-09.png', alt: 'Cuisine et salle à manger étoilée' },
-    { type: 'photo', src: '/images/asteria/villa-photo-10.png', alt: 'Home cinéma' },
-    { type: 'video', src: '/videos/villa-clip-03.mp4', poster: '/images/asteria/villa-photo-10.png' },
-    { type: 'photo', src: '/images/asteria/villa-photo-11.png', alt: 'Home cinéma Dune' },
-    { type: 'photo', src: '/images/asteria/villa-photo-12.png', alt: 'Ascenseur privé et aquarium lobby' },
-    { type: 'photo', src: '/images/asteria/villa-photo-13.png', alt: 'Piscine privée au coucher du soleil' },
-    { type: 'photo', src: '/images/asteria/villa-photo-14.png', alt: 'Passerelle piscine à débordement' },
-    { type: 'video', src: '/videos/villa-clip-04.mp4', poster: '/images/asteria/villa-photo-13.png' },
-    { type: 'photo', src: '/images/asteria/villa-photo-15.png', alt: 'Cuisine outdoor et salle de sport' },
-    { type: 'photo', src: '/images/asteria/villa-photo-16.png', alt: 'Cuisine ouverte vue piscine coucher soleil' },
-  ]
-  const galleryItems: GalleryItem[] = doc?.villaGallery?.length
-    ? doc.villaGallery
-        .map((item: any): GalleryItem | null => {
-          if (item.mediaType === 'video') {
-            if (!item.videoUrl) return null
-            return { type: 'video', src: item.videoUrl, poster: item.poster?.asset ? img(item.poster, 800) : undefined }
-          }
-          const src = img(item.image)
-          if (!src) return null
-          return { type: 'photo', src, alt: item.alt || '' }
+  /* Smooth scroll to a section, accounting for sticky header + type bar */
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const offset = 84 + 72 // header height + type selector bar height
+    const top = el.getBoundingClientRect().top + window.scrollY - offset
+    window.scrollTo({ top, behavior: 'smooth' })
+    setActiveType(id)
+  }
+
+  /* Highlight active type on scroll via IntersectionObserver */
+  useEffect(() => {
+    const sections = TYPE_ITEMS.map((t) => document.getElementById(t.id)).filter(Boolean) as HTMLElement[]
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveType(entry.target.id)
         })
-        .filter(Boolean) as GalleryItem[]
-    : STATIC_GALLERY
+      },
+      { rootMargin: '-30% 0px -60% 0px' }
+    )
+    sections.forEach((s) => obs.observe(s))
+    return () => obs.disconnect()
+  }, [])
 
   return (
     <motion.div
@@ -308,7 +294,6 @@ export default function Asteria() {
           breadcrumbLd([{ name: 'Accueil', path: '/' }, { name: 'Nos Projets', path: '/projets' }, { name: 'ASTERIA', path: '/projets/asteria' }]),
         ]}
       />
-      {/* ── MINIMAL NAV ── */}
       <Header />
 
       {/* ── HERO ── */}
@@ -372,7 +357,6 @@ export default function Asteria() {
           </motion.p>
         </motion.div>
 
-        {/* Scroll hint */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -384,52 +368,6 @@ export default function Asteria() {
         </motion.div>
       </div>
 
-      {/* ── MANIFESTO + STATS ── */}
-      <section style={{ maxWidth: 1100, margin: '0 auto', padding: 'clamp(80px, 14vw, 180px) clamp(24px, 5vw, 64px)', textAlign: 'center' }}>
-        <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontStyle: 'italic', fontSize: 'clamp(24px, 4vw, 52px)', lineHeight: 1.4, color: 'var(--text)', margin: 0, fontWeight: 400 }}>
-          <WordReveal
-            segments={
-              introText || introTextAccent
-                ? [
-                    introText ? { t: introText } : null,
-                    introTextAccent ? { t: ' ' + introTextAccent, accent: true } : null,
-                  ].filter(Boolean) as { t: string; accent?: boolean }[]
-                : [
-                    { t: 'Une architecture sculptée par la lumière, où chaque balcon ondule comme une vague et chaque cascade murmure le luxe.' },
-                    { t: " ASTERIA n'est pas une adresse, c'est une signature.", accent: true },
-                  ]
-            }
-          />
-        </p>
-
-        <Reveal delay={0.15}>
-          <div style={{ marginTop: 'clamp(60px, 8vw, 100px)' }}>
-            <StatMarquee items={introStats} speed={36} numberSize="clamp(40px, 6vw, 72px)" />
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ── ARCHITECTURE FEATURE ── */}
-      <section style={{ padding: 'clamp(40px, 8vw, 100px) clamp(24px, 5vw, 64px)' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center' }} className="ast-split">
-          <Reveal>
-            <Eyebrow>L'Architecture</Eyebrow>
-            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 28px', letterSpacing: '-0.01em' }}>
-              Des courbes<br /><span style={{ color: TEAL }}>vivantes</span>
-            </h2>
-            <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 480 }}>
-              La façade d'ASTERIA défie la ligne droite. Ses balcons ondulants, baignés de
-              lumière dorée, encadrent des cascades suspendues et des bassins infinis. Une
-              prouesse d'ingénierie où l'eau, le verre et la végétation composent un paysage
-              vertical inédit en Algérie.
-            </p>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <ParallaxImage src="/images/asteria/building-front.jpg" alt="Façade ondulante d'ASTERIA" aspect="3/4" />
-          </Reveal>
-        </div>
-      </section>
-
       {/* ── SIGNATURE FEATURES — kinetic band ── */}
       <div style={{ padding: 'clamp(24px, 4vw, 44px) 0', borderTop: '1px solid rgba(var(--line-rgb),0.06)', borderBottom: '1px solid rgba(var(--line-rgb),0.06)' }}>
         <Marquee
@@ -439,157 +377,73 @@ export default function Asteria() {
         />
       </div>
 
-      {/* ── RÉSIDENCES GALLERY ── */}
-      <section style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-          <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(48px, 7vw, 90px)' }}>
-              <Eyebrow color={GOLD}>Les Résidences</Eyebrow>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(32px, 5vw, 68px)', fontWeight: 400, margin: 0, letterSpacing: '-0.01em' }}>
-                Intérieurs d'exception
-              </h2>
-            </div>
-          </Reveal>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 32px)' }} className="ast-gallery">
-            <Reveal>
-              <figure style={{ margin: 0 }}>
-                <ParallaxImage src="/images/asteria/living-1.jpg" alt="Séjour avec plafond étoilé" aspect="3/4" />
-                <figcaption style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.45)', marginTop: 16 }}>Séjour — Plafond étoilé</figcaption>
-              </figure>
-            </Reveal>
-            <Reveal delay={0.12}>
-              <figure style={{ margin: 0, marginTop: 'clamp(0px, 8vw, 90px)' }}>
-                <ParallaxImage src="/images/asteria/bedroom-1.jpg" alt="Chambre principale" aspect="3/4" />
-                <figcaption style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.45)', marginTop: 16 }}>Chambre principale</figcaption>
-              </figure>
-            </Reveal>
-          </div>
-
-          <Reveal delay={0.1}>
-            <div style={{ marginTop: 'clamp(16px, 2.5vw, 32px)' }}>
-              <ParallaxImage src="/images/asteria/living-3.jpg" alt="Espace de vie ouvert" aspect="16/9" range={10} />
-            </div>
-          </Reveal>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 32px)', marginTop: 'clamp(16px, 2.5vw, 32px)' }} className="ast-gallery">
-            <Reveal>
-              <ParallaxImage src="/images/asteria/bathroom-1.jpg" alt="Salle de bain en marbre" aspect="4/3" range={10} />
-            </Reveal>
-            <Reveal delay={0.12}>
-              <ParallaxImage src="/images/asteria/bedroom-2.jpg" alt="Suite avec vue" aspect="4/3" range={10} />
-            </Reveal>
-          </div>
+      {/* ── TYPE SELECTOR — sticky bar ── */}
+      <div
+        style={{
+          position: 'sticky', top: 83, zIndex: 90,
+          background: 'rgba(var(--header-rgb),0.96)',
+          backdropFilter: 'blur(20px) saturate(140%)',
+          borderBottom: '1px solid rgba(var(--line-rgb),0.08)',
+        }}
+      >
+        <div style={{ maxWidth: 860, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
+          {TYPE_ITEMS.map((item) => {
+            const active = activeType === item.id
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                style={{
+                  padding: 'clamp(14px,2vw,22px) 16px',
+                  background: 'transparent',
+                  border: 'none',
+                  borderBottom: `2px solid ${active ? TEAL : 'transparent'}`,
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  transition: 'border-color 0.3s ease',
+                }}
+              >
+                <span style={{
+                  display: 'block',
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: 'clamp(16px, 2vw, 24px)',
+                  fontWeight: 700,
+                  letterSpacing: '0.05em',
+                  color: active ? TEAL : 'var(--text)',
+                  transition: 'color 0.3s ease',
+                }}>
+                  {item.label}
+                </span>
+                <span style={{
+                  display: 'block',
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: 10,
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(var(--text-rgb),0.4)',
+                  marginTop: 4,
+                }}>
+                  {item.sub}
+                </span>
+              </button>
+            )
+          })}
         </div>
-      </section>
+      </div>
 
-      {/* ── TERRASSES — full-bleed ── */}
-      <section style={{ position: 'relative', padding: 'clamp(80px, 12vw, 160px) clamp(24px, 5vw, 64px)' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center' }} className="ast-split">
-          <Reveal>
-            <ParallaxImage src="/images/asteria/balcony-1.jpg" alt="Terrasse avec piscine privée au coucher du soleil" aspect="3/4" />
-          </Reveal>
-          <Reveal delay={0.15}>
-            <Eyebrow>Les Terrasses</Eyebrow>
-            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 28px' }}>
-              Le ciel,<br /><span style={{ color: GOLD }}>pour jardin</span>
-            </h2>
-            <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 480 }}>
-              Chaque résidence supérieure s'ouvre sur une terrasse privative dotée de sa propre
-              piscine à débordement. Un salon en plein air suspendu au-dessus de la ville, où le
-              coucher de soleil devient un rituel quotidien.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── ESPACES COMMUNS ── */}
-      <section style={{ padding: 'clamp(40px, 8vw, 100px) clamp(24px, 5vw, 64px)' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-          <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 72px)' }}>
-              <Eyebrow color={TEAL}>Espaces Communs</Eyebrow>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 5vw, 64px)', fontWeight: 400, margin: 0 }}>
-                Un art de recevoir
-              </h2>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <ParallaxImage src="/images/asteria/common-pool.jpg" alt="Piscine intérieure sous plafond étoilé" aspect="16/9" range={8} />
-          </Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 32px)', marginTop: 'clamp(16px, 2.5vw, 32px)' }} className="ast-gallery">
-            <Reveal>
-              <ParallaxImage src="/images/asteria/common-1.jpg" alt="Hall de réception" aspect="4/3" range={10} />
-            </Reveal>
-            <Reveal delay={0.12}>
-              <ParallaxImage src="/images/asteria/common-2.jpg" alt="Lounge résidents" aspect="4/3" range={10} />
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ── LE QUARTIER ── */}
-      <section style={{ position: 'relative', padding: 'clamp(70px, 11vw, 150px) clamp(24px, 5vw, 64px)', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '20%', left: '-10%', width: '45%', height: '60%', background: `radial-gradient(ellipse, ${TEAL}0a 0%, transparent 70%)`, pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1300, margin: '0 auto', position: 'relative' }}>
-          <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(48px, 7vw, 80px)' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 14, marginBottom: 22 }}>
-                <div style={{ width: 38, height: 1, background: TEAL }} />
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase', color: TEAL }}>Le Quartier</span>
-                <div style={{ width: 38, height: 1, background: TEAL }} />
-              </div>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 5vw, 64px)', fontWeight: 400, margin: '0 auto', maxWidth: 820, lineHeight: 1.12 }}>
-                Une adresse au cœur<br /><span style={{ color: GOLD }}>de tout</span>
-              </h2>
-            </div>
-          </Reveal>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px, 6vw, 100px)', alignItems: 'center' }} className="ast-quartier">
-            {/* Map */}
-            <Reveal>
-              <QuartierMap />
-            </Reveal>
-
-            {/* Narrative + proximity list */}
-            <Reveal delay={0.15}>
-              <div>
-                <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', margin: '0 0 36px', maxWidth: 480 }}>
-                  Située au cœur d'El Achour, ASTERIA vous place au centre d'un quartier où tout est à
-                  portée de quelques minutes. Établissements scolaires, commerces, cliniques, restaurants
-                  et principaux axes de la capitale composent un cadre de vie aussi pratique que privilégié.
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'rgba(var(--line-rgb),0.07)', border: '1px solid rgba(var(--line-rgb),0.07)', borderRadius: 6, overflow: 'hidden' }} className="ast-poi-grid">
-                  {POIS.map((p, i) => (
-                    <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: 'clamp(16px, 1.6vw, 22px)', background: 'var(--bg)', gridColumn: i === POIS.length - 1 && POIS.length % 2 !== 0 ? '1 / -1' : undefined }}>
-                      <span style={{ color: TEAL, flexShrink: 0 }}>{p.icon}</span>
-                      <div style={{ minWidth: 0 }}>
-                        <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13.5, color: 'var(--text)', lineHeight: 1.3 }}>{p.label}</div>
-                        <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: GOLD, marginTop: 3 }}>{p.time}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ── FLOOR PLANS ── */}
-      <section style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', background: 'var(--bg-2)', borderTop: '1px solid rgba(var(--line-rgb),0.04)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)' }}>
+      {/* ── F3 FLOOR PLANS ── */}
+      <section id="f3" style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', background: 'var(--bg-2)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)' }}>
         <div style={{ maxWidth: 1300, margin: '0 auto' }}>
           <Reveal>
             <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 56px)' }}>
-              <Eyebrow color={GOLD}>Les Résidences</Eyebrow>
+              <Eyebrow color={GOLD}>Les Résidences F3</Eyebrow>
               <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 5vw, 64px)', fontWeight: 400, margin: 0 }}>
-                Choisissez votre adresse
+                Choisissez votre F3
               </h2>
             </div>
           </Reveal>
 
           <Reveal delay={0.1}>
-            {/* Unit selector */}
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 'clamp(36px, 4vw, 56px)' }}>
               {PLANS.map((p, i) => (
                 <button
@@ -609,7 +463,6 @@ export default function Asteria() {
               ))}
             </div>
 
-            {/* Explorer: plan + specs */}
             <motion.div
               key={plan}
               initial={{ opacity: 0, y: 16 }}
@@ -618,19 +471,15 @@ export default function Asteria() {
               style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center', maxWidth: 1180, margin: '0 auto' }}
               className="ast-residences"
             >
-              {/* Plan image */}
               <div style={{ padding: 'clamp(16px, 3vw, 40px)', background: '#fff', borderRadius: 4 }}>
                 <img src={PLANS[plan].img} alt={`Plan ${PLANS[plan].ref} — F3 ${PLANS[plan].surface} m²`} style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
-
-              {/* Spec panel */}
               <div>
                 <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD }}>Résidence {PLANS[plan].ref}</span>
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(38px, 5vw, 60px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1, margin: '10px 0 4px' }}>
                   {PLANS[plan].surface} <span style={{ fontSize: '0.45em', fontWeight: 400, color: 'rgba(var(--text-rgb),0.6)' }}>m²</span>
                 </div>
                 <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.04em' }}>{PLANS[plan].pieces} · {PLANS[plan].exposition}</span>
-
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px 24px', margin: 'clamp(26px, 3vw, 36px) 0', paddingTop: 'clamp(22px, 3vw, 30px)', borderTop: '1px solid rgba(var(--line-rgb),0.08)' }}>
                   <Spec icon={<Maximize size={17} />} label="Surface habitable" value={`${PLANS[plan].surface} m²`} />
                   <Spec icon={<BedDouble size={17} />} label="Chambres" value={String(PLANS[plan].chambres)} />
@@ -639,12 +488,10 @@ export default function Asteria() {
                   <Spec icon={<Building2 size={17} />} label="Étage" value={PLANS[plan].etage} />
                   <Spec icon={<Compass size={17} />} label="Orientation" value={PLANS[plan].orientation} />
                 </div>
-
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
                   <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.45)' }}>Prix</span>
                   <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 16, color: 'var(--text)' }}>Sur demande</span>
                 </div>
-
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
                   <a
                     href={waResidence(whatsapp, PLANS[plan].ref, PLANS[plan].surface)}
@@ -671,9 +518,8 @@ export default function Asteria() {
       </section>
 
       {/* ── F4 SECTION ── */}
-      <section style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', borderTop: '1px solid rgba(var(--line-rgb),0.04)' }}>
+      <section id="f4" style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', borderTop: '1px solid rgba(var(--line-rgb),0.04)' }}>
         <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-          {/* F4 intro — balcony render + text */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center', marginBottom: 'clamp(60px, 8vw, 100px)' }} className="ast-split">
             <Reveal>
               <ParallaxImage src="/images/asteria/balcony-f4.png" alt="Terrasse F4 avec vue panoramique" aspect="4/3" />
@@ -691,7 +537,6 @@ export default function Asteria() {
             </Reveal>
           </div>
 
-          {/* F4 plan selector + explorer */}
           <Reveal delay={0.1}>
             <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 48px)' }}>
               <Eyebrow color={TEAL}>Les Résidences F4</Eyebrow>
@@ -772,7 +617,7 @@ export default function Asteria() {
       </section>
 
       {/* ── VILLAS ── */}
-      <section style={{ background: 'var(--bg-2)', borderTop: '1px solid rgba(var(--line-rgb),0.04)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)' }}>
+      <section id="villas" style={{ background: 'var(--bg-2)', borderTop: '1px solid rgba(var(--line-rgb),0.04)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)' }}>
 
         {/* Hero intro: exterior render + text */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 520 }} className="ast-split">
@@ -806,59 +651,9 @@ export default function Asteria() {
           </Reveal>
         </div>
 
-        {/* ── VILLA GALLERY — photos + video clips ── */}
-        <div style={{ background: '#06080a', padding: 'clamp(48px, 6vw, 80px) clamp(16px, 3vw, 40px)' }}>
-          <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-            <Reveal>
-              <div style={{ textAlign: 'center', marginBottom: 'clamp(28px, 4vw, 48px)' }}>
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL }}>Intérieurs d'exception</span>
-                <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(22px, 3vw, 38px)', fontWeight: 400, color: '#f3f4f1', margin: '10px 0 0' }}>
-                  Chaque détail raconte le luxe
-                </h3>
-              </div>
-            </Reveal>
-
-            {/* Masonry-style grid: 4 columns, videos interspersed */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-80px' }}
-              variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
-              style={{ lineHeight: 0 }}
-              className="villa-gallery-grid"
-            >
-              {galleryItems.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } } }}
-                  style={{ display: 'inline-block', width: '100%', marginBottom: 10, breakInside: 'avoid', overflow: 'hidden', borderRadius: 2, position: 'relative', background: '#111' }}
-                >
-                  {item.type === 'photo' ? (
-                    <img
-                      src={item.src} alt={item.alt}
-                      loading="lazy"
-                      decoding="async"
-                      style={{ width: '100%', height: 'auto', display: 'block', transition: 'transform 0.55s ease', cursor: 'zoom-in' }}
-                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.05)' }}
-                      onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-                    />
-                  ) : (
-                    <LazyVideo
-                      src={item.src}
-                      poster={item.poster}
-                      style={{ width: '100%', display: 'block', aspectRatio: '9/16', objectFit: 'cover' }}
-                    />
-                  )}
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-
         {/* Villa selector + level plans */}
         <div style={{ padding: 'clamp(48px, 7vw, 96px) clamp(24px, 5vw, 64px)', maxWidth: 1300, margin: '0 auto' }}>
           <Reveal>
-            {/* Villa tabs */}
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 10, marginBottom: 'clamp(36px, 4vw, 52px)' }}>
               {VILLAS_PLANS.map((v, i) => (
                 <button
@@ -878,7 +673,6 @@ export default function Asteria() {
               ))}
             </div>
 
-            {/* Level tabs for the selected villa */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: 0, marginBottom: 'clamp(28px, 3vw, 40px)', borderBottom: '1px solid rgba(var(--line-rgb),0.1)' }}>
               {VILLAS_PLANS[villa].levels.map((lv, li) => (
                 <button
@@ -898,7 +692,6 @@ export default function Asteria() {
               ))}
             </div>
 
-            {/* Plan image + specs */}
             <motion.div
               key={`villa-${villa}-${villaLevel}`}
               initial={{ opacity: 0, y: 14 }}
@@ -907,7 +700,6 @@ export default function Asteria() {
               style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center', maxWidth: 1180, margin: '0 auto' }}
               className="ast-residences"
             >
-              {/* Floor plan image */}
               <div style={{ padding: 'clamp(16px, 3vw, 36px)', background: '#fff', borderRadius: 4, boxShadow: '0 4px 32px rgba(0,0,0,0.08)' }}>
                 <img
                   src={VILLAS_PLANS[villa].levels[villaLevel].img}
@@ -915,8 +707,6 @@ export default function Asteria() {
                   style={{ width: '100%', height: 'auto', display: 'block' }}
                 />
               </div>
-
-              {/* Specs */}
               <div>
                 <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL }}>
                   Villa {VILLAS_PLANS[villa].ref} · {VILLAS_PLANS[villa].levels[villaLevel].label}
@@ -927,7 +717,6 @@ export default function Asteria() {
                 <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, color: 'rgba(var(--text-rgb),0.5)', fontStyle: 'italic' }}>
                   {VILLAS_PLANS[villa].levels[villaLevel].sub}
                 </span>
-
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 20px', margin: 'clamp(22px, 3vw, 32px) 0', paddingTop: 'clamp(20px, 2.5vw, 28px)', borderTop: '1px solid rgba(var(--line-rgb),0.08)' }}>
                   <Spec icon={<BedDouble size={17} />} label="Chambres" value={String(VILLAS_PLANS[villa].chambres)} />
                   <Spec icon={<Bath size={17} />} label="Salles de bain" value={String(VILLAS_PLANS[villa].sdb)} />
@@ -936,7 +725,6 @@ export default function Asteria() {
                   <Spec icon={<Building2 size={17} />} label="Niveaux" value="8 · 9 · Terrasse" />
                   <Spec icon={<Maximize size={17} />} label="Surface et prix" value="Sur demande" />
                 </div>
-
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
                   <a
                     href={waVilla(whatsapp, VILLAS_PLANS[villa].ref)}
@@ -962,6 +750,97 @@ export default function Asteria() {
         </div>
       </section>
 
+      {/* ── ARCHITECTURE FEATURE ── */}
+      <section style={{ padding: 'clamp(40px, 8vw, 100px) clamp(24px, 5vw, 64px)' }}>
+        <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center' }} className="ast-split">
+          <Reveal>
+            <Eyebrow>L'Architecture</Eyebrow>
+            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 28px', letterSpacing: '-0.01em' }}>
+              Des courbes<br /><span style={{ color: TEAL }}>vivantes</span>
+            </h2>
+            <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 480 }}>
+              La façade d'ASTERIA défie la ligne droite. Ses balcons ondulants, baignés de
+              lumière dorée, encadrent des cascades suspendues et des bassins infinis. Une
+              prouesse d'ingénierie où l'eau, le verre et la végétation composent un paysage
+              vertical inédit en Algérie.
+            </p>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <ParallaxImage src="/images/asteria/building-front.jpg" alt="Façade ondulante d'ASTERIA" aspect="3/4" />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── ESPACES COMMUNS ── */}
+      <section style={{ padding: 'clamp(40px, 8vw, 100px) clamp(24px, 5vw, 64px)' }}>
+        <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+          <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 72px)' }}>
+              <Eyebrow color={TEAL}>Espaces Communs</Eyebrow>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 5vw, 64px)', fontWeight: 400, margin: 0 }}>
+                Un art de recevoir
+              </h2>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <ParallaxImage src="/images/asteria/common-pool.jpg" alt="Piscine intérieure sous plafond étoilé" aspect="16/9" range={8} />
+          </Reveal>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 32px)', marginTop: 'clamp(16px, 2.5vw, 32px)' }} className="ast-gallery">
+            <Reveal>
+              <ParallaxImage src="/images/asteria/common-1.jpg" alt="Hall de réception" aspect="4/3" range={10} />
+            </Reveal>
+            <Reveal delay={0.12}>
+              <ParallaxImage src="/images/asteria/common-2.jpg" alt="Lounge résidents" aspect="4/3" range={10} />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── LE QUARTIER ── */}
+      <section style={{ position: 'relative', padding: 'clamp(70px, 11vw, 150px) clamp(24px, 5vw, 64px)', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '20%', left: '-10%', width: '45%', height: '60%', background: `radial-gradient(ellipse, ${TEAL}0a 0%, transparent 70%)`, pointerEvents: 'none' }} />
+        <div style={{ maxWidth: 1300, margin: '0 auto', position: 'relative' }}>
+          <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(48px, 7vw, 80px)' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 14, marginBottom: 22 }}>
+                <div style={{ width: 38, height: 1, background: TEAL }} />
+                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase', color: TEAL }}>Le Quartier</span>
+                <div style={{ width: 38, height: 1, background: TEAL }} />
+              </div>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 5vw, 64px)', fontWeight: 400, margin: '0 auto', maxWidth: 820, lineHeight: 1.12 }}>
+                Une adresse au cœur<br /><span style={{ color: GOLD }}>de tout</span>
+              </h2>
+            </div>
+          </Reveal>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px, 6vw, 100px)', alignItems: 'center' }} className="ast-quartier">
+            <Reveal>
+              <QuartierMap />
+            </Reveal>
+            <Reveal delay={0.15}>
+              <div>
+                <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', margin: '0 0 36px', maxWidth: 480 }}>
+                  Située au cœur d'El Achour, ASTERIA vous place au centre d'un quartier où tout est à
+                  portée de quelques minutes. Établissements scolaires, commerces, cliniques, restaurants
+                  et principaux axes de la capitale composent un cadre de vie aussi pratique que privilégié.
+                </p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', background: 'rgba(var(--line-rgb),0.07)', border: '1px solid rgba(var(--line-rgb),0.07)', borderRadius: 6, overflow: 'hidden' }} className="ast-poi-grid">
+                  {POIS.map((p, i) => (
+                    <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: 'clamp(16px, 1.6vw, 22px)', background: 'var(--bg)', gridColumn: i === POIS.length - 1 && POIS.length % 2 !== 0 ? '1 / -1' : undefined }}>
+                      <span style={{ color: TEAL, flexShrink: 0 }}>{p.icon}</span>
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13.5, color: 'var(--text)', lineHeight: 1.3 }}>{p.label}</div>
+                        <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: GOLD, marginTop: 3 }}>{p.time}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA ── */}
       <section className="force-dark" style={{ position: 'relative', height: '70vh', minHeight: 460, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <img src="/images/asteria/building-detail.jpg" alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -980,7 +859,6 @@ export default function Asteria() {
         </Reveal>
       </section>
 
-      {/* ── FOOTER ── */}
       <SiteFooter />
 
       <style>{`
