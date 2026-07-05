@@ -15,9 +15,13 @@ function statusColor(s: string) {
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>()
   const [project, setProject] = useState<Project | undefined>(() => getProject(slug))
+  // Projects that only exist in Sanity (not in the static fallback) start with
+  // `project` undefined — only redirect once fetchProject() confirms the slug
+  // truly doesn't exist anywhere, not before the CMS fetch has had a chance to resolve.
+  const [notFound, setNotFound] = useState(false)
   useEffect(() => {
-    if (!slug) return
-    fetchProject(slug).then((p) => p && setProject(p))
+    if (!slug) { setNotFound(true); return }
+    fetchProject(slug).then((p) => (p ? setProject(p) : setNotFound(true)))
   }, [slug])
 
   const heroRef = useRef<HTMLDivElement>(null)
@@ -27,7 +31,7 @@ export default function ProjectDetail() {
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '24%'])
   const heroTextY = useTransform(scrollYProgress, [0, 1], ['0%', '55%'])
 
-  if (!project) return <Navigate to="/projets" replace />
+  if (!project) return notFound ? <Navigate to="/projets" replace /> : null
 
   return (
     <motion.div
