@@ -11,7 +11,7 @@ import Article from './pages/Article'
 import Univers from './pages/Univers'
 import ContactPage from './pages/Contact'
 import NotFound from './pages/NotFound'
-import { ScrollProgress, BackToTop } from './components/custom/lux'
+import { BackToTop } from './components/custom/lux'
 
 function ScrollManager() {
   const { pathname, hash } = useLocation()
@@ -41,7 +41,6 @@ export default function App() {
     <MotionConfig reducedMotion="user">
       {/* Film-grain overlay — physical paper texture (editorial-luxury) */}
       <div className="noise-overlay" aria-hidden="true" />
-      <ScrollProgress />
       <BackToTop />
       <ScrollManager />
       <AnimatePresence mode="wait">

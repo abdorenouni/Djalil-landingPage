@@ -105,13 +105,23 @@ export default function Header() {
           height: isScrolled ? 70 : 84,
           padding: '0 clamp(24px, 5vw, 80px)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          // Always a frosted themed bar — identical structure on every page.
+          transition: 'height 0.45s ease',
+          willChange: 'transform, opacity',
+        }}
+      >
+        {/* Frosted background layer — kept separate from the header's own
+            opacity/transform animation. Animating opacity directly on a
+            backdrop-filter element is a known Chromium compositing bug: it
+            can leave a stale blurred rectangle ("ghost box") behind until a
+            repaint is forced. This layer never animates opacity, so it can't. */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: -1,
           background: isScrolled ? 'rgba(var(--header-rgb),0.85)' : 'rgba(var(--header-rgb),0.6)',
           backdropFilter: 'blur(22px) saturate(140%)',
           borderBottom: `1px solid ${isScrolled ? 'rgba(43,189,176,0.18)' : 'rgba(var(--line-rgb),0.08)'}`,
-          transition: 'height 0.45s ease, background 0.45s ease, border-color 0.45s ease',
-        }}
-      >
+          transition: 'background 0.45s ease, border-color 0.45s ease',
+        }} />
+
         {/* ── LOGO + back button ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexShrink: 0, zIndex: 1001 }}>
           <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
