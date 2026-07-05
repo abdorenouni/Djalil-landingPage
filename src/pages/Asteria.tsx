@@ -377,12 +377,14 @@ export default function Asteria() {
         />
       </div>
 
-      {/* ── TYPE SELECTOR — sticky bar ── */}
+      {/* ── TYPE SELECTOR — sticky bar ──
+          No backdrop-filter: Chromium tiles blur() compositing on wide
+          fixed/sticky elements, showing a visible seam. Solid-ish
+          background gives the same effect without the artifact. */}
       <div
         style={{
           position: 'sticky', top: 83, zIndex: 90,
-          background: 'rgba(var(--header-rgb),0.96)',
-          backdropFilter: 'blur(20px) saturate(140%)',
+          background: 'rgba(var(--header-rgb),0.98)',
           borderBottom: '1px solid rgba(var(--line-rgb),0.08)',
         }}
       >

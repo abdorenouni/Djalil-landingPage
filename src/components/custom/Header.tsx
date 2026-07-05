@@ -109,15 +109,14 @@ export default function Header() {
           willChange: 'transform, opacity',
         }}
       >
-        {/* Frosted background layer — kept separate from the header's own
-            opacity/transform animation. Animating opacity directly on a
-            backdrop-filter element is a known Chromium compositing bug: it
-            can leave a stale blurred rectangle ("ghost box") behind until a
-            repaint is forced. This layer never animates opacity, so it can't. */}
+        {/* Background layer — no backdrop-filter. Chromium tiles blur()
+            compositing on wide fixed elements, which shows up as a visible
+            vertical seam partway across the bar (independent of animation).
+            A near-solid background gives the same frosted look without a
+            blur layer to tile. */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: -1,
-          background: isScrolled ? 'rgba(var(--header-rgb),0.85)' : 'rgba(var(--header-rgb),0.6)',
-          backdropFilter: 'blur(22px) saturate(140%)',
+          background: isScrolled ? 'rgba(var(--header-rgb),0.97)' : 'rgba(var(--header-rgb),0.92)',
           borderBottom: `1px solid ${isScrolled ? 'rgba(43,189,176,0.18)' : 'rgba(var(--line-rgb),0.08)'}`,
           transition: 'background 0.45s ease, border-color 0.45s ease',
         }} />
