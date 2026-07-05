@@ -5,4 +5,5 @@ export default defineCliConfig({
     projectId: '4ovc1jum',
     dataset: 'production',
   },
+  studioHost: 'elite-promotion',
 })
