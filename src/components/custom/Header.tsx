@@ -32,11 +32,15 @@ export default function Header() {
   }
 
   const settings = useSiteSettings()
-  const whatsapp = settings?.whatsapp || FALLBACK_WHATSAPP
-  const phone = settings?.phone || FALLBACK_PHONE
-  const instagram = settings?.instagram || FALLBACK_INSTAGRAM
+  // Once settings has loaded, an empty CMS field means the client intentionally
+  // cleared it — respect that instead of silently falling back to a hardcoded
+  // value. The fallback only applies before the fetch resolves (settings === null).
+  const loaded = settings !== null
+  const whatsapp = loaded ? settings.whatsapp : FALLBACK_WHATSAPP
+  const phone = loaded ? settings.phone : FALLBACK_PHONE
+  const instagram = loaded ? settings.instagram : FALLBACK_INSTAGRAM
   const cleanWa = (n: string) => { const d = n.replace(/\D/g, ''); return (d.startsWith('0') && d.length === 10) ? '213' + d.slice(1) : d }
-  const waLink = `https://wa.me/${cleanWa(whatsapp)}?text=${encodeURIComponent('Bonjour Elite, je suis intéressé par ASTERIA.')}`
+  const waLink = `https://wa.me/${cleanWa(whatsapp || '')}?text=${encodeURIComponent('Bonjour Elite, je suis intéressé par ASTERIA.')}`
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 60)
@@ -268,30 +272,34 @@ export default function Header() {
               style={{ position: 'relative', padding: '0 clamp(24px, 7vw, 48px) clamp(32px, 6vh, 56px)', display: 'flex', flexDirection: 'column', gap: 16 }}
             >
               {/* WhatsApp CTA — prominent */}
-              <a
-                href={waLink}
-                target="_blank" rel="noopener noreferrer"
-                className="emo-wa"
-                style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 18px', background: 'rgba(43,189,176,0.1)', border: '1px solid rgba(43,189,176,0.25)', borderRadius: 10, textDecoration: 'none', transition: 'border-color 0.3s ease, background 0.3s ease' }}
-              >
-                <span style={{ width: 40, height: 40, flexShrink: 0, borderRadius: '50%', background: '#2bbdb0', color: '#04211e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><MessageCircle size={18} /></span>
-                <span style={{ flex: 1 }}>
-                  <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 600, color: 'var(--text)', letterSpacing: '0.02em' }}>Discuter sur WhatsApp</span>
-                  <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, color: 'rgba(var(--text-rgb),0.45)', marginTop: 2 }}>Réponse en quelques minutes</span>
-                </span>
-                <ArrowUpRight size={16} color="rgba(43,189,176,0.6)" />
-              </a>
+              {whatsapp && (
+                <a
+                  href={waLink}
+                  target="_blank" rel="noopener noreferrer"
+                  className="emo-wa"
+                  style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 18px', background: 'rgba(43,189,176,0.1)', border: '1px solid rgba(43,189,176,0.25)', borderRadius: 10, textDecoration: 'none', transition: 'border-color 0.3s ease, background 0.3s ease' }}
+                >
+                  <span style={{ width: 40, height: 40, flexShrink: 0, borderRadius: '50%', background: '#2bbdb0', color: '#04211e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><MessageCircle size={18} /></span>
+                  <span style={{ flex: 1 }}>
+                    <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, fontWeight: 600, color: 'var(--text)', letterSpacing: '0.02em' }}>Discuter sur WhatsApp</span>
+                    <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, color: 'rgba(var(--text-rgb),0.45)', marginTop: 2 }}>Réponse en quelques minutes</span>
+                  </span>
+                  <ArrowUpRight size={16} color="rgba(43,189,176,0.6)" />
+                </a>
+              )}
 
               {/* Bottom row — phone + socials */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 4 }}>
-                <a href={`tel:${phone.replace(/\s/g, '')}`} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-                  <Phone size={14} color="rgba(43,189,176,0.5)" />
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, letterSpacing: '0.04em', color: 'rgba(var(--text-rgb),0.6)' }}>{phone}</span>
-                </a>
+                {phone && (
+                  <a href={`tel:${phone.replace(/\s/g, '')}`} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+                    <Phone size={14} color="rgba(43,189,176,0.5)" />
+                    <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, letterSpacing: '0.04em', color: 'rgba(var(--text-rgb),0.6)' }}>{phone}</span>
+                  </a>
+                )}
                 <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
                   <ThemeToggle />
-                  <a href={instagram} target="_blank" rel="noopener noreferrer" className="emo-social-icon" aria-label="Instagram"><Instagram size={18} /></a>
-                  <a href={`https://wa.me/${cleanWa(whatsapp)}`} target="_blank" rel="noopener noreferrer" className="emo-social-icon" aria-label="WhatsApp"><MessageCircle size={18} /></a>
+                  {instagram && <a href={instagram} target="_blank" rel="noopener noreferrer" className="emo-social-icon" aria-label="Instagram"><Instagram size={18} /></a>}
+                  {whatsapp && <a href={`https://wa.me/${cleanWa(whatsapp)}`} target="_blank" rel="noopener noreferrer" className="emo-social-icon" aria-label="WhatsApp"><MessageCircle size={18} /></a>}
                 </div>
               </div>
             </motion.div>

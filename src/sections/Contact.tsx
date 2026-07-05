@@ -48,18 +48,22 @@ function buildWhatsAppUrl(whatsapp: string, f: FormState): string {
 
 export default function Contact() {
   const settings = useSiteSettings()
-  const WHATSAPP = settings?.whatsapp || FALLBACK_WHATSAPP
-  const PHONE_1 = settings?.phone || FALLBACK_PHONE_1
-  const PHONE_2 = settings?.phone2 || FALLBACK_PHONE_2
-  const EMAIL = settings?.email || FALLBACK_EMAIL
-  const ADDRESS = settings?.address || FALLBACK_ADDRESS
-  const INSTAGRAM = settings?.instagram || FALLBACK_INSTAGRAM
+  // Once settings has loaded, an empty CMS field means the client intentionally
+  // cleared it — respect that instead of silently falling back to a hardcoded
+  // value. The fallback only applies before the fetch resolves (settings === null).
+  const loaded = settings !== null
+  const WHATSAPP = loaded ? settings.whatsapp : FALLBACK_WHATSAPP
+  const PHONE_1 = loaded ? settings.phone : FALLBACK_PHONE_1
+  const PHONE_2 = loaded ? settings.phone2 : FALLBACK_PHONE_2
+  const EMAIL = loaded ? settings.email : FALLBACK_EMAIL
+  const ADDRESS = loaded ? settings.address : FALLBACK_ADDRESS
+  const INSTAGRAM = loaded ? settings.instagram : FALLBACK_INSTAGRAM
 
   const [form, setForm] = useState<FormState>({ nom: '', telephone: '', email: '', sujet: 'Visite privée', message: '' })
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<Status>('idle')
   const sent = status === 'sent'
-  const waUrl = buildWhatsAppUrl(WHATSAPP, form)
+  const waUrl = buildWhatsAppUrl(WHATSAPP || '', form)
 
   const update = (k: keyof typeof form, v: string) => {
     setForm((f) => ({ ...f, [k]: v }))
@@ -168,35 +172,43 @@ export default function Contact() {
             {/* ── LEFT: channels ── */}
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.9, ease: EASE, delay: 0.1 }} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
               {/* Prominent WhatsApp — the fastest channel */}
-              <a
-                className="ct-whatsapp"
-                href={`https://wa.me/${cleanWaNumber(WHATSAPP)}?text=${encodeURIComponent('Bonjour Elite, je suis intéressé par ASTERIA.')}`}
-                target="_blank" rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: 16, padding: 'clamp(18px, 2vw, 24px)', background: `linear-gradient(120deg, ${TEAL}1c, ${TEAL}08)`, border: `1px solid ${TEAL}44`, borderRadius: 12, textDecoration: 'none', transition: 'transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease' }}
-              >
-                <span style={{ width: 50, height: 50, flexShrink: 0, borderRadius: '50%', background: TEAL, color: '#04211e', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 6px 20px ${TEAL}44` }}><MessageCircle size={22} /></span>
-                <span style={{ flex: 1 }}>
-                  <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 17, color: 'var(--text)' }}>Discuter sur WhatsApp</span>
-                  <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, color: 'rgba(var(--text-rgb),0.55)', marginTop: 3 }}>Réponse en quelques minutes</span>
-                </span>
-                <ArrowUpRight size={20} color={TEAL} />
-              </a>
+              {WHATSAPP && (
+                <a
+                  className="ct-whatsapp"
+                  href={`https://wa.me/${cleanWaNumber(WHATSAPP)}?text=${encodeURIComponent('Bonjour Elite, je suis intéressé par ASTERIA.')}`}
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'flex', alignItems: 'center', gap: 16, padding: 'clamp(18px, 2vw, 24px)', background: `linear-gradient(120deg, ${TEAL}1c, ${TEAL}08)`, border: `1px solid ${TEAL}44`, borderRadius: 12, textDecoration: 'none', transition: 'transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease' }}
+                >
+                  <span style={{ width: 50, height: 50, flexShrink: 0, borderRadius: '50%', background: TEAL, color: '#04211e', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 6px 20px ${TEAL}44` }}><MessageCircle size={22} /></span>
+                  <span style={{ flex: 1 }}>
+                    <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 17, color: 'var(--text)' }}>Discuter sur WhatsApp</span>
+                    <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, color: 'rgba(var(--text-rgb),0.55)', marginTop: 3 }}>Réponse en quelques minutes</span>
+                  </span>
+                  <ArrowUpRight size={20} color={TEAL} />
+                </a>
+              )}
 
-              <ContactRow icon={<Phone size={18} />} label="Téléphone">
-                <a href={`tel:${PHONE_1.replace(/\s/g, '')}`} style={infoLink}>{PHONE_1}</a>
-                <a href={`tel:${PHONE_2.replace(/\s/g, '')}`} style={infoLink}>{PHONE_2}</a>
-              </ContactRow>
+              {(PHONE_1 || PHONE_2) && (
+                <ContactRow icon={<Phone size={18} />} label="Téléphone">
+                  {PHONE_1 && <a href={`tel:${PHONE_1.replace(/\s/g, '')}`} style={infoLink}>{PHONE_1}</a>}
+                  {PHONE_2 && <a href={`tel:${PHONE_2.replace(/\s/g, '')}`} style={infoLink}>{PHONE_2}</a>}
+                </ContactRow>
+              )}
 
-              <ContactRow icon={<Mail size={18} />} label="Email">
-                <a href={`mailto:${EMAIL}`} style={infoLink}>{EMAIL}</a>
-              </ContactRow>
+              {EMAIL && (
+                <ContactRow icon={<Mail size={18} />} label="Email">
+                  <a href={`mailto:${EMAIL}`} style={infoLink}>{EMAIL}</a>
+                </ContactRow>
+              )}
 
-              <ContactRow icon={<MapPin size={18} />} label="Adresse">
-                <span style={{ ...infoLink, cursor: 'default' }}>{ADDRESS}</span>
-              </ContactRow>
+              {ADDRESS && (
+                <ContactRow icon={<MapPin size={18} />} label="Adresse">
+                  <span style={{ ...infoLink, cursor: 'default' }}>{ADDRESS}</span>
+                </ContactRow>
+              )}
 
               <div style={{ display: 'flex', gap: 14, marginTop: 'auto', paddingTop: 12 }}>
-                <SocialIcon href={INSTAGRAM} label="Instagram"><Instagram size={18} /></SocialIcon>
+                {INSTAGRAM && <SocialIcon href={INSTAGRAM} label="Instagram"><Instagram size={18} /></SocialIcon>}
                 <SocialIcon href="https://www.facebook.com/" label="Facebook"><Facebook size={18} /></SocialIcon>
               </div>
             </motion.div>

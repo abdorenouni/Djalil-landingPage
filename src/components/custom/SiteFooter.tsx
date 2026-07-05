@@ -23,9 +23,13 @@ const NAV = GLOBAL_NAV
 /** Shared luxury footer for interior pages. */
 export default function SiteFooter() {
   const settings = useSiteSettings()
-  const WHATSAPP = settings?.whatsapp || FALLBACK_WHATSAPP
-  const PHONE = settings?.phone || FALLBACK_PHONE
-  const INSTAGRAM = settings?.instagram || FALLBACK_INSTAGRAM
+  // Once settings has loaded, an empty CMS field means the client intentionally
+  // cleared it — respect that instead of silently falling back to a hardcoded
+  // value. The fallback only applies before the fetch resolves (settings === null).
+  const loaded = settings !== null
+  const WHATSAPP = loaded ? settings.whatsapp : FALLBACK_WHATSAPP
+  const PHONE = loaded ? settings.phone : FALLBACK_PHONE
+  const INSTAGRAM = loaded ? settings.instagram : FALLBACK_INSTAGRAM
   const BRAND = settings?.brandName || FALLBACK_BRAND
   const ADDRESS = settings?.address || FALLBACK_ADDRESS
   const TAGLINE = settings?.tagline || 'Une adresse qui reflète votre réussite.'
@@ -60,10 +64,10 @@ export default function SiteFooter() {
             <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: TEAL }}>Nous suivre</span>
             <div style={{ display: 'flex', gap: 14 }}>
               {[
-                { icon: <MessageCircle size={18} />, href: `https://wa.me/${(() => { const d = WHATSAPP.replace(/\D/g,''); return (d.startsWith('0')&&d.length===10)?'213'+d.slice(1):d })()}`, label: 'WhatsApp' },
-                { icon: <Instagram size={18} />, href: INSTAGRAM, label: 'Instagram' },
-                { icon: <Phone size={18} />, href: `tel:${PHONE.replace(/\s/g, '')}`, label: 'Téléphone' },
-              ].map((s) => (
+                WHATSAPP && { icon: <MessageCircle size={18} />, href: `https://wa.me/${(() => { const d = WHATSAPP.replace(/\D/g,''); return (d.startsWith('0')&&d.length===10)?'213'+d.slice(1):d })()}`, label: 'WhatsApp' },
+                INSTAGRAM && { icon: <Instagram size={18} />, href: INSTAGRAM, label: 'Instagram' },
+                PHONE && { icon: <Phone size={18} />, href: `tel:${PHONE.replace(/\s/g, '')}`, label: 'Téléphone' },
+              ].filter(Boolean).map((s: any) => (
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
                   style={{ width: 42, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(var(--line-rgb),0.12)', borderRadius: '50%', color: 'rgba(var(--text-rgb),0.65)', transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => { e.currentTarget.style.borderColor = TEAL; e.currentTarget.style.color = TEAL }}
@@ -73,7 +77,7 @@ export default function SiteFooter() {
                 </a>
               ))}
             </div>
-            <a href={`tel:${PHONE.replace(/\s/g, '')}`} style={{ ...footLink, fontSize: 13, letterSpacing: '0.06em', textTransform: 'none' }}>{PHONE}</a>
+            {PHONE && <a href={`tel:${PHONE.replace(/\s/g, '')}`} style={{ ...footLink, fontSize: 13, letterSpacing: '0.06em', textTransform: 'none' }}>{PHONE}</a>}
           </div>
         </div>
 
