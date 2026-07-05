@@ -218,22 +218,23 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   }
 
-  /* Scrollbar styling */
+  /* Scrollbar styling — subtle, theme-aware (was solid brand teal, which
+     visually collided with the header CTA at scroll position 0). */
   ::-webkit-scrollbar {
     width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--bg-2);
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2bbdb0;
+    background: rgba(var(--text-rgb), 0.16);
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #3fd3c6;
+    background: rgba(var(--text-rgb), 0.3);
   }
 
   /* Hero floating particles */
