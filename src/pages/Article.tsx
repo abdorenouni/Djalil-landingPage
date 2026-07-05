@@ -12,8 +12,16 @@ export default function Article() {
   const { slug } = useParams<{ slug: string }>()
   const [article, setArticle] = useState<ArticleType | undefined>(() => (slug ? getArticle(slug) : undefined))
   const [allArticles, setAllArticles] = useState<ArticleType[]>(ARTICLES)
+  // Articles that only exist in Sanity (not in the static fallback) start with
+  // `article` undefined — only redirect once fetchArticle() confirms the slug
+  // truly doesn't exist anywhere, not before the CMS fetch has had a chance to resolve.
+  const [notFound, setNotFound] = useState(false)
   useEffect(() => {
-    if (slug) fetchArticle(slug).then((a) => a && setArticle(a))
+    if (slug) {
+      fetchArticle(slug).then((a) => (a ? setArticle(a) : setNotFound(true)))
+    } else {
+      setNotFound(true)
+    }
     fetchArticles().then((list) => list?.length && setAllArticles(list))
   }, [slug])
 
@@ -23,7 +31,7 @@ export default function Article() {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.15])
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '22%'])
 
-  if (!article) return <Navigate to="/journal" replace />
+  if (!article) return notFound ? <Navigate to="/journal" replace /> : null
 
   const related = allArticles.filter((a) => a.slug !== article.slug).slice(0, 3)
 
