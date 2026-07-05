@@ -1,8 +1,20 @@
-import { getCliClient } from 'sanity/cli'
+import { createClient } from '@sanity/client'
 import { createReadStream } from 'fs'
 import path from 'path'
 
-const client = getCliClient({ apiVersion: '2024-01-01' })
+const token = process.env.SANITY_AUTH_TOKEN
+if (!token) {
+  console.error('Set SANITY_AUTH_TOKEN before running this script.')
+  process.exit(1)
+}
+
+const client = createClient({
+  projectId: '4ovc1jum',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  token,
+  useCdn: false,
+})
 const publicDir = path.resolve(__dirname, '..', 'public')
 
 const imageCache: Record<string, any> = {}
