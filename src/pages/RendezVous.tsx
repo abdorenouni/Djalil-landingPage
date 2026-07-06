@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Check, Video } from 'lucide-react'
+import { Check, MessageCircle, Video } from 'lucide-react'
 import { BezelCard, TEAL, EASE } from '@/components/custom/lux'
 import Header from '@/components/custom/Header'
 import SiteFooter from '@/components/custom/SiteFooter'
 import { Seo, breadcrumbLd } from '@/lib/seo'
+import { useSiteSettings } from '@/lib/useSiteSettings'
 
 /**
  * "Demander une réunion Zoom" — posts to the Laravel backend
@@ -17,15 +18,35 @@ type FormState = {
   full_name: string
   email: string
   phone: string
-  company: string
   preferred_date: string
   preferred_time: string
   message: string
 }
 
 const EMPTY: FormState = {
-  full_name: '', email: '', phone: '', company: '',
+  full_name: '', email: '', phone: '',
   preferred_date: '', preferred_time: '10:00', message: '',
+}
+
+const FALLBACK_WHATSAPP = '213779527948'
+
+const cleanWaNumber = (n: string) => {
+  const d = n.replace(/\D/g, '')
+  return (d.startsWith('0') && d.length === 10) ? '213' + d.slice(1) : d
+}
+
+/** Pre-filled WhatsApp message used when the backend is unreachable. */
+function buildWaUrl(whatsapp: string, f: FormState): string {
+  const lines = [
+    'Bonjour Elite Promotion, je souhaite planifier une réunion Zoom.',
+    '',
+    `Nom : ${f.full_name.trim()}`,
+    `Téléphone : ${f.phone.trim()}`,
+    `Email : ${f.email.trim()}`,
+    `Date souhaitée : ${f.preferred_date} à ${f.preferred_time}`,
+    f.message.trim() ? `Message : ${f.message.trim()}` : '',
+  ].filter(Boolean)
+  return `https://wa.me/${cleanWaNumber(whatsapp)}?text=${encodeURIComponent(lines.join('\n'))}`
 }
 
 const inputStyle: React.CSSProperties = {
@@ -44,38 +65,61 @@ const labelStyle: React.CSSProperties = {
 export default function RendezVous() {
   const [form, setForm] = useState<FormState>(EMPTY)
   const [errors, setErrors] = useState<Record<string, string[]>>({})
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'fallback'>('idle')
   const [reference, setReference] = useState('')
+
+  const settings = useSiteSettings()
+  const waUrl = buildWaUrl(settings?.whatsapp || FALLBACK_WHATSAPP, form)
 
   const update = (k: keyof FormState, v: string) => {
     setForm((f) => ({ ...f, [k]: v }))
     if (errors[k]) setErrors((e) => ({ ...e, [k]: [] }))
   }
 
+  /** Client-side required check so the WhatsApp fallback never fires on an empty form. */
+  const missingRequired = () => {
+    const missing: Record<string, string[]> = {}
+    if (!form.full_name.trim()) missing.full_name = ['Le nom est requis.']
+    if (!form.email.trim()) missing.email = ["L'email est requis."]
+    if (!form.phone.trim()) missing.phone = ['Le téléphone est requis.']
+    if (!form.preferred_date) missing.preferred_date = ['La date est requise.']
+    if (!form.preferred_time) missing.preferred_time = ["L'heure est requise."]
+    return missing
+  }
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (status === 'sending') return
+    const missing = missingRequired()
+    if (Object.keys(missing).length) { setErrors(missing); return }
     setStatus('sending')
     setErrors({})
     try {
       const res = await fetch(`${BACKEND}/api/meeting-requests`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ ...form, company: form.company || null, message: form.message || null }),
+        body: JSON.stringify({ ...form, message: form.message || null }),
       })
       const body = await res.json().catch(() => null)
       if (res.status === 201) {
         setReference(body?.reference || '')
         setStatus('sent')
-      } else if (res.status === 422) {
-        setErrors(body?.errors || {})
+      } else if (res.status === 422 && body?.errors) {
+        setErrors(body.errors)
         setStatus('idle')
       } else {
-        setStatus('error')
+        // Backend absent ou réponse inattendue (ex. SPA hébergée sans API) :
+        // on bascule sur WhatsApp pour que la demande aboutisse toujours.
+        openWhatsAppFallback()
       }
     } catch {
-      setStatus('error')
+      openWhatsAppFallback()
     }
+  }
+
+  const openWhatsAppFallback = () => {
+    window.open(waUrl, '_blank', 'noopener,noreferrer')
+    setStatus('fallback')
   }
 
   const err = (k: string) => errors[k]?.[0]
@@ -123,7 +167,33 @@ export default function RendezVous() {
         </motion.div>
 
         <BezelCard padding="clamp(26px, 4vw, 44px)">
-          {status === 'sent' ? (
+          {status === 'fallback' ? (
+            <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, ease: EASE }} style={{ textAlign: 'center', padding: 'clamp(20px, 4vw, 40px) 0' }}>
+              <motion.div initial={{ scale: 0, rotate: -30 }} animate={{ scale: 1, rotate: 0 }} transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1], delay: 0.1 }}
+                style={{ width: 72, height: 72, borderRadius: '50%', border: `1.5px solid ${TEAL}`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', color: TEAL, boxShadow: `0 0 30px ${TEAL}33` }}>
+                <MessageCircle size={30} />
+              </motion.div>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 26, fontWeight: 400, margin: '0 0 12px' }}>Finalisez sur WhatsApp</h2>
+              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 15, color: 'rgba(var(--text-rgb),0.6)', lineHeight: 1.7, maxWidth: 440, margin: '0 auto' }}>
+                WhatsApp s'est ouvert avec votre demande pré-remplie — il ne reste qu'à appuyer sur <strong style={{ color: 'var(--text)' }}>Envoyer</strong>.
+                Si rien ne s'est ouvert, utilisez le bouton ci-dessous.
+              </p>
+              <a
+                href={waUrl} target="_blank" rel="noopener noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginTop: 24, padding: '13px 30px', background: TEAL, color: '#04211e', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: 999, boxShadow: `0 10px 34px ${TEAL}30` }}
+              >
+                <MessageCircle size={16} /> Ouvrir WhatsApp
+              </a>
+              <div>
+                <button
+                  onClick={() => setStatus('idle')}
+                  style={{ marginTop: 20, background: 'none', border: 'none', color: 'rgba(var(--text-rgb),0.45)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', cursor: 'pointer' }}
+                >
+                  Revenir au formulaire
+                </button>
+              </div>
+            </motion.div>
+          ) : status === 'sent' ? (
             <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, ease: EASE }} style={{ textAlign: 'center', padding: 'clamp(20px, 4vw, 40px) 0' }}>
               <motion.div initial={{ scale: 0, rotate: -30 }} animate={{ scale: 1, rotate: 0 }} transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1], delay: 0.1 }}
                 style={{ width: 72, height: 72, borderRadius: '50%', border: `1.5px solid ${TEAL}`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', color: TEAL, boxShadow: `0 0 30px ${TEAL}33` }}>
@@ -147,7 +217,6 @@ export default function RendezVous() {
                   {field('email', 'Email *', { type: 'email', placeholder: 'vous@email.com', autoComplete: 'email', required: true })}
                   {field('phone', 'Téléphone *', { type: 'tel', placeholder: '+213 ...', autoComplete: 'tel', required: true })}
                 </div>
-                {field('company', 'Société', { placeholder: 'Optionnel', autoComplete: 'organization' })}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }} className="rv-row">
                   {field('preferred_date', 'Date souhaitée *', { type: 'date', required: true, min: new Date().toISOString().slice(0, 10) })}
                   {field('preferred_time', 'Heure souhaitée *', { type: 'time', required: true })}
@@ -162,12 +231,6 @@ export default function RendezVous() {
                     onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(var(--line-rgb),0.12)' }}
                   />
                 </div>
-
-                {status === 'error' && (
-                  <div role="alert" style={{ padding: '12px 16px', borderRadius: 8, border: '1px solid rgba(224,106,106,0.4)', background: 'rgba(224,106,106,0.08)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, color: '#e9a4a4' }}>
-                    L'envoi a échoué. Vérifiez votre connexion et réessayez.
-                  </div>
-                )}
 
                 <button
                   type="submit" disabled={status === 'sending'} className="magnetic-cta is-solid"
