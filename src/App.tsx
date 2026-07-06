@@ -10,6 +10,7 @@ import Journal from './pages/Journal'
 import Article from './pages/Article'
 import Univers from './pages/Univers'
 import ContactPage from './pages/Contact'
+import RendezVous from './pages/RendezVous'
 import NotFound from './pages/NotFound'
 import { BackToTop } from './components/custom/lux'
 
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/journal/:slug" element={<Article />} />
           <Route path="/univers/:slug" element={<Univers />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/rendez-vous" element={<RendezVous />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AnimatePresence>
