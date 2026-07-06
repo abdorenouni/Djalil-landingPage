@@ -15,6 +15,7 @@ export const GLOBAL_NAV: GlobalNavItem[] = [
   { label: 'À Propos', to: '/a-propos' },
   { label: 'Projets', to: '/projets' },
   { label: 'Le Journal', to: '/journal' },
+  { label: 'Rendez-vous', to: '/rendez-vous' },
   { label: 'Contact', to: '/contact' },
 ]
 
