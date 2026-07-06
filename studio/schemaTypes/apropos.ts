@@ -18,7 +18,11 @@ export default defineType({
     defineField({ name: 'heroEyebrow', title: 'Éyebrow', type: 'string', group: 'hero', initialValue: 'À Propos' }),
     defineField({ name: 'heroTitle', title: 'Titre (1 mot par ligne)', type: 'array', of: [{ type: 'string' }], group: 'hero' }),
     defineField({ name: 'heroSubtitle', title: 'Sous-titre', type: 'string', group: 'hero' }),
-    defineField({ name: 'heroImage', title: 'Image', type: 'image', group: 'hero' }),
+    defineField({
+      name: 'heroImage', title: 'Image', type: 'image', group: 'hero',
+      description: "Grande image plein écran en haut de la page À Propos. Si elle est vide, le site affiche une image par défaut (façade ASTERIA).",
+      validation: (r) => r.required().warning("Sans image, la page utilise l'image par défaut du site."),
+    }),
     defineField({ name: 'marqueeKeywords', title: 'Mots-clés (marquee)', type: 'array', of: [{ type: 'string' }], group: 'hero' }),
 
     // ── STORY ──
