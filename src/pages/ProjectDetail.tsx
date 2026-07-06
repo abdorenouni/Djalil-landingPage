@@ -92,22 +92,27 @@ export default function ProjectDetail() {
       )}
 
       {/* ── MANIFESTO ── */}
-      <section style={{ maxWidth: 1000, margin: '0 auto', padding: 'clamp(80px, 13vw, 170px) clamp(24px, 5vw, 64px)', textAlign: 'center' }}>
-        <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontStyle: 'italic', fontSize: 'clamp(22px, 3.6vw, 46px)', lineHeight: 1.42, color: 'var(--text)', margin: 0, fontWeight: 400 }}>
-          <WordReveal segments={[{ t: project.description[0] }]} />
-        </p>
-      </section>
+      {project.description.length > 0 && (
+        <section style={{ maxWidth: 1000, margin: '0 auto', padding: 'clamp(80px, 13vw, 170px) clamp(24px, 5vw, 64px)', textAlign: 'center' }}>
+          <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontStyle: 'italic', fontSize: 'clamp(22px, 3.6vw, 46px)', lineHeight: 1.42, color: 'var(--text)', margin: 0, fontWeight: 400 }}>
+            <WordReveal segments={[{ t: project.description[0] }]} />
+          </p>
+        </section>
+      )}
 
-      {/* ── STAT MARQUEE ── */}
-      <div style={{ padding: 'clamp(20px, 4vw, 44px) 0', borderTop: '1px solid rgba(var(--line-rgb),0.06)', borderBottom: '1px solid rgba(var(--line-rgb),0.06)' }}>
-        <StatMarquee items={project.stats} speed={38} numberSize="clamp(38px, 5.5vw, 68px)" />
-      </div>
+      {/* ── STAT MARQUEE — only when the CMS provides stats ── */}
+      {project.stats.length > 0 && (
+        <div style={{ padding: 'clamp(20px, 4vw, 44px) 0', borderTop: '1px solid rgba(var(--line-rgb),0.06)', borderBottom: '1px solid rgba(var(--line-rgb),0.06)' }}>
+          <StatMarquee items={project.stats} speed={38} numberSize="clamp(38px, 5.5vw, 68px)" />
+        </div>
+      )}
 
       {/* ── NARRATIVE + first image ── */}
       <section style={{ padding: 'clamp(70px, 11vw, 150px) clamp(24px, 5vw, 64px)' }}>
         <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center' }} className="pd-split">
           <Reveal>
-            <ParallaxImage src={project.gallery[0]} alt={`${project.name} — vue`} aspect="4/5" />
+            {/* Falls back to the cover when the CMS gallery is empty. */}
+            <ParallaxImage src={project.gallery[0] ?? project.cover} alt={`${project.name} — vue`} aspect="4/5" />
           </Reveal>
           <Reveal delay={0.15}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
@@ -126,25 +131,27 @@ export default function ProjectDetail() {
         </div>
       </section>
 
-      {/* ── GALLERY ── */}
-      <section style={{ padding: 'clamp(20px, 4vw, 60px) clamp(24px, 5vw, 64px) clamp(70px, 11vw, 150px)' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-          <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 72px)' }}>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 4.5vw, 56px)', fontWeight: 400, margin: 0 }}>La Galerie</h2>
+      {/* ── GALLERY — only when the CMS provides more than the lead image ── */}
+      {project.gallery.length > 1 && (
+        <section style={{ padding: 'clamp(20px, 4vw, 60px) clamp(24px, 5vw, 64px) clamp(70px, 11vw, 150px)' }}>
+          <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+            <Reveal>
+              <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 72px)' }}>
+                <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 4.5vw, 56px)', fontWeight: 400, margin: 0 }}>La Galerie</h2>
+              </div>
+            </Reveal>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 32px)' }} className="pd-gallery">
+              {project.gallery.slice(1).map((src, i) => (
+                <Reveal key={src} delay={(i % 2) * 0.1}>
+                  <figure style={{ margin: 0, marginTop: i % 2 === 1 ? 'clamp(0px, 6vw, 70px)' : 0 }}>
+                    <ParallaxImage src={src} alt={`${project.name} — galerie ${i + 1}`} aspect={i % 3 === 2 ? '4/3' : '3/4'} range={12} />
+                  </figure>
+                </Reveal>
+              ))}
             </div>
-          </Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 32px)' }} className="pd-gallery">
-            {project.gallery.slice(1).map((src, i) => (
-              <Reveal key={src} delay={(i % 2) * 0.1}>
-                <figure style={{ margin: 0, marginTop: i % 2 === 1 ? 'clamp(0px, 6vw, 70px)' : 0 }}>
-                  <ParallaxImage src={src} alt={`${project.name} — galerie ${i + 1}`} aspect={i % 3 === 2 ? '4/3' : '3/4'} range={12} />
-                </figure>
-              </Reveal>
-            ))}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── CTA ── */}
       <section style={{ position: 'relative', minHeight: 440, height: '60dvh', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
