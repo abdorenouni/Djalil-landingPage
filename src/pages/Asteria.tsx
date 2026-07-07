@@ -77,32 +77,32 @@ const VILLAS_PLANS = [
   {
     ref: 'V-01', pieces: 'Villa · Duplex', chambres: 4, sdb: 3, piscine: 'Piscine privée 36 m²', exposition: 'Plein sud',
     levels: [
-      { label: 'Niveau 8', sub: 'Séjour · Cuisine · Piscine', img: '/images/asteria/plan-villa-1-n8.png' },
-      { label: 'Niveau 9', sub: 'Chambres · Dressing · Hammam', img: '/images/asteria/plan-villa-1-n9.png' },
+      { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Piscine', img: '/images/asteria/plan-villa-1-n8.png' },
+      { label: 'Niveau 9 · Nuit', sub: 'Chambres · Dressing · Hammam', img: '/images/asteria/plan-villa-1-n9.png' },
       { label: 'Terrasse', sub: 'Toit-terrasse · Piscine · Jardin', img: '/images/asteria/plan-villa-1-terrasse.png' },
     ],
   },
   {
     ref: 'V-02', pieces: 'Villa · Duplex', chambres: 4, sdb: 3, piscine: 'Piscine privée 15 m²', exposition: 'Plein ouest',
     levels: [
-      { label: 'Niveau 8', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-2-n8.jpg' },
-      { label: 'Niveau 9', sub: 'Chambres · Dressing · Home Cinéma', img: '/images/asteria/plan-villa-2-n9.png' },
+      { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-2-n8.jpg' },
+      { label: 'Niveau 9 · Nuit', sub: 'Chambres · Dressing · Home Cinéma', img: '/images/asteria/plan-villa-2-n9.png' },
       { label: 'Terrasse', sub: 'Toit-terrasse · Piscine · Sport', img: '/images/asteria/plan-villa-2-terrasse.png' },
     ],
   },
   {
     ref: 'V-03', pieces: 'Villa · Duplex', chambres: 4, sdb: 3, piscine: 'Piscine privée panoramique', exposition: 'Multi-exposition',
     levels: [
-      { label: 'Niveau 8', sub: 'Séjour · Cuisine · Cheminée', img: '/images/asteria/plan-villa-3-n8.png' },
-      { label: 'Niveau 9', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-3-n9.png' },
+      { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Cheminée', img: '/images/asteria/plan-villa-3-n8.png' },
+      { label: 'Niveau 9 · Nuit', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-3-n9.png' },
       { label: 'Terrasse', sub: 'Toit-terrasse · Piscine · Sport', img: '/images/asteria/plan-villa-3-terrasse.png' },
     ],
   },
   {
     ref: 'V-04', pieces: 'Villa · Duplex', chambres: 4, sdb: 3, piscine: "Piscine privée Baie d'Alger", exposition: 'Angle premium',
     levels: [
-      { label: 'Niveau 8', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-4-n8.png' },
-      { label: 'Niveau 9', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-4-n9.png' },
+      { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-4-n8.png' },
+      { label: 'Niveau 9 · Nuit', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-4-n9.png' },
       { label: 'Terrasse', sub: 'Toit-terrasse · Piscine · Sport', img: '/images/asteria/plan-villa-4-terrasse.png' },
     ],
   },
