@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, type ReactNode } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-router'
-import { Waves, Plane, GraduationCap, ShoppingBag, Stethoscope, Maximize, BedDouble, Bath, Building2, Compass, Sun, MessageCircle, TreePine, Landmark } from 'lucide-react'
+import { Plane, GraduationCap, ShoppingBag, Stethoscope, Building2, MessageCircle, TreePine, Landmark } from 'lucide-react'
 import Header from '@/components/custom/Header'
 import SiteFooter from '@/components/custom/SiteFooter'
 import { MagneticCTA, Marquee, useIsMobile } from '@/components/custom/lux'
@@ -129,19 +129,6 @@ const POIS = [
   { icon: <Landmark size={18} />, label: 'Monument des Martyrs', time: '18 min', x: 14, y: 36 },
   { icon: <Plane size={18} />, label: 'Aéroport Int. Houari Boumediene', time: '25 min', x: 48, y: 88 },
 ]
-
-/* Single spec row in the residence explorer. */
-function Spec({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-      <span style={{ color: TEAL, flexShrink: 0, marginTop: 2 }}>{icon}</span>
-      <div style={{ minWidth: 0 }}>
-        <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 10.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.45)' }}>{label}</div>
-        <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14.5, color: 'var(--text)', marginTop: 3, lineHeight: 1.35 }}>{value}</div>
-      </div>
-    </div>
-  )
-}
 
 /* Bespoke radial "location" graphic */
 function QuartierMap() {
@@ -485,23 +472,7 @@ export default function Asteria() {
               </div>
               <div>
                 <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD }}>Résidence {f3Units[plan].ref}</span>
-                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(38px, 5vw, 60px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1, margin: '10px 0 4px' }}>
-                  {f3Units[plan].surface} <span style={{ fontSize: '0.45em', fontWeight: 400, color: 'rgba(var(--text-rgb),0.6)' }}>m²</span>
-                </div>
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.04em' }}>{f3Units[plan].pieces} · {f3Units[plan].exposition}</span>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px 24px', margin: 'clamp(26px, 3vw, 36px) 0', paddingTop: 'clamp(22px, 3vw, 30px)', borderTop: '1px solid rgba(var(--line-rgb),0.08)' }}>
-                  <Spec icon={<Maximize size={17} />} label="Surface habitable" value={`${f3Units[plan].surface} m²`} />
-                  <Spec icon={<BedDouble size={17} />} label="Chambres" value={String(f3Units[plan].chambres)} />
-                  <Spec icon={<Bath size={17} />} label="Salles de bain" value={String(f3Units[plan].sdb)} />
-                  <Spec icon={<Sun size={17} />} label="Terrasse privative" value={f3Units[plan].terrasse} />
-                  <Spec icon={<Building2 size={17} />} label="Étage" value={f3Units[plan].etage} />
-                  <Spec icon={<Compass size={17} />} label="Orientation" value={f3Units[plan].orientation} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.45)' }}>Prix</span>
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 16, color: 'var(--text)' }}>Sur demande</span>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 'clamp(20px, 2.5vw, 28px)' }}>
                   <a
                     href={waResidence(whatsapp, f3Units[plan].ref, f3Units[plan].surface)}
                     target="_blank" rel="noopener noreferrer"
@@ -584,23 +555,7 @@ export default function Asteria() {
               </div>
               <div>
                 <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL }}>Résidence {f4Units[planF4].ref}</span>
-                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(38px, 5vw, 60px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1, margin: '10px 0 4px' }}>
-                  {f4Units[planF4].surface} <span style={{ fontSize: '0.45em', fontWeight: 400, color: 'rgba(var(--text-rgb),0.6)' }}>m²</span>
-                </div>
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14, color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.04em' }}>{f4Units[planF4].pieces} · {f4Units[planF4].exposition}</span>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '18px 24px', margin: 'clamp(26px, 3vw, 36px) 0', paddingTop: 'clamp(22px, 3vw, 30px)', borderTop: '1px solid rgba(var(--line-rgb),0.08)' }}>
-                  <Spec icon={<Maximize size={17} />} label="Surface habitable" value={`${f4Units[planF4].surface} m²`} />
-                  <Spec icon={<BedDouble size={17} />} label="Chambres" value={String(f4Units[planF4].chambres)} />
-                  <Spec icon={<Bath size={17} />} label="Salles de bain" value={String(f4Units[planF4].sdb)} />
-                  <Spec icon={<Sun size={17} />} label="Terrasse privative" value={f4Units[planF4].terrasse} />
-                  <Spec icon={<Building2 size={17} />} label="Étage" value={f4Units[planF4].etage} />
-                  <Spec icon={<Compass size={17} />} label="Orientation" value={f4Units[planF4].orientation} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.45)' }}>Prix</span>
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 16, color: 'var(--text)' }}>Sur demande</span>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 'clamp(20px, 2.5vw, 28px)' }}>
                   <a
                     href={waResidenceF4(whatsapp, f4Units[planF4].ref, f4Units[planF4].surface)}
                     target="_blank" rel="noopener noreferrer"
@@ -720,21 +675,11 @@ export default function Asteria() {
                 <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL }}>
                   Villa {villasList[villa].ref} · {villasList[villa].levels[villaLevel].label}
                 </span>
-                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(22px, 2.8vw, 36px)', fontWeight: 700, color: 'var(--text)', lineHeight: 1.1, margin: '10px 0 6px' }}>
-                  {villasList[villa].pieces}
-                </div>
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, color: 'rgba(var(--text-rgb),0.5)', fontStyle: 'italic' }}>
+                {/* Caption of the selected floor plan — tied to the level tabs. */}
+                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, color: 'rgba(var(--text-rgb),0.5)', fontStyle: 'italic', marginTop: 10 }}>
                   {villasList[villa].levels[villaLevel].sub}
-                </span>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 20px', margin: 'clamp(22px, 3vw, 32px) 0', paddingTop: 'clamp(20px, 2.5vw, 28px)', borderTop: '1px solid rgba(var(--line-rgb),0.08)' }}>
-                  <Spec icon={<BedDouble size={17} />} label="Chambres" value={String(villasList[villa].chambres)} />
-                  <Spec icon={<Bath size={17} />} label="Salles de bain" value={String(villasList[villa].sdb)} />
-                  <Spec icon={<Waves size={17} />} label="Piscine privée" value={villasList[villa].piscine} />
-                  <Spec icon={<Sun size={17} />} label="Exposition" value={villasList[villa].exposition} />
-                  <Spec icon={<Building2 size={17} />} label="Niveaux" value="8 · 9 · Terrasse" />
-                  <Spec icon={<Maximize size={17} />} label="Surface et prix" value="Sur demande" />
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 'clamp(20px, 2.5vw, 28px)' }}>
                   <a
                     href={waVilla(whatsapp, villasList[villa].ref)}
                     target="_blank" rel="noopener noreferrer"
