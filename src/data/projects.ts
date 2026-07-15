@@ -31,7 +31,7 @@ export const PROJECTS: Project[] = [
     location: 'Alger',
     year: '2025',
     status: 'En cours',
-    cover: '/images/asteria/building-hero.jpg',
+    cover: '/images/asteria/asteria-hero.png',
     gallery: [
       '/images/asteria/building-front.jpg',
       '/images/asteria/living-1.jpg',

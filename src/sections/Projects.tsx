@@ -17,7 +17,7 @@ interface ProjectCard {
 
 /* Teaser mix — each card links to its own project detail page */
 const projects: ProjectCard[] = [
-  { id: 1, title: 'ASTERIA', location: 'Alger', image: '/images/asteria/building-hero.jpg', year: '2025', featured: true, to: '/projets/asteria' },
+  { id: 1, title: 'ASTERIA', location: 'Alger', image: '/images/asteria/asteria-hero.png', year: '2025', featured: true, to: '/projets/asteria' },
   { id: 2, title: 'MAGNOLIA', location: 'Oran', image: '/images/carousel-2.jpg', year: '2026', to: '/projets/magnolia' },
   { id: 3, title: 'ASTERIA · Les Terrasses', location: 'Alger', image: '/images/asteria/balcony-1.jpg', year: '2025', to: '/projets/asteria' },
   { id: 4, title: 'MAGNOLIA · Les Jardins', location: 'Oran', image: '/images/carousel-1.jpg', year: '2026', to: '/projets/magnolia' },
