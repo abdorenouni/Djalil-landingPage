@@ -672,14 +672,7 @@ export default function Asteria() {
                 />
               </div>
               <div>
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL }}>
-                  Villa {villasList[villa].ref} · {villasList[villa].levels[villaLevel].label}
-                </span>
-                {/* Caption of the selected floor plan — tied to the level tabs. */}
-                <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 13, color: 'rgba(var(--text-rgb),0.5)', fontStyle: 'italic', marginTop: 10 }}>
-                  {villasList[villa].levels[villaLevel].sub}
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 'clamp(20px, 2.5vw, 28px)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
                   <a
                     href={waVilla(whatsapp, villasList[villa].ref)}
                     target="_blank" rel="noopener noreferrer"
