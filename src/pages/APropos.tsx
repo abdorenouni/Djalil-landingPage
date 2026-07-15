@@ -82,7 +82,8 @@ export default function APropos() {
   const heroImg = img(ap?.heroImage, 2000) || FALLBACK_HERO_IMG
   const heroEyebrow = ap?.heroEyebrow || FALLBACK_HERO_EYEBROW
   const heroWords: string[] = (ap?.heroTitle?.length ? ap.heroTitle : FALLBACK_HERO_WORDS) as string[]
-  const heroSub = ap?.heroSubtitle || FALLBACK_HERO_SUB
+  const rawHeroSub = ap?.heroSubtitle || FALLBACK_HERO_SUB
+  const heroSub = rawHeroSub.toLowerCase() === 'immobilière' ? '' : rawHeroSub
   const keywords: string[] = ap?.marqueeKeywords?.length ? ap.marqueeKeywords : FALLBACK_KEYWORDS
   const storyText = ap?.storyText || FALLBACK_STORY
 
@@ -151,10 +152,12 @@ export default function APropos() {
             ))}
           </h1>
 
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.85 }} transition={{ duration: 1.2, delay: 1 }}
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(14px, 1.7vw, 20px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.8)', margin: '18px 0 0' }}>
-            {heroSub}
-          </motion.p>
+          {heroSub && (
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 0.85 }} transition={{ duration: 1.2, delay: 1 }}
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(14px, 1.7vw, 20px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.8)', margin: '18px 0 0' }}>
+              {heroSub}
+            </motion.p>
+          )}
         </motion.div>
 
         {/* scroll cue */}
