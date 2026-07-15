@@ -189,9 +189,22 @@ export default function APropos() {
             <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 4.2vw, 56px)', fontWeight: 400, lineHeight: 1.12, margin: '0 0 26px' }}>
               {mission.title1}<br /><span style={{ color: TEAL }}>{mission.title2}</span>
             </h2>
-            {mission.paras.map((p: string, i: number) => (
-              <p key={i} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: i === 0 ? 'rgba(var(--text-rgb),0.65)' : 'rgba(var(--text-rgb),0.5)', marginBottom: i === 0 ? 20 : 0, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>{p}</p>
-            ))}
+            {mission.paras.map((p: string, i: number) => {
+              if (p.includes("Avec ASTERIA, nous signons une première :")) {
+                const parts = p.split("Avec ASTERIA, nous signons une première :")
+                return (
+                  <p key={i} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.5)', marginBottom: 0, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>
+                    Avec ASTERIA, nous signons une première :
+                    <span style={{ display: 'block', marginTop: '6px' }}>
+                      {parts[1].trim()}
+                    </span>
+                  </p>
+                )
+              }
+              return (
+                <p key={i} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: i === 0 ? 'rgba(var(--text-rgb),0.65)' : 'rgba(var(--text-rgb),0.5)', marginBottom: i === 0 ? 20 : 0, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>{p}</p>
+              )
+            })}
           </Reveal>
         </div>
       </section>
