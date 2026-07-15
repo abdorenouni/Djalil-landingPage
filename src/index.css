@@ -279,8 +279,12 @@
 }
 
 /* Hero section responsive height and video alignment */
-.hero-container {
+.hero-sticky-wrap {
   height: 100dvh;
+}
+
+.hero-section {
+  height: 100%;
 }
 
 .hero-video {
@@ -289,8 +293,9 @@
 }
 
 @media (max-width: 768px) {
-  .hero-container {
+  .hero-sticky-wrap {
     height: 55dvh; /* Reduces zoom effect on mobile by showing more video width */
+    margin-top: 84px; /* Align hero container below the mobile header */
   }
   .hero-video {
     object-position: center; /* Can adjust x/y centering if needed */

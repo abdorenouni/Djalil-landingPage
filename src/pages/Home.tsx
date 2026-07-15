@@ -34,7 +34,7 @@ export default function Home() {
       */}
       <div style={{ position: 'relative' }}>
         {/* Sticky hero — stays pinned at top while content scrolls over */}
-        <div className="hero-container" style={{ position: 'sticky', top: 0, zIndex: 0 }}>
+        <div className="hero-sticky-wrap" style={{ position: 'sticky', top: 0, zIndex: 0 }}>
           <Hero />
         </div>
 
