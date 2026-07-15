@@ -736,14 +736,28 @@ export default function Asteria() {
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <ParallaxImage src="/images/asteria/common-pool.jpg" alt="Piscine intérieure sous plafond étoilé" aspect="16/9" range={8} />
+            <div>
+              <ParallaxImage src="/images/asteria/common-pool.jpg" alt="Piscine intérieure sous plafond étoilé" aspect="16/9" range={8} />
+              <p style={{
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontSize: 'clamp(13px, 1.1vw, 16px)',
+                lineHeight: 1.6,
+                color: 'rgba(var(--text-rgb),0.6)',
+                marginTop: 18,
+                textAlign: 'center',
+                maxWidth: 800,
+                margin: '18px auto 0'
+              }}>
+                Une piscine intérieure d'exception sous un plafond constellé d'étoiles.
+              </p>
+            </div>
           </Reveal>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(20px, 3.5vw, 40px)', marginTop: 'clamp(20px, 3.5vw, 40px)' }} className="ast-gallery">
             <Reveal>
               <div>
-                <ParallaxImage src="/images/asteria/common-2.png" alt="Façade majestueuse" aspect="4/3" range={10} />
+                <ParallaxImage src="/images/asteria/cinema.jpeg" alt="Cinéma privé" aspect="4/3" range={10} />
                 <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(13px, 1vw, 15px)', lineHeight: 1.6, color: 'rgba(var(--text-rgb),0.6)', marginTop: 16, textAlign: 'center' }}>
-                  L'enveloppe architecturale d'ASTERIA fusionnant nature et cascades suspendues.
+                  Une salle de cinéma privée offrant une expérience immersive exclusive.
                 </p>
               </div>
             </Reveal>
