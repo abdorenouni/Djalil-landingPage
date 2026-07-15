@@ -28,7 +28,7 @@ const EMPTY: FormState = {
   preferred_date: '', preferred_time: '10:00', message: '',
 }
 
-const FALLBACK_WHATSAPP = '213779527948'
+const FALLBACK_WHATSAPP = '213550363604'
 
 const cleanWaNumber = (n: string) => {
   const d = n.replace(/\D/g, '')
@@ -144,10 +144,10 @@ export default function RendezVous() {
       style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100vh', overflowX: 'hidden' }}
     >
       <Seo
-        title="Réunion Zoom"
+        title="Meeting And Zoom"
         description="Planifiez une réunion Zoom avec l'équipe Elite Promotion Immobilière : choisissez votre créneau, un conseiller vous confirme le rendez-vous."
         path="/rendez-vous"
-        jsonLd={breadcrumbLd([{ name: 'Accueil', path: '/' }, { name: 'Réunion Zoom', path: '/rendez-vous' }])}
+        jsonLd={breadcrumbLd([{ name: 'Accueil', path: '/' }, { name: 'Meeting And Zoom', path: '/rendez-vous' }])}
       />
       <Header />
 
@@ -155,7 +155,7 @@ export default function RendezVous() {
         <motion.div initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: EASE, delay: 0.15 }} style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 56px)' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 14, marginBottom: 22 }}>
             <div style={{ width: 38, height: 1, background: TEAL }} />
-            <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase', color: TEAL }}>Réunion Zoom</span>
+            <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase', color: TEAL }}>Meeting And Zoom</span>
             <div style={{ width: 38, height: 1, background: TEAL }} />
           </div>
           <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(32px, 6vw, 64px)', fontWeight: 700, margin: 0, lineHeight: 1.05 }}>

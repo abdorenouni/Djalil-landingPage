@@ -7,8 +7,8 @@ import { useSiteSettings } from '@/lib/useSiteSettings'
 import ThemeToggle from '@/components/custom/ThemeToggle'
 import Logo from '@/components/custom/Logo'
 
-const FALLBACK_WHATSAPP = '213779527948'
-const FALLBACK_PHONE = '+213 779 52 79 48'
+const FALLBACK_WHATSAPP = '213550363604'
+const FALLBACK_PHONE = '0550 36 36 04'
 const FALLBACK_INSTAGRAM = 'https://instagram.com/elite_reallestate'
 
 export default function Header() {
