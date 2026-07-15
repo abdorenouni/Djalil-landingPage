@@ -12,7 +12,7 @@ export type Block =
 
 export interface Article {
   slug: string
-  category: 'Architecture' | 'Art de vivre' | 'Marché' | 'ASTERIA'
+  category: 'Architecture' | 'Art de vivre' | 'Investissement'
   title: string
   excerpt: string
   cover: string
@@ -26,7 +26,7 @@ export interface Article {
 export const ARTICLES: Article[] = [
   {
     slug: 'asteria-paysage-vertical',
-    category: 'ASTERIA',
+    category: 'Investissement',
     title: "ASTERIA : repenser le paysage vertical",
     excerpt:
       "Comment l'eau, la lumière et la végétation se conjuguent pour transformer une tour résidentielle en écosystème vivant au cœur d'Alger.",
@@ -68,7 +68,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: 'standing-algerien-2026',
-    category: 'Marché',
+    category: 'Investissement',
     title: "Le standing algérien en 2026",
     excerpt:
       "Le marché du haut de gamme à Alger évolue. Décryptage des attentes d'une clientèle exigeante et de ce qui définit désormais l'exception.",

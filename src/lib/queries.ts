@@ -63,10 +63,14 @@ const ARTICLE_LIST_QUERY = `*[_type == "article"] | order(date desc) {
 }`
 
 function mapSanityArticleMeta(a: any): Omit<Article, 'body'> & { body: Block[] } {
+  let cat = a.category || 'Architecture'
+  if (cat === 'ASTERIA' || cat === 'Marché') {
+    cat = 'Investissement'
+  }
   return {
     slug: a.slug,
     title: a.title,
-    category: a.category || 'Architecture',
+    category: cat as any,
     excerpt: a.excerpt || '',
     cover: sanityImageUrl(a.cover),
     date: a.date?.split('T')[0] || '',

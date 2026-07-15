@@ -8,7 +8,7 @@ import { ARTICLES, featuredArticle, formatDate, type Article } from '@/data/jour
 import { fetchArticles } from '@/lib/queries'
 import { Seo, breadcrumbLd } from '@/lib/seo'
 
-const CATEGORIES = ['Tous', 'ASTERIA', 'Architecture', 'Art de vivre', 'Marché'] as const
+const CATEGORIES = ['Tous', 'Investissement', 'Architecture', 'Art de vivre'] as const
 
 export default function Journal() {
   const [cat, setCat] = useState<(typeof CATEGORIES)[number]>('Tous')
