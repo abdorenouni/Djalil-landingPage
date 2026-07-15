@@ -45,6 +45,9 @@ export async function fetchProjects(): Promise<Project[]> {
 }
 
 export async function fetchProject(slug: string): Promise<Project | undefined> {
+  // Always use local static data for magnolia — Sanity doesn't have the new
+  // galleryItems, beach-themed content, or updated images.
+  if (slug === 'magnolia') return PROJECTS.find((p) => p.slug === slug)
   try {
     const data = await client.fetch(
       `*[_type == "project" && slug.current == $slug][0]{ name, "slug": slug.current, tagline, location, year, status, featured, cover, gallery, description, stats }`,

@@ -13,7 +13,33 @@ function statusColor(s: string) {
 }
 
 /* ── Rich gallery with captions — used when galleryItems is defined ── */
-function RichGallery({ items, name }: { items: GalleryItem[]; name: string }) {
+function RichGallery({ items }: { items: GalleryItem[] }) {
+  // Pre-process items into display rows: wide items get their own row,
+  // consecutive non-wide items are grouped into pairs.
+  type Row =
+    | { kind: 'wide'; item: GalleryItem; index: number }
+    | { kind: 'pair'; a: GalleryItem; aIdx: number; b: GalleryItem; bIdx: number }
+    | { kind: 'single'; item: GalleryItem; index: number }
+
+  const rows: Row[] = []
+  let i = 0
+  while (i < items.length) {
+    const item = items[i]
+    if (item.wide) {
+      rows.push({ kind: 'wide', item, index: i })
+      i++
+    } else {
+      const next = items[i + 1]
+      if (next && !next.wide) {
+        rows.push({ kind: 'pair', a: item, aIdx: i, b: next, bIdx: i + 1 })
+        i += 2
+      } else {
+        rows.push({ kind: 'single', item, index: i })
+        i++
+      }
+    }
+  }
+
   return (
     <section style={{ padding: 'clamp(20px, 4vw, 60px) clamp(24px, 5vw, 64px) clamp(70px, 11vw, 150px)' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto' }}>
@@ -30,22 +56,23 @@ function RichGallery({ items, name }: { items: GalleryItem[]; name: string }) {
           </div>
         </Reveal>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(20px, 3.5vw, 48px)' }}>
-          {items.map((item, i) => {
-            if (item.wide) {
-              /* Full-width cinematic row with text below */
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 4vw, 56px)' }}>
+          {rows.map((row, ri) => {
+            if (row.kind === 'wide') {
               return (
-                <Reveal key={item.src} delay={0.05}>
+                <Reveal key={row.item.src} delay={0.05}>
                   <div>
-                    <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 4, aspectRatio: item.aspect || '16/9' }}>
-                      <ParallaxImage src={item.src} alt={item.caption} aspect={item.aspect || '16/9'} range={10} />
+                    <div style={{ borderRadius: 4, overflow: 'hidden' }}>
+                      <ParallaxImage src={row.item.src} alt={row.item.caption} aspect={row.item.aspect || '16/9'} range={10} />
                     </div>
-                    {(item.caption || item.desc) && (
+                    {(row.item.caption || row.item.desc) && (
                       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, marginTop: 20, paddingBottom: 'clamp(14px, 2vw, 24px)', borderBottom: '1px solid rgba(var(--line-rgb),0.07)' }}>
-                        <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.28em', textTransform: 'uppercase', color: TEAL }}>{String(i + 1).padStart(2, '0')} — {item.caption}</span>
-                        {item.desc && (
+                        <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.28em', textTransform: 'uppercase', color: TEAL }}>
+                          {String(row.index + 1).padStart(2, '0')} — {row.item.caption}
+                        </span>
+                        {row.item.desc && (
                           <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(13px, 1vw, 15px)', lineHeight: 1.7, color: 'rgba(var(--text-rgb),0.55)', margin: 0, maxWidth: 560, textAlign: 'right' }}>
-                            {item.desc}
+                            {row.item.desc}
                           </p>
                         )}
                       </div>
@@ -55,35 +82,30 @@ function RichGallery({ items, name }: { items: GalleryItem[]; name: string }) {
               )
             }
 
-            /* Pair two non-wide consecutive items side by side */
-            const next = items[i + 1]
-            if (!next || next.wide || i % 2 !== 0) {
-              /* Already rendered as part of a pair, or orphaned single — skip even index check */
-              if (i % 2 !== 0 && !items[i - 1]?.wide) return null
-              /* Orphan single */
+            if (row.kind === 'pair') {
               return (
-                <Reveal key={item.src} delay={0.05}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 24, maxWidth: 720, margin: '0 auto', width: '100%' }}>
-                    <GalleryCard item={item} index={i} />
-                  </div>
-                </Reveal>
+                <div key={row.a.src} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 36px)', alignItems: 'flex-start' }} className="pd-rich-pair">
+                  <Reveal delay={0}>
+                    <GalleryCard item={row.a} index={row.aIdx} />
+                  </Reveal>
+                  <Reveal delay={0.1}>
+                    <div style={{ marginTop: ri % 2 === 0 ? 'clamp(32px, 5vw, 64px)' : 0 }}>
+                      <GalleryCard item={row.b} index={row.bIdx} />
+                    </div>
+                  </Reveal>
+                </div>
               )
             }
 
-            /* Two non-wide items → side-by-side with alternating offset */
+            // single
             return (
-              <div key={item.src} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 36px)', alignItems: 'flex-start' }} className="pd-rich-pair">
-                <Reveal delay={0}>
-                  <GalleryCard item={item} index={i} />
-                </Reveal>
-                <Reveal delay={0.1}>
-                  <div style={{ marginTop: 'clamp(32px, 5vw, 64px)' }}>
-                    <GalleryCard item={next} index={i + 1} />
-                  </div>
-                </Reveal>
-              </div>
+              <Reveal key={row.item.src} delay={0.05}>
+                <div style={{ maxWidth: 720, margin: '0 auto', width: '100%' }}>
+                  <GalleryCard item={row.item} index={row.index} />
+                </div>
+              </Reveal>
             )
-          }).filter(Boolean)}
+          })}
         </div>
       </div>
       <style>{`
