@@ -79,7 +79,7 @@ export default function APropos() {
   useEffect(() => { fetchApropos().then((d) => d && setAp(d)) }, [])
 
   const img = (img: any, w = 1200) => (img?.asset ? urlFor(img).width(w).url() : '')
-  const heroImg = img(ap?.heroImage, 2000) || FALLBACK_HERO_IMG
+  const heroImg = '/images/asteria/a-propos-hero.png'
   const heroEyebrow = ap?.heroEyebrow || FALLBACK_HERO_EYEBROW
   const heroWords: string[] = (ap?.heroTitle?.length ? ap.heroTitle : FALLBACK_HERO_WORDS) as string[]
   const rawHeroSub = ap?.heroSubtitle || FALLBACK_HERO_SUB
@@ -134,11 +134,11 @@ export default function APropos() {
         ) : (
           <motion.img src={heroImg} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', scale: heroScale, y: heroY }} />
         )}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(6,6,6,0.6) 0%, rgba(6,6,6,0.4) 45%, rgba(6,6,6,0.96) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(6,6,6,0.3) 0%, rgba(6,6,6,0.15) 45%, rgba(6,6,6,0.85) 100%)' }} />
 
         <motion.div style={{ position: 'absolute', inset: 0, ...(isMobile ? {} : { y: heroTextY, opacity: heroFade }), display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
           <motion.span initial={{ opacity: 0, letterSpacing: '0.5em' }} animate={{ opacity: 0.8, letterSpacing: '0.34em' }} transition={{ duration: 1.3, ease: EASE, delay: 0.2 }}
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(13px, 1.6vw, 18px)', color: TEAL, textTransform: 'uppercase', marginBottom: 20 }}>
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(13px, 1.6vw, 18px)', color: '#ffffff', textTransform: 'uppercase', marginBottom: 20 }}>
             {heroEyebrow}
           </motion.span>
 
@@ -165,7 +165,7 @@ export default function APropos() {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6, duration: 1 }}
           style={{ position: 'absolute', bottom: 30, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
           <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.5)' }}>Découvrir</span>
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 1, height: 30, background: `linear-gradient(to bottom, ${TEAL}, transparent)` }} />
+          <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 1, height: 30, background: 'linear-gradient(to bottom, #ffffff, transparent)' }} />
         </motion.div>
       </div>
 
