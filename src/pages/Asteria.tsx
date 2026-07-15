@@ -499,23 +499,7 @@ export default function Asteria() {
       {/* ── F4 SECTION ── */}
       <section id="f4" style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', borderTop: '1px solid rgba(var(--line-rgb),0.04)' }}>
         <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center', marginBottom: 'clamp(60px, 8vw, 100px)' }} className="ast-split">
-            <Reveal>
-              <ParallaxImage src="/images/asteria/balcony-f4.png" alt="Terrasse F4 avec vue panoramique" aspect="4/3" />
-            </Reveal>
-            <Reveal delay={0.15}>
-              <Eyebrow>F4 · 4 Pièces</Eyebrow>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 28px' }}>
-                Des espaces<br /><span style={{ color: TEAL }}>amplifiés</span>
-              </h2>
-              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 480 }}>
-                Les résidences F4 d'ASTERIA offrent un espace de vie exceptionnel de 154 à 171 m².
-                Trois chambres généreuses, double séjour et vaste terrasse panoramique font de ces
-                appartements une référence absolue du luxe résidentiel algérois.
-              </p>
-            </Reveal>
-          </div>
-
+          {/* F4 Floor plans block */}
           <Reveal delay={0.1}>
             <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 48px)' }}>
               <Eyebrow color={TEAL}>{f4UnitsEyebrow}</Eyebrow>
@@ -575,47 +559,40 @@ export default function Asteria() {
               </div>
             </motion.div>
           </Reveal>
+
+          {/* F4 Split block below plans */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center', marginTop: 'clamp(60px, 10vw, 110px)' }} className="ast-split">
+            <Reveal>
+              <ParallaxImage src="/images/asteria/balcony-f4.png" alt="Terrasse F4 avec vue panoramique" aspect="4/3" />
+            </Reveal>
+            <Reveal delay={0.15}>
+              <Eyebrow>F4 · 4 Pièces</Eyebrow>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 28px' }}>
+                Des espaces<br /><span style={{ color: TEAL }}>amplifiés</span>
+              </h2>
+              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 480 }}>
+                Les résidences F4 d'ASTERIA offrent un espace de vie exceptionnel de 154 à 171 m².
+                Trois chambres généreuses, double séjour et vaste terrasse panoramique font de ces
+                appartements une référence absolue du luxe résidentiel algérois.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ── VILLAS ── */}
-      <section id="villas" style={{ background: 'var(--bg-2)', borderTop: '1px solid rgba(var(--line-rgb),0.04)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)' }}>
-
-        {/* Hero intro: exterior render + text */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 520 }} className="ast-split">
-          <div style={{ overflow: 'hidden', position: 'relative' }}>
-            <img
-              src="/images/asteria/villa-exterior.png"
-              alt="Les Villas ASTERIA, piscines privées aux niveaux 8 et 9"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent 60%, var(--bg-2))' }} />
-          </div>
-          <Reveal>
-            <div style={{ padding: 'clamp(48px, 7vw, 100px) clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <Eyebrow color={TEAL}>{villasEyebrow}</Eyebrow>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 24px' }}>
-                {doc?.villasTitle ? villasTitle : (<>Les Villas<br /><span style={{ color: TEAL }}>ASTERIA</span></>)}
-              </h2>
-              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 460, margin: '0 0 32px' }}>
-                Quatre villas d'exception aux niveaux 8 et 9 d'ASTERIA. Chacune s'étend sur deux niveaux
-                avec un toit-terrasse privatif, piscine à débordement, home cinéma et entrée indépendante.
-              </p>
-              <div style={{ display: 'flex', gap: 32 }}>
-                {[['4', 'Villas'], ['3', 'Niveaux'], ['4+', 'Chambres']].map(([n, l]) => (
-                  <div key={l}>
-                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, color: TEAL, lineHeight: 1 }}>{n}</div>
-                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.5)', marginTop: 4 }}>{l}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </div>
+      <section id="villas" style={{ background: 'var(--bg-2)', borderTop: '1px solid rgba(var(--line-rgb),0.04)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)', padding: 'clamp(60px, 10vw, 140px) 0 0' }}>
 
         {/* Villa selector + level plans */}
-        <div style={{ padding: 'clamp(48px, 7vw, 96px) clamp(24px, 5vw, 64px)', maxWidth: 1300, margin: '0 auto' }}>
+        <div style={{ padding: '0 clamp(24px, 5vw, 64px) clamp(48px, 7vw, 96px)', maxWidth: 1300, margin: '0 auto' }}>
           <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 48px)' }}>
+              <Eyebrow color={TEAL}>{villasEyebrow}</Eyebrow>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(24px, 4vw, 52px)', fontWeight: 400, margin: 0 }}>
+                {villasTitle}
+              </h2>
+            </div>
+
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 10, marginBottom: 'clamp(36px, 4vw, 52px)' }}>
               {villasList.map((v: any, i: number) => (
                 <button
@@ -691,6 +668,38 @@ export default function Asteria() {
                 </div>
               </div>
             </motion.div>
+          </Reveal>
+        </div>
+
+        {/* Hero intro: exterior render + text below plans */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 520, borderTop: '1px solid rgba(var(--line-rgb),0.04)' }} className="ast-split">
+          <div style={{ overflow: 'hidden', position: 'relative' }}>
+            <img
+              src="/images/asteria/villa-exterior.png"
+              alt="Les Villas ASTERIA, piscines privées aux niveaux 8 et 9"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent 60%, var(--bg-2))' }} />
+          </div>
+          <Reveal>
+            <div style={{ padding: 'clamp(48px, 7vw, 100px) clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Eyebrow color={TEAL}>Le Prestige Absolu</Eyebrow>
+              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 24px' }}>
+                Le ciel comme<br /><span style={{ color: TEAL }}>horizon</span>
+              </h2>
+              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 460, margin: '0 0 32px' }}>
+                Quatre villas d'exception aux niveaux 8 et 9 d'ASTERIA. Chacune s'étend sur deux niveaux
+                avec un toit-terrasse privatif, piscine à débordement, home cinéma et entrée indépendante.
+              </p>
+              <div style={{ display: 'flex', gap: 32 }}>
+                {[['4', 'Villas'], ['3', 'Niveaux'], ['4+', 'Chambres']].map(([n, l]) => (
+                  <div key={l}>
+                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, color: TEAL, lineHeight: 1 }}>{n}</div>
+                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.5)', marginTop: 4 }}>{l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
