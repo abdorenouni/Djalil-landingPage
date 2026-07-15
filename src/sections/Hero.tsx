@@ -26,6 +26,7 @@ export default function Hero() {
   useEffect(() => {
     if (!textRef.current) return
     const chars = textRef.current.querySelectorAll('.char')
+    if (chars.length === 0) return
     if (reduce) { gsap.set(chars, { opacity: 1, y: 0, rotateX: 0 }); return }
     gsap.fromTo(
       chars,
@@ -45,7 +46,7 @@ export default function Hero() {
     )
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const title = (settings?.heroHeadline || "L'EXCELLENCE").toUpperCase()
+  const title = (settings?.heroHeadline && settings.heroHeadline !== "L'EXCELLENCE" ? settings.heroHeadline : "").toUpperCase()
   const subtitle = (settings?.heroSubtext || 'IMMOBILIÈRE EN ALGÉRIE').toUpperCase()
 
   return (
@@ -59,20 +60,25 @@ export default function Hero() {
         background: '#000',
       }}
     >
-      {/* Full-bleed hero image — the family-dream-home visual. */}
-      <img
-        src={HERO_IMAGE}
-        alt="Une famille devant la maison de ses rêves au coucher du soleil"
+      {/* Full-bleed hero video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster={HERO_IMAGE}
         style={{
           position: 'absolute',
           inset: 0,
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          objectPosition: 'center 58%',
           zIndex: 1,
         }}
-      />
+      >
+        <source src="/videos/hero-video.mp4" type="video/mp4" />
+      </video>
 
       {/* Dark cinematic overlay */}
       <div
@@ -103,27 +109,29 @@ export default function Hero() {
           perspective: 1000,
         }}
       >
-        <h1
-          style={{
-            fontFamily: "'Plus Jakarta Sans', sans-serif",
-            fontSize: 'clamp(32px, 8vw, 130px)',
-            fontWeight: 700,
-            color: '#ffffff',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            textAlign: 'center',
-            lineHeight: 1,
-            whiteSpace: 'nowrap',
-            margin: 0,
-            textShadow: '0 2px 40px rgba(0,0,0,0.5)',
-          }}
-        >
-          {title.split('').map((char, i) => (
-            <span key={i} className="char" style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}>
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
-        </h1>
+        {title && (
+          <h1
+            style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontSize: 'clamp(32px, 8vw, 130px)',
+              fontWeight: 700,
+              color: '#ffffff',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              textAlign: 'center',
+              lineHeight: 1,
+              whiteSpace: 'nowrap',
+              margin: 0,
+              textShadow: '0 2px 40px rgba(0,0,0,0.5)',
+            }}
+          >
+            {title.split('').map((char, i) => (
+              <span key={i} className="char" style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}>
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+            ))}
+          </h1>
+        )}
         <p
           ref={subtitleRef}
           style={{
