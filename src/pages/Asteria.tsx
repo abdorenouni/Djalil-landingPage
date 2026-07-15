@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, type ReactNode } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router'
 import { Plane, GraduationCap, ShoppingBag, Stethoscope, Building2, MessageCircle, TreePine, Landmark } from 'lucide-react'
 import Header from '@/components/custom/Header'
@@ -245,30 +245,16 @@ export default function Asteria() {
       }))
     : VILLAS_PLANS
 
-  /* Smooth scroll to a section, accounting for sticky header + type bar */
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id)
-    if (!el) return
-    const offset = 84 + 72 // header height + type selector bar height
-    const top = el.getBoundingClientRect().top + window.scrollY - offset
-    window.scrollTo({ top, behavior: 'smooth' })
+  /* Handle type switching in-place, aligning viewport with the selector bar */
+  const handleTypeChange = (id: string) => {
     setActiveType(id)
+    const el = document.getElementById('residences-selector')
+    if (el) {
+      const offset = 83 // sticky header top offset
+      const top = el.getBoundingClientRect().top + window.scrollY - offset
+      window.scrollTo({ top, behavior: 'smooth' })
+    }
   }
-
-  /* Highlight active type on scroll via IntersectionObserver */
-  useEffect(() => {
-    const sections = TYPE_ITEMS.map((t) => document.getElementById(t.id)).filter(Boolean) as HTMLElement[]
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveType(entry.target.id)
-        })
-      },
-      { rootMargin: '-30% 0px -60% 0px' }
-    )
-    sections.forEach((s) => obs.observe(s))
-    return () => obs.disconnect()
-  }, [])
 
   return (
     <motion.div
@@ -376,6 +362,7 @@ export default function Asteria() {
           fixed/sticky elements, showing a visible seam. Solid-ish
           background gives the same effect without the artifact. */}
       <div
+        id="residences-selector"
         style={{
           position: 'sticky', top: 83, zIndex: 90,
           background: 'rgba(var(--header-rgb),0.98)',
@@ -388,7 +375,7 @@ export default function Asteria() {
             return (
               <button
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => handleTypeChange(item.id)}
                 style={{
                   padding: 'clamp(14px,2vw,22px) 16px',
                   background: 'transparent',
@@ -427,282 +414,294 @@ export default function Asteria() {
         </div>
       </div>
 
-      {/* ── F3 FLOOR PLANS ── */}
-      <section id="f3" style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', background: 'var(--bg-2)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)' }}>
-        <div style={{ maxWidth: 1300, margin: '0 auto' }}>
-          <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 56px)' }}>
-              <Eyebrow color={GOLD}>{f3UnitsEyebrow}</Eyebrow>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 5vw, 64px)', fontWeight: 400, margin: 0 }}>
-                {f3UnitsTitle}
-              </h2>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 'clamp(36px, 4vw, 56px)' }}>
-              {f3Units.map((p: any, i: number) => (
-                <button
-                  key={p.ref}
-                  onClick={() => setPlan(i)}
-                  style={{
-                    padding: '12px 24px', cursor: 'pointer', textAlign: 'left',
-                    background: plan === i ? GOLD : 'transparent',
-                    border: `1px solid ${plan === i ? GOLD : 'rgba(var(--line-rgb),0.15)'}`,
-                    color: plan === i ? 'var(--bg)' : 'rgba(var(--text-rgb),0.7)',
-                    fontFamily: "'Plus Jakarta Sans', sans-serif", borderRadius: 2, transition: 'all 0.3s ease',
-                  }}
-                >
-                  <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', opacity: 0.7 }}>{p.ref}</span>
-                  <span style={{ display: 'block', fontSize: 14, fontWeight: 600, letterSpacing: '0.02em', marginTop: 2 }}>{p.surface} m²</span>
-                </button>
-              ))}
-            </div>
-
-            <motion.div
-              key={plan}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: EASE }}
-              style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center', maxWidth: 1180, margin: '0 auto' }}
-              className="ast-residences"
-            >
-              <div style={{ padding: 'clamp(16px, 3vw, 40px)', background: '#fff', borderRadius: 4 }}>
-                <img src={f3Units[plan].img} alt={`Plan ${f3Units[plan].ref} — F3 ${f3Units[plan].surface} m²`} style={{ width: '100%', height: 'auto', display: 'block' }} />
-              </div>
-              <div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-                  <a
-                    href={waResidence(whatsapp, f3Units[plan].ref, f3Units[plan].surface)}
-                    target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '14px 26px', background: TEAL, color: '#04211e', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, boxShadow: `0 8px 26px ${TEAL}33`, transition: 'transform 0.25s ease, box-shadow 0.25s ease' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 12px 34px ${TEAL}55` }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 8px 26px ${TEAL}33` }}
-                  >
-                    <MessageCircle size={17} /> Demander cette suite
-                  </a>
-                  <Link
-                    to="/contact"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 24px', border: '1px solid rgba(var(--line-rgb),0.18)', color: 'rgba(var(--text-rgb),0.85)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, transition: 'border-color 0.3s ease' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = TEAL }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(var(--line-rgb),0.18)' }}
-                  >
-                    Visite privée
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── F4 SECTION ── */}
-      <section id="f4" style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', borderTop: '1px solid rgba(var(--line-rgb),0.04)' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-          {/* F4 Floor plans block */}
-          <Reveal delay={0.1}>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 48px)' }}>
-              <Eyebrow color={TEAL}>{f4UnitsEyebrow}</Eyebrow>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(24px, 4vw, 52px)', fontWeight: 400, margin: 0 }}>
-                {f4UnitsTitle}
-              </h2>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 'clamp(36px, 4vw, 56px)' }}>
-              {f4Units.map((p: any, i: number) => (
-                <button
-                  key={p.ref}
-                  onClick={() => setPlanF4(i)}
-                  style={{
-                    padding: '12px 24px', cursor: 'pointer', textAlign: 'left',
-                    background: planF4 === i ? TEAL : 'transparent',
-                    border: `1px solid ${planF4 === i ? TEAL : 'rgba(var(--line-rgb),0.15)'}`,
-                    color: planF4 === i ? 'var(--bg)' : 'rgba(var(--text-rgb),0.7)',
-                    fontFamily: "'Plus Jakarta Sans', sans-serif", borderRadius: 2, transition: 'all 0.3s ease',
-                  }}
-                >
-                  <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', opacity: 0.7 }}>{p.ref}</span>
-                  <span style={{ display: 'block', fontSize: 14, fontWeight: 600, letterSpacing: '0.02em', marginTop: 2 }}>{p.surface} m²</span>
-                </button>
-              ))}
-            </div>
-            <motion.div
-              key={`f4-${planF4}`}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: EASE }}
-              style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center', maxWidth: 1180, margin: '0 auto' }}
-              className="ast-residences"
-            >
-              <div style={{ padding: 'clamp(16px, 3vw, 40px)', background: '#fff', borderRadius: 4 }}>
-                <img src={f4Units[planF4].img} alt={`Plan ${f4Units[planF4].ref} — ${f4Units[planF4].surface} m²`} style={{ width: '100%', height: 'auto', display: 'block' }} />
-              </div>
-              <div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-                  <a
-                    href={waResidenceF4(whatsapp, f4Units[planF4].ref, f4Units[planF4].surface)}
-                    target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '14px 26px', background: TEAL, color: '#04211e', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, boxShadow: `0 8px 26px ${TEAL}33`, transition: 'transform 0.25s ease, box-shadow 0.25s ease' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 12px 34px ${TEAL}55` }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 8px 26px ${TEAL}33` }}
-                  >
-                    <MessageCircle size={17} /> Demander cette suite
-                  </a>
-                  <Link
-                    to="/contact"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 24px', border: '1px solid rgba(var(--line-rgb),0.18)', color: 'rgba(var(--text-rgb),0.85)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, transition: 'border-color 0.3s ease' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = TEAL }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(var(--line-rgb),0.18)' }}
-                  >
-                    Visite privée
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          </Reveal>
-
-          {/* F4 Split block below plans */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center', marginTop: 'clamp(60px, 10vw, 110px)' }} className="ast-split">
-            <Reveal>
-              <ParallaxImage src="/images/asteria/balcony-f4.png" alt="Terrasse F4 avec vue panoramique" aspect="4/3" />
-            </Reveal>
-            <Reveal delay={0.15}>
-              <Eyebrow>F4 · 4 Pièces</Eyebrow>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 28px' }}>
-                Des espaces<br /><span style={{ color: TEAL }}>amplifiés</span>
-              </h2>
-              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 480 }}>
-                Les résidences F4 d'ASTERIA offrent un espace de vie exceptionnel de 154 à 171 m².
-                Trois chambres généreuses, double séjour et vaste terrasse panoramique font de ces
-                appartements une référence absolue du luxe résidentiel algérois.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ── VILLAS ── */}
-      <section id="villas" style={{ background: 'var(--bg-2)', borderTop: '1px solid rgba(var(--line-rgb),0.04)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)', padding: 'clamp(60px, 10vw, 140px) 0 0' }}>
-
-        {/* Villa selector + level plans */}
-        <div style={{ padding: '0 clamp(24px, 5vw, 64px) clamp(48px, 7vw, 96px)', maxWidth: 1300, margin: '0 auto' }}>
-          <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 48px)' }}>
-              <Eyebrow color={TEAL}>{villasEyebrow}</Eyebrow>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(24px, 4vw, 52px)', fontWeight: 400, margin: 0 }}>
-                {villasTitle}
-              </h2>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 10, marginBottom: 'clamp(36px, 4vw, 52px)' }}>
-              {villasList.map((v: any, i: number) => (
-                <button
-                  key={v.ref}
-                  onClick={() => { setVilla(i); setVillaLevel(0) }}
-                  style={{
-                    padding: '12px 26px', cursor: 'pointer', textAlign: 'center',
-                    background: villa === i ? TEAL : 'transparent',
-                    border: `1px solid ${villa === i ? TEAL : 'rgba(var(--line-rgb),0.15)'}`,
-                    color: villa === i ? '#04211e' : 'rgba(var(--text-rgb),0.7)',
-                    fontFamily: "'Plus Jakarta Sans', sans-serif", borderRadius: 2, transition: 'all 0.3s ease',
-                  }}
-                >
-                  <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.75 }}>{v.ref}</span>
-                  <span style={{ display: 'block', fontSize: 13, fontWeight: 600, marginTop: 2 }}>{v.pieces}</span>
-                </button>
-              ))}
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 0, marginBottom: 'clamp(28px, 3vw, 40px)', borderBottom: '1px solid rgba(var(--line-rgb),0.1)' }}>
-              {villasList[villa].levels.map((lv: any, li: number) => (
-                <button
-                  key={lv.label}
-                  onClick={() => setVillaLevel(li)}
-                  style={{
-                    padding: '12px 28px', cursor: 'pointer', background: 'transparent', border: 'none',
-                    borderBottom: `2px solid ${villaLevel === li ? TEAL : 'transparent'}`,
-                    color: villaLevel === li ? TEAL : 'rgba(var(--text-rgb),0.5)',
-                    fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.1em',
-                    textTransform: 'uppercase', fontWeight: villaLevel === li ? 600 : 400,
-                    transition: 'all 0.25s ease', marginBottom: -1,
-                  }}
-                >
-                  {lv.label}
-                </button>
-              ))}
-            </div>
-
-            <motion.div
-              key={`villa-${villa}-${villaLevel}`}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, ease: EASE }}
-              style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center', maxWidth: 1180, margin: '0 auto' }}
-              className="ast-residences"
-            >
-              <div style={{ padding: 'clamp(16px, 3vw, 36px)', background: '#fff', borderRadius: 4, boxShadow: '0 4px 32px rgba(0,0,0,0.08)' }}>
-                <img
-                  src={villasList[villa].levels[villaLevel].img}
-                  alt={`${villasList[villa].ref} · ${villasList[villa].levels[villaLevel].label}`}
-                  style={{ width: '100%', height: 'auto', display: 'block' }}
-                />
-              </div>
-              <div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-                  <a
-                    href={waVilla(whatsapp, villasList[villa].ref)}
-                    target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '14px 26px', background: TEAL, color: '#04211e', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, boxShadow: `0 8px 26px ${TEAL}33`, transition: 'transform 0.25s ease, box-shadow 0.25s ease' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 12px 34px ${TEAL}55` }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 8px 26px ${TEAL}33` }}
-                  >
-                    <MessageCircle size={17} /> Demander cette villa
-                  </a>
-                  <Link
-                    to="/contact"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 24px', border: '1px solid rgba(var(--line-rgb),0.18)', color: 'rgba(var(--text-rgb),0.85)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, transition: 'border-color 0.3s ease' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = TEAL }}
-                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(var(--line-rgb),0.18)' }}
-                  >
-                    Visite privée
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          </Reveal>
-        </div>
-
-        {/* Hero intro: exterior render + text below plans */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 520, borderTop: '1px solid rgba(var(--line-rgb),0.04)' }} className="ast-split">
-          <div style={{ overflow: 'hidden', position: 'relative' }}>
-            <img
-              src="/images/asteria/villa-exterior.png"
-              alt="Les Villas ASTERIA, piscines privées aux niveaux 8 et 9"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent 60%, var(--bg-2))' }} />
-          </div>
-          <Reveal>
-            <div style={{ padding: 'clamp(48px, 7vw, 100px) clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <Eyebrow color={TEAL}>Le Prestige Absolu</Eyebrow>
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 24px' }}>
-                Le ciel comme<br /><span style={{ color: TEAL }}>horizon</span>
-              </h2>
-              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 460, margin: '0 0 32px' }}>
-                Quatre villas d'exception aux niveaux 8 et 9 d'ASTERIA. Chacune s'étend sur deux niveaux
-                avec un toit-terrasse privatif, piscine à débordement, home cinéma et entrée indépendante.
-              </p>
-              <div style={{ display: 'flex', gap: 32 }}>
-                {[['4', 'Villas'], ['3', 'Niveaux'], ['4+', 'Chambres']].map(([n, l]) => (
-                  <div key={l}>
-                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, color: TEAL, lineHeight: 1 }}>{n}</div>
-                    <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.5)', marginTop: 4 }}>{l}</div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeType}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.35, ease: EASE }}
+        >
+          {activeType === 'f3' && (
+            <section id="f3" style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', background: 'var(--bg-2)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)' }}>
+              <div style={{ maxWidth: 1300, margin: '0 auto' }}>
+                <Reveal>
+                  <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 56px)' }}>
+                    <Eyebrow color={GOLD}>{f3UnitsEyebrow}</Eyebrow>
+                    <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 5vw, 64px)', fontWeight: 400, margin: 0 }}>
+                      {f3UnitsTitle}
+                    </h2>
                   </div>
-                ))}
+                </Reveal>
+
+                <Reveal delay={0.1}>
+                  <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 'clamp(36px, 4vw, 56px)' }}>
+                    {f3Units.map((p: any, i: number) => (
+                      <button
+                        key={p.ref}
+                        onClick={() => setPlan(i)}
+                        style={{
+                          padding: '12px 24px', cursor: 'pointer', textAlign: 'left',
+                          background: plan === i ? GOLD : 'transparent',
+                          border: `1px solid ${plan === i ? GOLD : 'rgba(var(--line-rgb),0.15)'}`,
+                          color: plan === i ? 'var(--bg)' : 'rgba(var(--text-rgb),0.7)',
+                          fontFamily: "'Plus Jakarta Sans', sans-serif", borderRadius: 2, transition: 'all 0.3s ease',
+                        }}
+                      >
+                        <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', opacity: 0.7 }}>{p.ref}</span>
+                        <span style={{ display: 'block', fontSize: 14, fontWeight: 600, letterSpacing: '0.02em', marginTop: 2 }}>{p.surface} m²</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <motion.div
+                    key={plan}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: EASE }}
+                    style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center', maxWidth: 1180, margin: '0 auto' }}
+                    className="ast-residences"
+                  >
+                    <div style={{ padding: 'clamp(16px, 3vw, 40px)', background: '#fff', borderRadius: 4 }}>
+                      <img src={f3Units[plan].img} alt={`Plan ${f3Units[plan].ref} — F3 ${f3Units[plan].surface} m²`} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    </div>
+                    <div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                        <a
+                          href={waResidence(whatsapp, f3Units[plan].ref, f3Units[plan].surface)}
+                          target="_blank" rel="noopener noreferrer"
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '14px 26px', background: TEAL, color: '#04211e', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, boxShadow: `0 8px 26px ${TEAL}33`, transition: 'transform 0.25s ease, box-shadow 0.25s ease' }}
+                          onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 12px 34px ${TEAL}55` }}
+                          onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 8px 26px ${TEAL}33` }}
+                        >
+                          <MessageCircle size={17} /> Demander cette suite
+                        </a>
+                        <Link
+                          to="/contact"
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 24px', border: '1px solid rgba(var(--line-rgb),0.18)', color: 'rgba(var(--text-rgb),0.85)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, transition: 'border-color 0.3s ease' }}
+                          onMouseEnter={(e) => { e.currentTarget.style.borderColor = TEAL }}
+                          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(var(--line-rgb),0.18)' }}
+                        >
+                          Visite privée
+                        </Link>
+                      </div>
+                    </div>
+                  </motion.div>
+                </Reveal>
               </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+            </section>
+          )}
+
+          {activeType === 'f4' && (
+            <section id="f4" style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', borderTop: '1px solid rgba(var(--line-rgb),0.04)' }}>
+              <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+                {/* F4 Floor plans block */}
+                <Reveal delay={0.1}>
+                  <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 48px)' }}>
+                    <Eyebrow color={TEAL}>{f4UnitsEyebrow}</Eyebrow>
+                    <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(24px, 4vw, 52px)', fontWeight: 400, margin: 0 }}>
+                      {f4UnitsTitle}
+                    </h2>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 'clamp(36px, 4vw, 56px)' }}>
+                    {f4Units.map((p: any, i: number) => (
+                      <button
+                        key={p.ref}
+                        onClick={() => setPlanF4(i)}
+                        style={{
+                          padding: '12px 24px', cursor: 'pointer', textAlign: 'left',
+                          background: planF4 === i ? TEAL : 'transparent',
+                          border: `1px solid ${planF4 === i ? TEAL : 'rgba(var(--line-rgb),0.15)'}`,
+                          color: planF4 === i ? 'var(--bg)' : 'rgba(var(--text-rgb),0.7)',
+                          fontFamily: "'Plus Jakarta Sans', sans-serif", borderRadius: 2, transition: 'all 0.3s ease',
+                        }}
+                      >
+                        <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', opacity: 0.7 }}>{p.ref}</span>
+                        <span style={{ display: 'block', fontSize: 14, fontWeight: 600, letterSpacing: '0.02em', marginTop: 2 }}>{p.surface} m²</span>
+                      </button>
+                    ))}
+                  </div>
+                  <motion.div
+                    key={`f4-${planF4}`}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: EASE }}
+                    style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center', maxWidth: 1180, margin: '0 auto' }}
+                    className="ast-residences"
+                  >
+                    <div style={{ padding: 'clamp(16px, 3vw, 40px)', background: '#fff', borderRadius: 4 }}>
+                      <img src={f4Units[planF4].img} alt={`Plan ${f4Units[planF4].ref} — ${f4Units[planF4].surface} m²`} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    </div>
+                    <div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                        <a
+                          href={waResidenceF4(whatsapp, f4Units[planF4].ref, f4Units[planF4].surface)}
+                          target="_blank" rel="noopener noreferrer"
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '14px 26px', background: TEAL, color: '#04211e', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, boxShadow: `0 8px 26px ${TEAL}33`, transition: 'transform 0.25s ease, box-shadow 0.25s ease' }}
+                          onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 12px 34px ${TEAL}55` }}
+                          onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 8px 26px ${TEAL}33` }}
+                        >
+                          <MessageCircle size={17} /> Demander cette suite
+                        </a>
+                        <Link
+                          to="/contact"
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 24px', border: '1px solid rgba(var(--line-rgb),0.18)', color: 'rgba(var(--text-rgb),0.85)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, transition: 'border-color 0.3s ease' }}
+                          onMouseEnter={(e) => { e.currentTarget.style.borderColor = TEAL }}
+                          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(var(--line-rgb),0.18)' }}
+                        >
+                          Visite privée
+                        </Link>
+                      </div>
+                    </div>
+                  </motion.div>
+                </Reveal>
+
+                {/* F4 Split block below plans */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center', marginTop: 'clamp(60px, 10vw, 110px)' }} className="ast-split">
+                  <Reveal>
+                    <ParallaxImage src="/images/asteria/balcony-f4.png" alt="Terrasse F4 avec vue panoramique" aspect="4/3" />
+                  </Reveal>
+                  <Reveal delay={0.15}>
+                    <Eyebrow>F4 · 4 Pièces</Eyebrow>
+                    <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 28px' }}>
+                      Des espaces<br /><span style={{ color: TEAL }}>amplifiés</span>
+                    </h2>
+                    <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 480 }}>
+                      Les résidences F4 d'ASTERIA offrent un espace de vie exceptionnel de 154 à 171 m².
+                      Trois chambres généreuses, double séjour et vaste terrasse panoramique font de ces
+                      appartements une référence absolue du luxe résidentiel algérois.
+                    </p>
+                  </Reveal>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {activeType === 'villas' && (
+            <section id="villas" style={{ background: 'var(--bg-2)', borderTop: '1px solid rgba(var(--line-rgb),0.04)', borderBottom: '1px solid rgba(var(--line-rgb),0.04)', padding: 'clamp(60px, 10vw, 140px) 0 0' }}>
+              {/* Villa selector + level plans */}
+              <div style={{ padding: '0 clamp(24px, 5vw, 64px) clamp(48px, 7vw, 96px)', maxWidth: 1300, margin: '0 auto' }}>
+                <Reveal>
+                  <div style={{ textAlign: 'center', marginBottom: 'clamp(36px, 5vw, 48px)' }}>
+                    <Eyebrow color={TEAL}>{villasEyebrow}</Eyebrow>
+                    <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(24px, 4vw, 52px)', fontWeight: 400, margin: 0 }}>
+                      {villasTitle}
+                    </h2>
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 10, marginBottom: 'clamp(36px, 4vw, 52px)' }}>
+                    {villasList.map((v: any, i: number) => (
+                      <button
+                        key={v.ref}
+                        onClick={() => { setVilla(i); setVillaLevel(0) }}
+                        style={{
+                          padding: '12px 26px', cursor: 'pointer', textAlign: 'center',
+                          background: villa === i ? TEAL : 'transparent',
+                          border: `1px solid ${villa === i ? TEAL : 'rgba(var(--line-rgb),0.15)'}`,
+                          color: villa === i ? '#04211e' : 'rgba(var(--text-rgb),0.7)',
+                          fontFamily: "'Plus Jakarta Sans', sans-serif", borderRadius: 2, transition: 'all 0.3s ease',
+                        }}
+                      >
+                        <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.75 }}>{v.ref}</span>
+                        <span style={{ display: 'block', fontSize: 13, fontWeight: 600, marginTop: 2 }}>{v.pieces}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: 0, marginBottom: 'clamp(28px, 3vw, 40px)', borderBottom: '1px solid rgba(var(--line-rgb),0.1)' }}>
+                    {villasList[villa].levels.map((lv: any, li: number) => (
+                      <button
+                        key={lv.label}
+                        onClick={() => setVillaLevel(li)}
+                        style={{
+                          padding: '12px 28px', cursor: 'pointer', background: 'transparent', border: 'none',
+                          borderBottom: `2px solid ${villaLevel === li ? TEAL : 'transparent'}`,
+                          color: villaLevel === li ? TEAL : 'rgba(var(--text-rgb),0.5)',
+                          fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.1em',
+                          textTransform: 'uppercase', fontWeight: villaLevel === li ? 600 : 400,
+                          transition: 'all 0.25s ease', marginBottom: -1,
+                        }}
+                      >
+                        {lv.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <motion.div
+                    key={`villa-${villa}-${villaLevel}`}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45, ease: EASE }}
+                    style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 'clamp(28px, 4vw, 64px)', alignItems: 'center', maxWidth: 1180, margin: '0 auto' }}
+                    className="ast-residences"
+                  >
+                    <div style={{ padding: 'clamp(16px, 3vw, 36px)', background: '#fff', borderRadius: 4, boxShadow: '0 4px 32px rgba(0,0,0,0.08)' }}>
+                      <img
+                        src={villasList[villa].levels[villaLevel].img}
+                        alt={`${villasList[villa].ref} · ${villasList[villa].levels[villaLevel].label}`}
+                        style={{ width: '100%', height: 'auto', display: 'block' }}
+                      />
+                    </div>
+                    <div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                        <a
+                          href={waVilla(whatsapp, villasList[villa].ref)}
+                          target="_blank" rel="noopener noreferrer"
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '14px 26px', background: TEAL, color: '#04211e', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, fontWeight: 600, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, boxShadow: `0 8px 26px ${TEAL}33`, transition: 'transform 0.25s ease, box-shadow 0.25s ease' }}
+                          onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 12px 34px ${TEAL}55` }}
+                          onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 8px 26px ${TEAL}33` }}
+                        >
+                          <MessageCircle size={17} /> Demander cette villa
+                        </a>
+                        <Link
+                          to="/contact"
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 24px', border: '1px solid rgba(var(--line-rgb),0.18)', color: 'rgba(var(--text-rgb),0.85)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, letterSpacing: '0.06em', textDecoration: 'none', borderRadius: 3, transition: 'border-color 0.3s ease' }}
+                          onMouseEnter={(e) => { e.currentTarget.style.borderColor = TEAL }}
+                          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(var(--line-rgb),0.18)' }}
+                        >
+                          Visite privée
+                        </Link>
+                      </div>
+                    </div>
+                  </motion.div>
+                </Reveal>
+              </div>
+
+              {/* Hero intro: exterior render + text below plans */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 520, borderTop: '1px solid rgba(var(--line-rgb),0.04)' }} className="ast-split">
+                <div style={{ overflow: 'hidden', position: 'relative' }}>
+                  <img
+                    src="/images/asteria/villa-exterior.png"
+                    alt="Les Villas ASTERIA, piscines privées aux niveaux 8 et 9"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, transparent 60%, var(--bg-2))' }} />
+                </div>
+                <Reveal>
+                  <div style={{ padding: 'clamp(48px, 7vw, 100px) clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <Eyebrow color={TEAL}>Le Prestige Absolu</Eyebrow>
+                    <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(30px, 4.5vw, 60px)', fontWeight: 400, lineHeight: 1.1, margin: '0 0 24px' }}>
+                      Le ciel comme<br /><span style={{ color: TEAL }}>horizon</span>
+                    </h2>
+                    <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.65)', maxWidth: 460, margin: '0 0 32px' }}>
+                      Quatre villas d'exception aux niveaux 8 et 9 d'ASTERIA. Chacune s'étend sur deux niveaux
+                      avec un toit-terrasse privatif, piscine à débordement, home cinéma et entrée indépendante.
+                    </p>
+                    <div style={{ display: 'flex', gap: 32 }}>
+                      {[['4', 'Villas'], ['3', 'Niveaux'], ['4+', 'Chambres']].map(([n, l]) => (
+                        <div key={l}>
+                          <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 700, color: TEAL, lineHeight: 1 }}>{n}</div>
+                          <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.5)', marginTop: 4 }}>{l}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Reveal>
+              </div>
+            </section>
+          )}
+        </motion.div>
+      </AnimatePresence>
 
       {/* ── ARCHITECTURE FEATURE ── */}
       <section style={{ padding: 'clamp(40px, 8vw, 100px) clamp(24px, 5vw, 64px)' }}>
