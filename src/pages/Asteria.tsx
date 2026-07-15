@@ -480,7 +480,7 @@ export default function Asteria() {
                     onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 12px 34px ${TEAL}55` }}
                     onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 8px 26px ${TEAL}33` }}
                   >
-                    <MessageCircle size={17} /> Demander cette résidence
+                    <MessageCircle size={17} /> Demander cette suite
                   </a>
                   <Link
                     to="/contact"
@@ -563,7 +563,7 @@ export default function Asteria() {
                     onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 12px 34px ${TEAL}55` }}
                     onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 8px 26px ${TEAL}33` }}
                   >
-                    <MessageCircle size={17} /> Demander cette résidence
+                    <MessageCircle size={17} /> Demander cette suite
                   </a>
                   <Link
                     to="/contact"
