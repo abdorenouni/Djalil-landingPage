@@ -205,7 +205,7 @@ export default function Asteria() {
   const heroEyebrow = doc?.heroEyebrow || 'Élite Promotion Immobilière présente'
   const heroTitle = doc?.heroTitle || 'ASTERIA'
   const heroSubtitle = doc?.heroSubtitle || 'Luxury Living'
-  const heroImgSrc = img(doc?.heroImage, 2000) || '/images/asteria/building-hero.jpg'
+  const heroImgSrc = '/images/asteria/asteria-hero.png'
 
   const ctaTitle = doc?.ctaTitle || ''
   const ctaLabel = doc?.ctaLabel || ''
@@ -282,9 +282,9 @@ export default function Asteria() {
         title="ASTERIA — Résidence de prestige à Alger"
         description="ASTERIA, la résidence signature d'Elite Promotion à Alger : balcons ondulants, cascades suspendues, piscines à débordement et finitions haut standing. F3 de 103 à 110 m²."
         path="/projets/asteria"
-        image="/images/asteria/building-hero.jpg"
+        image="/images/asteria/asteria-hero.png"
         jsonLd={[
-          residenceLd({ name: 'ASTERIA', description: "Résidence de prestige à Alger signée Elite Promotion Immobilière.", image: '/images/asteria/building-hero.jpg', location: 'Alger', path: '/projets/asteria' }),
+          residenceLd({ name: 'ASTERIA', description: "Résidence de prestige à Alger signée Elite Promotion Immobilière.", image: '/images/asteria/asteria-hero.png', location: 'Alger', path: '/projets/asteria' }),
           breadcrumbLd([{ name: 'Accueil', path: '/' }, { name: 'Nos Projets', path: '/projets' }, { name: 'ASTERIA', path: '/projets/asteria' }]),
         ]}
       />
