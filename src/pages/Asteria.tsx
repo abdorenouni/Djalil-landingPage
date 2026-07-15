@@ -75,7 +75,7 @@ const PLANS_F4 = [
 /* Les 4 Villas ASTERIA */
 const VILLAS_PLANS = [
   {
-    ref: 'V-01', pieces: 'Villa · Duplex', chambres: 4, sdb: 3, piscine: 'Piscine privée 36 m²', exposition: 'Plein sud',
+    ref: 'V-01', pieces: 'Villa', chambres: 4, sdb: 3, piscine: 'Piscine privée 36 m²', exposition: 'Plein sud',
     levels: [
       { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Piscine', img: '/images/asteria/plan-villa-1-n8.png' },
       { label: 'Niveau 9 · Nuit', sub: 'Chambres · Dressing · Hammam', img: '/images/asteria/plan-villa-1-n9.png' },
@@ -83,7 +83,7 @@ const VILLAS_PLANS = [
     ],
   },
   {
-    ref: 'V-02', pieces: 'Villa · Duplex', chambres: 4, sdb: 3, piscine: 'Piscine privée 15 m²', exposition: 'Plein ouest',
+    ref: 'V-02', pieces: 'Villa', chambres: 4, sdb: 3, piscine: 'Piscine privée 15 m²', exposition: 'Plein ouest',
     levels: [
       { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-2-n8.jpg' },
       { label: 'Niveau 9 · Nuit', sub: 'Chambres · Dressing · Home Cinéma', img: '/images/asteria/plan-villa-2-n9.png' },
@@ -91,7 +91,7 @@ const VILLAS_PLANS = [
     ],
   },
   {
-    ref: 'V-03', pieces: 'Villa · Duplex', chambres: 4, sdb: 3, piscine: 'Piscine privée panoramique', exposition: 'Multi-exposition',
+    ref: 'V-03', pieces: 'Villa', chambres: 4, sdb: 3, piscine: 'Piscine privée panoramique', exposition: 'Multi-exposition',
     levels: [
       { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Cheminée', img: '/images/asteria/plan-villa-3-n8.png' },
       { label: 'Niveau 9 · Nuit', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-3-n9.png' },
@@ -99,7 +99,7 @@ const VILLAS_PLANS = [
     ],
   },
   {
-    ref: 'V-04', pieces: 'Villa · Duplex', chambres: 4, sdb: 3, piscine: "Piscine privée Baie d'Alger", exposition: 'Angle premium',
+    ref: 'V-04', pieces: 'Villa', chambres: 4, sdb: 3, piscine: "Piscine privée Baie d'Alger", exposition: 'Angle premium',
     levels: [
       { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-4-n8.png' },
       { label: 'Niveau 9 · Nuit', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-4-n9.png' },
@@ -237,7 +237,7 @@ export default function Asteria() {
   const villasTitle = doc?.villasTitle || 'Les Villas ASTERIA'
   const villasList = doc?.villas?.length
     ? doc.villas.map((v: any) => ({
-        ref: v.ref, pieces: 'Villa · Duplex', chambres: v.chambres, sdb: v.sdb,
+        ref: v.ref, pieces: 'Villa', chambres: v.chambres, sdb: v.sdb,
         piscine: v.piscine, exposition: v.exposition,
         levels: (v.levels?.length ? v.levels : VILLAS_PLANS[0].levels).map((lv: any) => ({
           label: lv.label, sub: lv.sub, img: img(lv.image, 1200) || VILLAS_PLANS[0].levels[0].img,
