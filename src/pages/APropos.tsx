@@ -180,19 +180,16 @@ export default function APropos() {
         </p>
       </section>
 
-      {/* ── 01 · MISSION split ── */}
-      <section style={{ padding: 'clamp(20px, 5vw, 60px) clamp(24px, 5vw, 64px)' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center' }} className="ap-split">
+      {/* ── 01 · MISSION (Centered, no image) ── */}
+      <section style={{ padding: 'clamp(60px, 10vw, 120px) clamp(24px, 5vw, 64px)' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
           <Reveal>
-            <ParallaxImage src={mission.img} alt="Espaces signés Elite Promotion" aspect="4/5" />
-          </Reveal>
-          <Reveal delay={0.15}>
             <Eyebrow>{mission.eyebrow}</Eyebrow>
             <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 4.2vw, 56px)', fontWeight: 400, lineHeight: 1.12, margin: '0 0 26px' }}>
               {mission.title1}<br /><span style={{ color: TEAL }}>{mission.title2}</span>
             </h2>
             {mission.paras.map((p: string, i: number) => (
-              <p key={i} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: i === 0 ? 'rgba(var(--text-rgb),0.65)' : 'rgba(var(--text-rgb),0.5)', marginBottom: i === 0 ? 20 : 0, maxWidth: 480 }}>{p}</p>
+              <p key={i} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: i === 0 ? 'rgba(var(--text-rgb),0.65)' : 'rgba(var(--text-rgb),0.5)', marginBottom: i === 0 ? 20 : 0, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>{p}</p>
             ))}
           </Reveal>
         </div>
@@ -200,22 +197,37 @@ export default function APropos() {
 
       {/* ── 02 / 03 · PHILOSOPHY zig-zag ── */}
       {philosophy.map((b: any, idx: number) => {
-        const imgEl = (
+        const isLobbyBlock = idx === 0 || b.index === '02';
+        const showImage = b.img && !isLobbyBlock;
+
+        const imgEl = showImage ? (
           <Reveal key="img">
-            <ParallaxImage src={b.img || FALLBACK_PHILOSOPHY[0].img} alt={b.title1 || 'Philosophie Elite'} aspect="4/5" range={16} />
+            <ParallaxImage src={b.img} alt={b.title1 || 'Philosophie Elite'} aspect="4/5" range={16} />
           </Reveal>
-        )
+        ) : null;
+
         const txtEl = (
-          <Reveal key="txt" delay={0.15}>
+          <Reveal key="txt" delay={showImage ? 0.15 : 0}>
             <Eyebrow>{b.eyebrow}</Eyebrow>
             <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 4.2vw, 56px)', fontWeight: 400, lineHeight: 1.12, margin: '0 0 26px' }}>
               {b.title1}<br /><span style={{ color: TEAL }}>{b.title2}</span>
             </h2>
-            <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.6)', maxWidth: 480 }}>
+            <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(15px, 1.1vw, 18px)', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.6)', maxWidth: showImage ? 480 : 640, marginLeft: showImage ? '0' : 'auto', marginRight: showImage ? '0' : 'auto' }}>
               {b.text}
             </p>
           </Reveal>
-        )
+        );
+
+        if (!showImage) {
+          return (
+            <section key={(b.index || idx) + ''} style={{ padding: 'clamp(60px, 10vw, 120px) clamp(24px, 5vw, 64px)' }}>
+              <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {txtEl}
+              </div>
+            </section>
+          )
+        }
+
         return (
           <section key={(b.index || idx) + ''} style={{ padding: 'clamp(48px, 8vw, 110px) clamp(24px, 5vw, 64px)' }}>
             <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(32px, 5vw, 90px)', alignItems: 'center' }} className="ap-split">
