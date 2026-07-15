@@ -18,11 +18,11 @@ interface ProjectCard {
 /* Teaser mix — each card links to its own project detail page */
 const projects: ProjectCard[] = [
   { id: 1, title: 'ASTERIA', location: 'Alger', image: '/images/asteria/asteria-hero.png', year: '2025', featured: true, to: '/projets/asteria' },
-  { id: 2, title: 'MAGNOLIA', location: 'Oran', image: '/images/carousel-2.jpg', year: '2026', to: '/projets/magnolia' },
+  { id: 2, title: 'MAGNOLIA', location: 'Oran', image: '/images/magnolia/3A2C0AAE-608F-4B79-90BE-6B92E97E4C1F.png', year: '2026', to: '/projets/magnolia' },
   { id: 3, title: 'ASTERIA · Les Terrasses', location: 'Alger', image: '/images/asteria/balcony-1.jpg', year: '2025', to: '/projets/asteria' },
-  { id: 4, title: 'MAGNOLIA · Les Jardins', location: 'Oran', image: '/images/carousel-1.jpg', year: '2026', to: '/projets/magnolia' },
+  { id: 4, title: 'MAGNOLIA · Les Jardins', location: 'Oran', image: '/images/magnolia/6A5DB9C9-F082-496D-905F-1142989BEE99.png', year: '2026', to: '/projets/magnolia' },
   { id: 5, title: 'ASTERIA · Les Séjours', location: 'Alger', image: '/images/asteria/living-1.jpg', year: '2025', to: '/projets/asteria' },
-  { id: 6, title: 'MAGNOLIA · Les Espaces', location: 'Oran', image: '/images/service-1.jpg', year: '2026', to: '/projets/magnolia' },
+  { id: 6, title: 'MAGNOLIA · Les Espaces', location: 'Oran', image: '/images/magnolia/96A19E33-DCA6-48AB-A511-6C701D3C9F55.png', year: '2026', to: '/projets/magnolia' },
 ]
 
 function ProjectCarousel({
