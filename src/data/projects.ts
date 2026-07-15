@@ -1,11 +1,18 @@
 /**
  * Projects catalogue.
  * ASTERIA is the real flagship (has its own bespoke showroom page).
- * MAGNOLIA is a FAKE TEST project (placeholder pics + invented info) used to
- * demonstrate the multi-project listing + the generic detail page.
+ * MAGNOLIA is a beachfront residence in Oran with premium renders.
  */
 
 export interface ProjectStat { n: string; l: string }
+
+export interface GalleryItem {
+  src: string
+  caption: string
+  desc?: string
+  aspect?: string // CSS aspect-ratio, e.g. '16/9', '4/3', '3/4', '1/1'
+  wide?: boolean  // spans both columns in 2-col grid
+}
 
 export interface Project {
   slug: string
@@ -16,6 +23,7 @@ export interface Project {
   status: 'En cours' | 'Livré' | 'À venir'
   cover: string
   gallery: string[]
+  galleryItems?: GalleryItem[] // rich gallery with captions and layout hints
   description: string[]
   stats: ProjectStat[]
   to: string // route to its detail page
@@ -56,39 +64,92 @@ export const PROJECTS: Project[] = [
   {
     slug: 'magnolia',
     name: 'MAGNOLIA',
-    tagline: 'Résidence-Jardin',
+    tagline: 'Résidence Balnéaire',
     location: 'Oran',
     year: '2026',
     status: 'À venir',
-    cover: '/images/carousel-2.jpg',
+    cover: '/images/magnolia/FD6EFAB0-B423-4189-8B31-FC866BF7E3E1.png',
     gallery: [
-      '/images/magnolia/A5585F72-C839-4C50-8250-FCC55FB335B7.png',
+      '/images/magnolia/FD6EFAB0-B423-4189-8B31-FC866BF7E3E1.png',
       '/images/magnolia/3A2C0AAE-608F-4B79-90BE-6B92E97E4C1F.png',
       '/images/magnolia/6A5DB9C9-F082-496D-905F-1142989BEE99.png',
       '/images/magnolia/96A19E33-DCA6-48AB-A511-6C701D3C9F55.png',
       '/images/magnolia/484EAAB8-29C3-4D32-8C84-BE2332D58056.png',
       '/images/magnolia/066FCA3D-8CB6-4F0D-9EBD-82C0CB162806.png',
+      '/images/magnolia/A5585F72-C839-4C50-8250-FCC55FB335B7.png',
       '/images/magnolia/CC978A0A-07F5-485B-947F-CB893B34ABA0.png',
       '/images/magnolia/F1212258-C210-4667-8F23-233E9A9A0649.png',
-      '/images/magnolia/FD6EFAB0-B423-4189-8B31-FC866BF7E3E1.png',
-      '/images/magnolia/IMG_8194.PNG',
-      '/images/magnolia/IMG_8190.PNG',
-      '/images/magnolia/IMG_8191.PNG',
-      '/images/magnolia/IMG_8193.PNG',
-      '/images/magnolia/IMG_7946.JPG',
+    ],
+    galleryItems: [
+      {
+        src: '/images/magnolia/FD6EFAB0-B423-4189-8B31-FC866BF7E3E1.png',
+        caption: 'Vue Panoramique',
+        desc: "Face à la mer, MAGNOLIA s'élève comme une sculpture contemporaine — ses volumes épurés dialoguent avec l'horizon méditerranéen.",
+        aspect: '16/9',
+        wide: true,
+      },
+      {
+        src: '/images/magnolia/3A2C0AAE-608F-4B79-90BE-6B92E97E4C1F.png',
+        caption: 'Terrasse Balnéaire',
+        desc: "Des terrasses généreuses ouvertes sur la mer, où chaque lever de soleil devient un privilège quotidien.",
+        aspect: '4/3',
+      },
+      {
+        src: '/images/magnolia/6A5DB9C9-F082-496D-905F-1142989BEE99.png',
+        caption: 'Espace de Vie',
+        desc: "Des intérieurs lumineux baignés par la lumière marine, conçus pour sublimer chaque instant du quotidien.",
+        aspect: '4/3',
+      },
+      {
+        src: '/images/magnolia/484EAAB8-29C3-4D32-8C84-BE2332D58056.png',
+        caption: 'Piscine à Débordement',
+        desc: "Une piscine à débordement suspendue au-dessus de la Méditerranée — l'eau et l'horizon ne font qu'un.",
+        aspect: '3/4',
+      },
+      {
+        src: '/images/magnolia/96A19E33-DCA6-48AB-A511-6C701D3C9F55.png',
+        caption: 'Architecture Littorale',
+        desc: "Chaque façade est orientée pour capturer la lumière naturelle du littoral, du lever au coucher du soleil.",
+        aspect: '3/4',
+      },
+      {
+        src: '/images/magnolia/066FCA3D-8CB6-4F0D-9EBD-82C0CB162806.png',
+        caption: 'Cadre de Vie Exclusif',
+        desc: "Un environnement pensé pour l'exception : matériaux nobles, finitions sur-mesure et vue imprenable sur la mer.",
+        aspect: '16/9',
+        wide: true,
+      },
+      {
+        src: '/images/magnolia/A5585F72-C839-4C50-8250-FCC55FB335B7.png',
+        caption: 'Suite Parentale',
+        desc: "Des suites parentales avec vue directe sur la mer — s'endormir et se réveiller face à l'horizon, chaque jour.",
+        aspect: '4/3',
+      },
+      {
+        src: '/images/magnolia/CC978A0A-07F5-485B-947F-CB893B34ABA0.png',
+        caption: 'Espaces Communs',
+        desc: "Des espaces communs raffinés, entre sérénité et élégance, pour une expérience de vie au plus près de la mer.",
+        aspect: '4/3',
+      },
+      {
+        src: '/images/magnolia/F1212258-C210-4667-8F23-233E9A9A0649.png',
+        caption: 'Détails & Finitions',
+        desc: "Une attention absolue portée au détail — chaque surface, chaque matière, chaque ligne pensée pour durer.",
+        aspect: '16/9',
+        wide: true,
+      },
     ],
     description: [
-      "MAGNOLIA réinvente la résidence-jardin : des terrasses végétalisées en cascade, des patios suspendus et une lumière qui circule librement entre l'intérieur et le dehors.",
-      "Pensée pour Oran, cette adresse conjugue intimité, verdure et art de vivre méditerranéen, une parenthèse de calme au cœur de la ville.",
+      "MAGNOLIA s'impose face à la Méditerranée : une résidence balnéaire d'exception où l'architecture épurée rencontre l'horizon infini de la mer.",
+      "Pensée pour Oran, cette adresse conjugue intimité, lumière marine et art de vivre littoral — une parenthèse de prestige au bord des flots.",
     ],
     stats: [
-      { n: '8', l: 'Étages jardin' },
+      { n: '8', l: 'Étages vue mer' },
       { n: 'F4', l: 'Résidences 120–145 m²' },
-      { n: '3', l: 'Patios suspendus' },
+      { n: '∞', l: 'Vue sur la Méditerranée' },
       { n: '2027', l: 'Livraison prévue' },
     ],
     to: '/projets/magnolia',
-    isTest: true,
   },
 ]
 

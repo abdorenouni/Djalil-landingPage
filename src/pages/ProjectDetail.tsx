@@ -4,12 +4,118 @@ import { useParams, Navigate } from 'react-router'
 import { Reveal, ParallaxImage, StatMarquee, MagneticCTA, WordReveal, TEAL, GOLD, EASE, useIsMobile } from '@/components/custom/lux'
 import Header from '@/components/custom/Header'
 import SiteFooter from '@/components/custom/SiteFooter'
-import { getProject, type Project } from '@/data/projects'
+import { getProject, type Project, type GalleryItem } from '@/data/projects'
 import { fetchProject } from '@/lib/queries'
 import { Seo, residenceLd, breadcrumbLd } from '@/lib/seo'
 
 function statusColor(s: string) {
   return s === 'En cours' ? TEAL : s === 'Livré' ? GOLD : '#9fb0ae'
+}
+
+/* ── Rich gallery with captions — used when galleryItems is defined ── */
+function RichGallery({ items, name }: { items: GalleryItem[]; name: string }) {
+  return (
+    <section style={{ padding: 'clamp(20px, 4vw, 60px) clamp(24px, 5vw, 64px) clamp(70px, 11vw, 150px)' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+        <Reveal>
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vw, 80px)' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 14, marginBottom: 18 }}>
+              <div style={{ width: 38, height: 1, background: TEAL }} />
+              <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase', color: TEAL }}>La Galerie</span>
+              <div style={{ width: 38, height: 1, background: TEAL }} />
+            </div>
+            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(28px, 4.5vw, 56px)', fontWeight: 400, margin: 0 }}>
+              Chaque vue, un privilège
+            </h2>
+          </div>
+        </Reveal>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(20px, 3.5vw, 48px)' }}>
+          {items.map((item, i) => {
+            if (item.wide) {
+              /* Full-width cinematic row with text below */
+              return (
+                <Reveal key={item.src} delay={0.05}>
+                  <div>
+                    <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 4, aspectRatio: item.aspect || '16/9' }}>
+                      <ParallaxImage src={item.src} alt={item.caption} aspect={item.aspect || '16/9'} range={10} />
+                    </div>
+                    {(item.caption || item.desc) && (
+                      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, marginTop: 20, paddingBottom: 'clamp(14px, 2vw, 24px)', borderBottom: '1px solid rgba(var(--line-rgb),0.07)' }}>
+                        <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.28em', textTransform: 'uppercase', color: TEAL }}>{String(i + 1).padStart(2, '0')} — {item.caption}</span>
+                        {item.desc && (
+                          <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(13px, 1vw, 15px)', lineHeight: 1.7, color: 'rgba(var(--text-rgb),0.55)', margin: 0, maxWidth: 560, textAlign: 'right' }}>
+                            {item.desc}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </Reveal>
+              )
+            }
+
+            /* Pair two non-wide consecutive items side by side */
+            const next = items[i + 1]
+            if (!next || next.wide || i % 2 !== 0) {
+              /* Already rendered as part of a pair, or orphaned single — skip even index check */
+              if (i % 2 !== 0 && !items[i - 1]?.wide) return null
+              /* Orphan single */
+              return (
+                <Reveal key={item.src} delay={0.05}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 24, maxWidth: 720, margin: '0 auto', width: '100%' }}>
+                    <GalleryCard item={item} index={i} />
+                  </div>
+                </Reveal>
+              )
+            }
+
+            /* Two non-wide items → side-by-side with alternating offset */
+            return (
+              <div key={item.src} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 36px)', alignItems: 'flex-start' }} className="pd-rich-pair">
+                <Reveal delay={0}>
+                  <GalleryCard item={item} index={i} />
+                </Reveal>
+                <Reveal delay={0.1}>
+                  <div style={{ marginTop: 'clamp(32px, 5vw, 64px)' }}>
+                    <GalleryCard item={next} index={i + 1} />
+                  </div>
+                </Reveal>
+              </div>
+            )
+          }).filter(Boolean)}
+        </div>
+      </div>
+      <style>{`
+        @media (max-width: 760px) {
+          .pd-rich-pair { grid-template-columns: 1fr !important; }
+          .pd-rich-pair > * { margin-top: 0 !important; }
+        }
+      `}</style>
+    </section>
+  )
+}
+
+function GalleryCard({ item, index }: { item: GalleryItem; index: number }) {
+  return (
+    <figure style={{ margin: 0 }}>
+      <div style={{ overflow: 'hidden', borderRadius: 4 }}>
+        <ParallaxImage src={item.src} alt={item.caption} aspect={item.aspect || '4/3'} range={12} />
+      </div>
+      {(item.caption || item.desc) && (
+        <figcaption style={{ marginTop: 16 }}>
+          <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 10, letterSpacing: '0.26em', textTransform: 'uppercase', color: TEAL, marginBottom: 8 }}>
+            {String(index + 1).padStart(2, '0')} — {item.caption}
+          </span>
+          {item.desc && (
+            <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(13px, 1vw, 15px)', lineHeight: 1.72, color: 'rgba(var(--text-rgb),0.55)', margin: 0 }}>
+              {item.desc}
+            </p>
+          )}
+        </figcaption>
+      )}
+    </figure>
+  )
 }
 
 export default function ProjectDetail() {
@@ -82,15 +188,6 @@ export default function ProjectDetail() {
         </motion.div>
       </div>
 
-      {/* ── TEST NOTICE ── */}
-      {project.isTest && (
-        <div style={{ background: 'rgba(212,175,55,0.08)', borderBottom: '1px solid rgba(212,175,55,0.18)', padding: '12px 24px', textAlign: 'center' }}>
-          <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: GOLD }}>
-            Projet de démonstration — visuels et informations fictifs
-          </span>
-        </div>
-      )}
-
       {/* ── MANIFESTO ── */}
       {project.description.length > 0 && (
         <section style={{ maxWidth: 1000, margin: '0 auto', padding: 'clamp(80px, 13vw, 170px) clamp(24px, 5vw, 64px)', textAlign: 'center' }}>
@@ -131,8 +228,11 @@ export default function ProjectDetail() {
         </div>
       </section>
 
-      {/* ── GALLERY — only when the CMS provides more than the lead image ── */}
-      {project.gallery.length > 1 && (
+      {/* ── RICH GALLERY (captioned) — when galleryItems is defined ── */}
+      {project.galleryItems && project.galleryItems.length > 0 ? (
+        <RichGallery items={project.galleryItems} name={project.name} />
+      ) : project.gallery.length > 1 && (
+        /* ── PLAIN GALLERY fallback ── */
         <section style={{ padding: 'clamp(20px, 4vw, 60px) clamp(24px, 5vw, 64px) clamp(70px, 11vw, 150px)' }}>
           <div style={{ maxWidth: 1400, margin: '0 auto' }}>
             <Reveal>
