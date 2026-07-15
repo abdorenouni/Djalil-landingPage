@@ -471,8 +471,7 @@ export default function Asteria() {
                 <img src={f3Units[plan].img} alt={`Plan ${f3Units[plan].ref} — F3 ${f3Units[plan].surface} m²`} style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
               <div>
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD }}>Résidence {f3Units[plan].ref}</span>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 'clamp(20px, 2.5vw, 28px)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
                   <a
                     href={waResidence(whatsapp, f3Units[plan].ref, f3Units[plan].surface)}
                     target="_blank" rel="noopener noreferrer"
@@ -554,8 +553,7 @@ export default function Asteria() {
                 <img src={f4Units[planF4].img} alt={`Plan ${f4Units[planF4].ref} — ${f4Units[planF4].surface} m²`} style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
               <div>
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL }}>Résidence {f4Units[planF4].ref}</span>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 'clamp(20px, 2.5vw, 28px)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
                   <a
                     href={waResidenceF4(whatsapp, f4Units[planF4].ref, f4Units[planF4].surface)}
                     target="_blank" rel="noopener noreferrer"
