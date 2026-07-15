@@ -52,10 +52,10 @@ export default function Hero() {
   return (
     <section
       id="hero"
+      className="hero-container"
       style={{
         position: 'relative',
         width: '100%',
-        height: '100dvh',
         overflow: 'hidden',
         background: '#000',
       }}
@@ -68,12 +68,12 @@ export default function Hero() {
         playsInline
         preload="auto"
         poster={HERO_IMAGE}
+        className="hero-video"
         style={{
           position: 'absolute',
           inset: 0,
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
           zIndex: 1,
         }}
       >

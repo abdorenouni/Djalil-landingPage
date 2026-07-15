@@ -277,3 +277,23 @@
     min-height: 260px;
   }
 }
+
+/* Hero section responsive height and video alignment */
+.hero-container {
+  height: 100dvh;
+}
+
+.hero-video {
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    height: 55dvh; /* Reduces zoom effect on mobile by showing more video width */
+  }
+  .hero-video {
+    object-position: center; /* Can adjust x/y centering if needed */
+  }
+}
+
