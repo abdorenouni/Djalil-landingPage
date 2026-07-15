@@ -87,9 +87,10 @@ export default function APropos() {
   const keywords: string[] = ap?.marqueeKeywords?.length ? ap.marqueeKeywords : FALLBACK_KEYWORDS
   const storyText = ap?.storyText || FALLBACK_STORY
 
+  const rawMissionEyebrow = ap?.missionEyebrow || FALLBACK_MISSION.eyebrow
   const mission = {
     index: ap?.missionIndex || '01',
-    eyebrow: ap?.missionEyebrow || FALLBACK_MISSION.eyebrow,
+    eyebrow: rawMissionEyebrow.toLowerCase() === 'nos missions' ? 'Notre Mission' : rawMissionEyebrow,
     title1: ap?.missionTitle1 || FALLBACK_MISSION.title1,
     title2: ap?.missionTitle2 || FALLBACK_MISSION.title2,
     img: img(ap?.missionImage, 1200) || FALLBACK_MISSION.img,
