@@ -719,7 +719,7 @@ export default function Asteria() {
             </p>
           </Reveal>
           <Reveal delay={0.15}>
-            <ParallaxImage src="/images/asteria/building-front.jpg" alt="Façade ondulante d'ASTERIA" aspect="3/4" />
+            <ParallaxImage src="/images/asteria/building-front.png" alt="Façade ondulante d'ASTERIA" aspect="3/4" />
           </Reveal>
         </div>
       </section>
