@@ -738,12 +738,22 @@ export default function Asteria() {
           <Reveal delay={0.1}>
             <ParallaxImage src="/images/asteria/common-pool.jpg" alt="Piscine intérieure sous plafond étoilé" aspect="16/9" range={8} />
           </Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(16px, 2.5vw, 32px)', marginTop: 'clamp(16px, 2.5vw, 32px)' }} className="ast-gallery">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(20px, 3.5vw, 40px)', marginTop: 'clamp(20px, 3.5vw, 40px)' }} className="ast-gallery">
             <Reveal>
-              <ParallaxImage src="/images/asteria/common-1.jpg" alt="Hall de réception" aspect="4/3" range={10} />
+              <div>
+                <ParallaxImage src="/images/asteria/common-2.png" alt="Façade majestueuse" aspect="4/3" range={10} />
+                <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(13px, 1vw, 15px)', lineHeight: 1.6, color: 'rgba(var(--text-rgb),0.6)', marginTop: 16, textAlign: 'center' }}>
+                  L'enveloppe architecturale d'ASTERIA fusionnant nature et cascades suspendues.
+                </p>
+              </div>
             </Reveal>
             <Reveal delay={0.12}>
-              <ParallaxImage src="/images/asteria/common-2.jpg" alt="Lounge résidents" aspect="4/3" range={10} />
+              <div>
+                <ParallaxImage src="/images/asteria/common-1.jpeg" alt="Espaces communs prestigieux" aspect="4/3" range={10} />
+                <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(13px, 1vw, 15px)', lineHeight: 1.6, color: 'rgba(var(--text-rgb),0.6)', marginTop: 16, textAlign: 'center' }}>
+                  Des intérieurs d'exception alliant raffinement contemporain et confort absolu.
+                </p>
+              </div>
             </Reveal>
           </div>
         </div>
