@@ -40,7 +40,7 @@ export default function Header() {
   const phone = loaded ? settings.phone : FALLBACK_PHONE
   const instagram = loaded ? settings.instagram : FALLBACK_INSTAGRAM
   const cleanWa = (n: string) => { const d = n.replace(/\D/g, ''); return (d.startsWith('0') && d.length === 10) ? '213' + d.slice(1) : d }
-  const waLink = `https://wa.me/${cleanWa(whatsapp || '')}?text=${encodeURIComponent('Bonjour Elite, je suis intéressé par ASTERIA.')}`
+  const waLink = `https://wa.me/${cleanWa(whatsapp || '')}?text=${encodeURIComponent('Bonjour Elite')}`
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 60)

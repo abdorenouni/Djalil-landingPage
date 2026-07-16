@@ -175,7 +175,7 @@ export default function Contact() {
               {WHATSAPP && (
                 <a
                   className="ct-whatsapp"
-                  href={`https://wa.me/${cleanWaNumber(WHATSAPP)}?text=${encodeURIComponent('Bonjour Elite, je suis intéressé par ASTERIA.')}`}
+                  href={`https://wa.me/${cleanWaNumber(WHATSAPP)}?text=${encodeURIComponent('Bonjour Elite')}`}
                   target="_blank" rel="noopener noreferrer"
                   style={{ display: 'flex', alignItems: 'center', gap: 16, padding: 'clamp(18px, 2vw, 24px)', background: `linear-gradient(120deg, ${TEAL}1c, ${TEAL}08)`, border: `1px solid ${TEAL}44`, borderRadius: 12, textDecoration: 'none', transition: 'transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease' }}
                 >
