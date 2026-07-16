@@ -60,12 +60,6 @@ export default function Journal() {
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.25) 55%, transparent 100%)' }} />
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 'clamp(28px, 4vw, 56px)' }}>
               <Meta article={featured} />
-              <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(26px, 4vw, 52px)', fontWeight: 400, color: 'var(--text)', margin: '14px 0 12px', lineHeight: 1.12, maxWidth: 760 }}>
-                {featured.title}
-              </h2>
-              <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(14px, 1.3vw, 17px)', lineHeight: 1.7, color: 'rgba(var(--text-rgb),0.7)', margin: 0, maxWidth: 620 }}>
-                {featured.excerpt}
-              </p>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, marginTop: 22, fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: TEAL }}>
                 Lire l'article <Arrow />
               </span>
