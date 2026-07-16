@@ -1,7 +1,7 @@
 /**
  * Projects catalogue.
  * ASTERIA is the real flagship (has its own bespoke showroom page).
- * MAGNOLIA is a beachfront residence in Oran with premium renders.
+ * MAGNOLIA is a beachfront residence in Boumerdès with premium renders.
  */
 
 export interface ProjectStat { n: string; l: string }
@@ -65,7 +65,7 @@ export const PROJECTS: Project[] = [
     slug: 'magnolia',
     name: 'MAGNOLIA',
     tagline: 'Résidence Balnéaire',
-    location: 'Oran',
+    location: 'Boumerdès',
     year: '2026',
     status: 'À venir',
     cover: '/images/magnolia/FD6EFAB0-B423-4189-8B31-FC866BF7E3E1.png',
@@ -97,15 +97,15 @@ export const PROJECTS: Project[] = [
       },
       {
         src: '/images/magnolia/F1212258-C210-4667-8F23-233E9A9A0649.png',
-        caption: 'Détails & Finitions',
-        desc: "Une attention absolue portée au détail — chaque surface, chaque matière, chaque ligne pensée pour durer.",
+        caption: 'Chambres avec Vue sur la Méditerranée',
+        desc: "Des chambres baignées de lumière, où chaque réveil s'ouvre sur l'immensité de la Méditerranée.",
         aspect: '16/9',
         wide: true,
       },
     ],
     description: [
       "MAGNOLIA s'impose face à la Méditerranée : une résidence balnéaire d'exception où l'architecture épurée rencontre l'horizon infini de la mer.",
-      "Pensée pour Oran, cette adresse conjugue intimité, lumière marine et art de vivre littoral — une parenthèse de prestige au bord des flots.",
+      "Pensée pour Boumerdès, cette adresse conjugue intimité, lumière marine et art de vivre littoral — une parenthèse de prestige au bord des flots.",
     ],
     stats: [
       { n: '8', l: 'Étages vue mer' },

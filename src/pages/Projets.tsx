@@ -130,7 +130,7 @@ function ProjectCard({ project: p }: { project: Project }) {
           {p.status}
         </span>
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 'clamp(24px, 3vw, 40px)', pointerEvents: 'none' }}>
-          <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(24px, 3vw, 38px)', fontWeight: 400, color: 'var(--text)', margin: '0 0 4px' }}>{p.name}</h3>
+          <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(24px, 3vw, 38px)', fontWeight: 400, color: '#fff', margin: '0 0 4px' }}>{p.name}</h3>
           <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, letterSpacing: '0.04em', color: 'rgba(var(--text-rgb),0.6)' }}>{p.tagline}</span>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 14, fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: TEAL }}>
             Découvrir <Arrow />

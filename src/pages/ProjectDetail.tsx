@@ -205,7 +205,6 @@ export default function ProjectDetail() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.1 }}
             style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 26, flexWrap: 'wrap', justifyContent: 'center' }}>
             <span style={{ padding: '6px 14px', borderRadius: 2, background: `${statusColor(project.status)}22`, border: `1px solid ${statusColor(project.status)}66`, color: statusColor(project.status), fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase' }}>{project.status}</span>
-            <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.6)' }}>{project.year} · {project.location}</span>
           </motion.div>
         </motion.div>
       </div>
@@ -282,13 +281,14 @@ export default function ProjectDetail() {
         <Reveal>
           <div style={{ position: 'relative', textAlign: 'center', padding: '0 24px' }}>
             <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(32px, 6vw, 80px)', fontWeight: 700, margin: '0 0 20px', lineHeight: 1.05 }}>
-              {project.name}, sur rendez vous
+              Vivez {project.name}
             </h2>
             <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(14px, 1.2vw, 18px)', color: 'rgba(var(--text-rgb),0.7)', maxWidth: 540, margin: '0 auto 40px', lineHeight: 1.7 }}>
-              Notre équipe vous accueille pour une présentation privée et exclusive.
+              Les résidences sont disponibles sur rendez vous privé. Notre équipe vous accueille
+              pour une visite exclusive.
             </p>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <MagneticCTA label="Réserver une visite" to="/contact" variant="solid" />
+              <MagneticCTA label="Réserver une visite privée" to="/contact" variant="solid" />
             </div>
           </div>
         </Reveal>
