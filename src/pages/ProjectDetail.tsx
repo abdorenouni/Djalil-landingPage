@@ -280,7 +280,7 @@ export default function ProjectDetail() {
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(6,6,6,0.72)' }} />
         <Reveal>
           <div style={{ position: 'relative', textAlign: 'center', padding: '0 24px' }}>
-            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(32px, 6vw, 80px)', fontWeight: 700, margin: '0 0 20px', lineHeight: 1.05 }}>
+            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(32px, 6vw, 80px)', fontWeight: 700, margin: '0 0 20px', lineHeight: 1.05, color: '#fff' }}>
               Vivez {project.name}
             </h2>
             <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(14px, 1.2vw, 18px)', color: 'rgba(var(--text-rgb),0.7)', maxWidth: 540, margin: '0 auto 40px', lineHeight: 1.7 }}>
