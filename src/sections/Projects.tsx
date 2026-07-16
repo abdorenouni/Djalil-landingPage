@@ -94,9 +94,6 @@ function ProjectCarousel({
               )}
 
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '32px 24px', pointerEvents: 'none' }}>
-                <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.2em', color: '#2bbdb0', textTransform: 'uppercase', display: 'block', marginBottom: 8 }}>
-                  {project.year} · {project.location}
-                </span>
                 <h3 className="font-display" style={{ fontSize: 22, fontWeight: 400, color: 'var(--text)', lineHeight: 1.2 }}>
                   {project.title}
                 </h3>
