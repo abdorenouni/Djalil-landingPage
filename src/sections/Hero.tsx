@@ -167,7 +167,7 @@ export default function Hero() {
           alignItems: 'center',
           gap: 8,
           opacity: reduce ? 1 : 0,
-          animation: reduce ? 'none' : `fadeInUp 0.8s ease-out ${introSkipped ? 0.6 : 5.2}s forwards`,
+          animation: reduce ? 'none' : `fadeInUpCentered 0.8s ease-out ${introSkipped ? 0.6 : 5.2}s forwards`,
         }}
       >
         <span
