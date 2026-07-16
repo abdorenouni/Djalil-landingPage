@@ -252,7 +252,7 @@ export default function ProjectDetail() {
 
       {/* ── RICH GALLERY (captioned) — when galleryItems is defined ── */}
       {project.galleryItems && project.galleryItems.length > 0 ? (
-        <RichGallery items={project.galleryItems} name={project.name} />
+        <RichGallery items={project.galleryItems} />
       ) : project.gallery.length > 1 && (
         /* ── PLAIN GALLERY fallback ── */
         <section style={{ padding: 'clamp(20px, 4vw, 60px) clamp(24px, 5vw, 64px) clamp(70px, 11vw, 150px)' }}>

@@ -9,7 +9,7 @@ export default defineType({
     defineField({ name: 'slug', title: 'Slug (URL)', type: 'slug', options: { source: 'title', maxLength: 96 }, validation: (r) => r.required() }),
     defineField({
       name: 'category', title: 'Catégorie', type: 'string',
-      options: { list: ['ASTERIA', 'Architecture', 'Art de vivre', 'Marché', 'Événement', 'Investissement'] },
+      options: { list: ['Investissement', 'Architecture', 'Art de vivre'] },
     }),
     defineField({ name: 'excerpt', title: 'Extrait', type: 'text', rows: 3 }),
     defineField({ name: 'cover', title: 'Image de couverture', type: 'image', options: { hotspot: true }, validation: (r) => r.required() }),

@@ -27,6 +27,25 @@ export default defineType({
       validation: (r) => r.min(3).warning('Recommandé : au moins 3 photos — sinon la section « La Galerie » ne s\'affiche pas sur le site.'),
     }),
     defineField({
+      name: 'galleryItems', title: 'Galerie enrichie (avec légendes)', type: 'array',
+      description: "Galerie avancée avec légende, description et mise en page par photo — utilisée sur la page du projet à la place de la « Galerie » simple quand elle contient au moins une photo. Laisser vide pour utiliser la « Galerie » simple ci-dessus.",
+      of: [{
+        type: 'object', name: 'galleryItem',
+        fields: [
+          { name: 'image', title: 'Photo', type: 'image', options: { hotspot: true }, validation: (r: any) => r.required() },
+          { name: 'caption', title: 'Légende', type: 'string', validation: (r: any) => r.required() },
+          { name: 'desc', title: 'Description', type: 'text', rows: 2 },
+          {
+            name: 'aspect', title: 'Format', type: 'string',
+            options: { list: [{ title: 'Paysage (16/9)', value: '16/9' }, { title: 'Standard (4/3)', value: '4/3' }, { title: 'Portrait (3/4)', value: '3/4' }, { title: 'Carré (1/1)', value: '1/1' }] },
+            initialValue: '4/3',
+          },
+          { name: 'wide', title: 'Pleine largeur', description: 'La photo occupe les deux colonnes de la grille.', type: 'boolean', initialValue: false },
+        ],
+        preview: { select: { title: 'caption', media: 'image' } },
+      }],
+    }),
+    defineField({
       name: 'description', title: 'Description', type: 'array', of: [{ type: 'block' }],
       description: 'Le 1ᵉʳ paragraphe devient la grande phrase d\'introduction de la page ; les suivants forment le texte « Le Projet ».',
       validation: (r) => r.min(1).warning('Sans description, la page du projet perd son introduction.'),

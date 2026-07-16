@@ -55,7 +55,6 @@ const FALLBACK_PHILOSOPHY = [
 const FALLBACK_HERO_WORDS = ['Elite', 'Promotion']
 const FALLBACK_HERO_SUB = 'Immobilière'
 const FALLBACK_HERO_EYEBROW = 'À Propos'
-const FALLBACK_HERO_IMG = '/images/asteria/building-hero.jpg'
 const FALLBACK_STORY = 'Nous ne construisons pas seulement des résidences. Nous façonnons des adresses qui reflètent la réussite de ceux qui les habitent.'
 const FALLBACK_MISSION = {
   eyebrow: 'Notre Mission', title1: "Redéfinir l'art", title2: 'de vivre', img: '/images/asteria/common-1.jpg',

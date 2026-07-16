@@ -16,7 +16,7 @@ function sanityImageUrl(img: any): string {
 
 const PROJECT_QUERY = `*[_type == "project"] | order(order asc) {
   name, "slug": slug.current, tagline, location, year, status,
-  featured, cover, gallery, description, stats, order
+  featured, cover, gallery, galleryItems, description, stats, order
 }`
 
 function mapSanityProject(p: any): Project {
@@ -29,6 +29,15 @@ function mapSanityProject(p: any): Project {
     status: p.status || 'En cours',
     cover: sanityImageUrl(p.cover),
     gallery: (p.gallery || []).map((img: any) => sanityImageUrl(img)),
+    galleryItems: (p.galleryItems || []).length
+      ? p.galleryItems.map((g: any) => ({
+          src: sanityImageUrl(g.image),
+          caption: g.caption || '',
+          desc: g.desc || '',
+          aspect: g.aspect || '4/3',
+          wide: g.wide || false,
+        }))
+      : undefined,
     description: (p.description || []).map((b: any) => b.children?.map((c: any) => c.text).join('') || ''),
     stats: (p.stats || []).map((s: any) => ({ n: s.number, l: s.label })),
     to: `/projets/${p.slug}`,
@@ -45,12 +54,9 @@ export async function fetchProjects(): Promise<Project[]> {
 }
 
 export async function fetchProject(slug: string): Promise<Project | undefined> {
-  // Always use local static data for magnolia — Sanity doesn't have the new
-  // galleryItems, beach-themed content, or updated images.
-  if (slug === 'magnolia') return PROJECTS.find((p) => p.slug === slug)
   try {
     const data = await client.fetch(
-      `*[_type == "project" && slug.current == $slug][0]{ name, "slug": slug.current, tagline, location, year, status, featured, cover, gallery, description, stats }`,
+      `*[_type == "project" && slug.current == $slug][0]{ name, "slug": slug.current, tagline, location, year, status, featured, cover, gallery, galleryItems, description, stats }`,
       { slug }
     )
     if (data) return mapSanityProject(data)
