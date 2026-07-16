@@ -91,6 +91,25 @@ export default function Preloader() {
         overflow: 'hidden', pointerEvents: isOut ? 'none' : 'all', willChange: 'transform',
       }}
     >
+      {/* Portrait phones only: a heavily blurred, scaled-up copy of the same
+          frame fills the letterbox bars so they blend into the video instead
+          of showing a hard-edged black bar. Purely decorative, aria-hidden. */}
+      <video
+        aria-hidden="true"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        src="/videos/intro.mp4"
+        className="pl-video-bg"
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%', objectFit: 'cover',
+          filter: 'blur(60px) brightness(0.7) saturate(1.2)',
+          transform: 'scale(1.3)',
+        }}
+      />
       <video
         ref={videoRef}
         autoPlay
@@ -106,11 +125,14 @@ export default function Preloader() {
         }}
       />
       <style>{`
-        /* Portrait phones: show the FULL intro frame (logo not cropped).
-           The black letterbox bars are invisible on the var(--bg) backdrop.
-           Desktop / landscape keeps object-fit: cover for a full-bleed reveal. */
+        /* Portrait phones: show the FULL intro frame (logo not cropped),
+           with the blurred background layer filling the letterbox bars so
+           the transition from bar to frame is seamless instead of cropped.
+           Desktop / landscape keeps object-fit: cover and hides the blur layer. */
+        .pl-video-bg { display: none; }
         @media (max-aspect-ratio: 1/1) {
           .pl-video { object-fit: contain !important; }
+          .pl-video-bg { display: block !important; }
         }
       `}</style>
 
