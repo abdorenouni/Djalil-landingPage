@@ -153,8 +153,8 @@ export default function Contact() {
     <>
       <section id="contact" style={{ position: 'relative', padding: 'clamp(90px, 13vw, 180px) clamp(24px, 5vw, 80px)', overflow: 'hidden', background: 'var(--bg)' }}>
         {/* Uniform themed background — subtle brand glows only, no photo filigrane */}
-        <div style={{ position: 'absolute', top: '-10%', left: '-5%', width: '55%', height: '70%', background: `radial-gradient(circle, ${TEAL}12 0%, transparent 62%)`, pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '-12%', right: '-6%', width: '48%', height: '60%', background: `radial-gradient(circle, ${GOLD}0e 0%, transparent 65%)`, pointerEvents: 'none' }} />
+        <div className="ct-glow" style={{ position: 'absolute', top: '-10%', left: '-5%', width: '55%', height: '70%', background: `radial-gradient(circle, ${TEAL}12 0%, transparent 62%)`, pointerEvents: 'none' }} />
+        <div className="ct-glow" style={{ position: 'absolute', bottom: '-12%', right: '-6%', width: '48%', height: '60%', background: `radial-gradient(circle, ${GOLD}0e 0%, transparent 65%)`, pointerEvents: 'none' }} />
 
         <div style={{ maxWidth: 1300, margin: '0 auto', position: 'relative' }}>
           {/* Heading */}
@@ -324,6 +324,7 @@ export default function Contact() {
         .ct-row:hover .ct-icon { background: ${TEAL}1f !important; color: ${TEAL} !important; border-color: ${TEAL}66 !important; }
         @media (max-width: 880px) { .contact-grid { grid-template-columns: 1fr !important; } }
         @media (max-width: 520px) { .contact-form-row { grid-template-columns: 1fr !important; } }
+        @media (max-width: 768px) { .ct-glow { display: none !important; } }
       `}</style>
     </>
   )
