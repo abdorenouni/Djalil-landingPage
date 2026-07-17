@@ -17,14 +17,12 @@ interface ProjectCard {
 
 /* Teaser mix — each card links to its own project detail page */
 const projects: ProjectCard[] = [
-  { id: 2, title: 'MAGNOLIA', location: 'Boumerdès', image: '/images/magnolia/3A2C0AAE-608F-4B79-90BE-6B92E97E4C1F.png', year: '2026', to: '/projets/magnolia' },
-  { id: 3, title: 'ASTERIA · Les Terrasses', location: 'Alger', image: '/images/asteria/corner-balcony-view.jpg', year: '2025', to: '/projets/asteria' },
-  { id: 5, title: 'ASTERIA · Les Séjours', location: 'Alger', image: '/images/asteria/living-room-view.jpg', year: '2025', to: '/projets/asteria' },
-  { id: 6, title: 'MAGNOLIA · Les Espaces', location: 'Boumerdès', image: '/images/magnolia/rooftop-pool-view.jpg', year: '2026', to: '/projets/magnolia' },
-  { id: 7, title: 'ASTERIA · Le Cinéma', location: 'Alger', image: '/images/asteria/cinema-room-view.jpg', year: '2025', to: '/projets/asteria' },
-  { id: 8, title: 'MAGNOLIA · Les Chambres', location: 'Boumerdès', image: '/images/magnolia/bedroom-view.jpg', year: '2026', to: '/projets/magnolia' },
-  { id: 9, title: 'ASTERIA · Espace Enfants', location: 'Alger', image: '/images/asteria/kids-playroom-view.jpg', year: '2025', to: '/projets/asteria' },
-  { id: 10, title: 'ASTERIA · Les Séjours', location: 'Alger', image: '/images/asteria/living-room-view-2.jpg', year: '2025', to: '/projets/asteria' },
+  { id: 1, title: 'ASTERIA · Les Salons', location: 'Alger', image: '/images/showcase/starlit-living-room.jpg', year: '2025', to: '/projets/asteria' },
+  { id: 2, title: 'ASTERIA · Les Terrasses', location: 'Alger', image: '/images/showcase/infinity-balcony-view.jpg', year: '2025', to: '/projets/asteria' },
+  { id: 3, title: 'ASTERIA · Signature', location: 'Alger', image: '/images/showcase/building-night-facade.jpg', year: '2025', featured: true, to: '/projets/asteria' },
+  { id: 4, title: 'MAGNOLIA · Les Suites', location: 'Boumerdès', image: '/images/showcase/aerial-suite-pool.jpg', year: '2026', to: '/projets/magnolia' },
+  { id: 5, title: 'ASTERIA · Espace Enfants', location: 'Alger', image: '/images/showcase/rooftop-pool-family.jpg', year: '2025', to: '/projets/asteria' },
+  { id: 6, title: 'MAGNOLIA · Les Espaces', location: 'Boumerdès', image: '/images/showcase/lobby-elevator-aquarium.jpg', year: '2026', to: '/projets/magnolia' },
 ]
 
 function ProjectCarousel({
