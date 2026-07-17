@@ -215,7 +215,7 @@ export default function Contact() {
             </motion.div>
 
             {/* ── RIGHT: meeting request form, then the email form below it ── */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 4vw, 44px)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(56px, 9vw, 88px)' }}>
               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
                   <Video size={18} color={TEAL} />
