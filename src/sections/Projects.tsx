@@ -21,6 +21,10 @@ const projects: ProjectCard[] = [
   { id: 3, title: 'ASTERIA · Les Terrasses', location: 'Alger', image: '/images/asteria/corner-balcony-view.jpg', year: '2025', to: '/projets/asteria' },
   { id: 5, title: 'ASTERIA · Les Séjours', location: 'Alger', image: '/images/asteria/living-room-view.jpg', year: '2025', to: '/projets/asteria' },
   { id: 6, title: 'MAGNOLIA · Les Espaces', location: 'Boumerdès', image: '/images/magnolia/rooftop-pool-view.jpg', year: '2026', to: '/projets/magnolia' },
+  { id: 7, title: 'ASTERIA · Le Cinéma', location: 'Alger', image: '/images/asteria/cinema-room-view.jpg', year: '2025', to: '/projets/asteria' },
+  { id: 8, title: 'MAGNOLIA · Les Chambres', location: 'Boumerdès', image: '/images/magnolia/bedroom-view.jpg', year: '2026', to: '/projets/magnolia' },
+  { id: 9, title: 'ASTERIA · Espace Enfants', location: 'Alger', image: '/images/asteria/kids-playroom-view.jpg', year: '2025', to: '/projets/asteria' },
+  { id: 10, title: 'ASTERIA · Les Séjours', location: 'Alger', image: '/images/asteria/living-room-view-2.jpg', year: '2025', to: '/projets/asteria' },
 ]
 
 function ProjectCarousel({
