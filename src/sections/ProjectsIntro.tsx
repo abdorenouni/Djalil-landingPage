@@ -6,7 +6,6 @@ import { useSiteSettings } from '@/lib/useSiteSettings'
 
 const SCENES = [
   { num: '01', word: 'Nos Intérieurs', sub: "L'art de l'espace et de la lumière", img: '/images/asteria/living-1.jpg', to: '/univers/interieurs' },
-  { num: '02', word: 'Nos Design', sub: 'Le détail comme signature', img: '/images/asteria/bathroom-1.jpg', to: '/univers/design' },
 ]
 
 function CategoryScene({ scene }: { scene: (typeof SCENES)[number] }) {

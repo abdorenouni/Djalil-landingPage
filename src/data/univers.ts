@@ -59,40 +59,6 @@ export const UNIVERS: Univers[] = [
     variant: 'gallery',
     show3D: false,
   },
-  {
-    slug: 'design',
-    num: '02',
-    kicker: "L'Univers Elite",
-    title: 'Nos Design',
-    tagline: 'Le détail comme signature',
-    hero: '/images/univers/design/building-01.jpg',
-    intro: [
-      "Le design Elite se reconnaît à ce qui ne se voit pas au premier regard : la justesse d'une jonction, la noblesse d'un matériau, la lumière pensée centimètre par centimètre.",
-      "De la façade ondulante à la dernière poignée de porte, une même main, une même exigence, une signature architecturale cohérente du gros œuvre à la finition.",
-    ],
-    features: [
-      { title: 'Façade vivante', text: 'Des courbes qui défient la ligne droite, sculptées pour capter la lumière.' },
-      { title: 'Finitions sur-mesure', text: 'Chaque détail dessiné, prototypé et validé avant la pose.' },
-      { title: 'Lumière maîtrisée', text: 'Un éclairage pensé pièce par pièce, du jour artificiel au coucher.' },
-    ],
-    gallery: [
-      { src: '/images/univers/design/building-01.jpg', caption: 'ASTERIA · façade signature' },
-      { src: '/images/univers/design/building-02.jpg', caption: 'Volumes sculptés · jeu d\'ombres' },
-      { src: '/images/univers/design/building-03.jpg', caption: 'Vue d\'ensemble · contexte urbain' },
-      { src: '/images/univers/design/plan-f3-01.jpg', caption: 'Plan 3D · F3 typique' },
-      { src: '/images/univers/design/plan-f4-01.jpg', caption: 'Plan 3D · F4 traversant' },
-      { src: '/images/univers/design/plan-villa-01.jpg', caption: 'Villa · plan d\'étage' },
-      { src: '/images/univers/design/plan-villa-02.jpg', caption: 'Villa · niveau supérieur' },
-    ],
-    quote: 'Le luxe, ce sont mille décisions invisibles prises correctement.',
-    stats: [
-      { n: '100%', l: 'Sur-mesure' },
-      { n: '10+', l: "Années d'expertise" },
-      { n: '24/7', l: 'Accompagnement' },
-    ],
-    variant: 'editorial',
-    show3D: true,
-  },
 ]
 
 export const getUnivers = (slug?: string) => UNIVERS.find((u) => u.slug === slug)
