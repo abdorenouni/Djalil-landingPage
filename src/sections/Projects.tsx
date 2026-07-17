@@ -17,7 +17,6 @@ interface ProjectCard {
 
 /* Teaser mix — each card links to its own project detail page */
 const projects: ProjectCard[] = [
-  { id: 1, title: 'ASTERIA', location: 'Alger', image: '/images/asteria/bedroom-view.jpg', year: '2025', featured: true, to: '/projets/asteria' },
   { id: 2, title: 'MAGNOLIA', location: 'Boumerdès', image: '/images/magnolia/3A2C0AAE-608F-4B79-90BE-6B92E97E4C1F.png', year: '2026', to: '/projets/magnolia' },
   { id: 3, title: 'ASTERIA · Les Terrasses', location: 'Alger', image: '/images/asteria/corner-balcony-view.jpg', year: '2025', to: '/projets/asteria' },
   { id: 4, title: 'MAGNOLIA · Les Jardins', location: 'Boumerdès', image: '/images/magnolia/6A5DB9C9-F082-496D-905F-1142989BEE99.png', year: '2026', to: '/projets/magnolia' },
@@ -92,12 +91,6 @@ function ProjectCarousel({
                   Signature
                 </span>
               )}
-
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '32px 24px', pointerEvents: 'none' }}>
-                <h3 className="font-display" style={{ fontSize: 22, fontWeight: 400, color: 'var(--text)', lineHeight: 1.2 }}>
-                  {project.title}
-                </h3>
-              </div>
             </div>
           </Link>
         ))}
