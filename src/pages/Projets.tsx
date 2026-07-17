@@ -74,7 +74,7 @@ export default function Projets() {
                 <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 'clamp(36px, 7vw, 96px)', color: '#fff', margin: '0 0 6px', lineHeight: 0.98 }}>{featured.name}</h2>
                 {/* Catalog banner always reads "Luxury Living" — brand-level messaging,
                     independent of whichever project happens to be featured. */}
-                <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(12px, 1.6vw, 17px)', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.8)', margin: 0 }}>Luxury Living</p>
+                <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(12px, 1.6vw, 17px)', letterSpacing: '0.28em', textTransform: 'uppercase', color: '#fff', margin: 0 }}>Luxury Living</p>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, marginTop: 22, fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: TEAL }}>
                   Découvrir la résidence <Arrow />
                 </span>
@@ -138,7 +138,7 @@ function ProjectCard({ project: p }: { project: Project }) {
           <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 'clamp(24px, 3vw, 38px)', color: '#fff', margin: '0 0 6px', lineHeight: 0.98 }}>{p.name}</h3>
           {/* Catalog card always reads "Luxury Living" to match the featured banner —
               independent of the project's own tagline (shown on its detail page). */}
-          <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(12px, 1.6vw, 17px)', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.8)', margin: 0 }}>Luxury Living</p>
+          <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(12px, 1.6vw, 17px)', letterSpacing: '0.28em', textTransform: 'uppercase', color: '#fff', margin: 0 }}>Luxury Living</p>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, marginTop: 22, fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: TEAL }}>
             Découvrir la résidence <Arrow />
           </span>
