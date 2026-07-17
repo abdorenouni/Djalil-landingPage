@@ -671,7 +671,7 @@ export default function Asteria() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 520, borderTop: '1px solid rgba(var(--line-rgb),0.04)' }} className="ast-split">
                 <div style={{ overflow: 'hidden', position: 'relative' }}>
                   <img
-                    src="/images/asteria/villa-exterior.png"
+                    src="/images/asteria/villa-exterior-new.png"
                     alt="Les Villas ASTERIA, piscines privées aux niveaux 8 et 9"
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   />
