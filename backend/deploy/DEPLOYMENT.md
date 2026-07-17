@@ -34,7 +34,8 @@ cd /var/www/elite-backend
 composer install --no-dev --optimize-autoloader
 
 cp deploy/.env.production.example .env
-nano .env          # compléter DB_PASSWORD, REVERB_*, MAIL_*, domaines
+# MAIL_* et ZOOM_* sont déjà pré-remplis et vérifiés fonctionnels.
+nano .env          # compléter DB_PASSWORD, REVERB_*, domaines réels
 php artisan key:generate
 
 php artisan migrate --force
