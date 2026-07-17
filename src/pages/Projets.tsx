@@ -69,10 +69,12 @@ export default function Projets() {
                   <span style={{ padding: '6px 14px', borderRadius: 2, background: `${statusColor(featured.status)}26`, border: `1px solid ${statusColor(featured.status)}66`, color: statusColor(featured.status), fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
                     {featured.status}
                   </span>
-                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL }}>{featured.year} · {featured.location}</span>
+                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL }}>{featured.location}</span>
                 </div>
                 <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 'clamp(36px, 7vw, 96px)', color: '#fff', margin: '0 0 6px', lineHeight: 0.98 }}>{featured.name}</h2>
-                <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(12px, 1.6vw, 17px)', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.8)', margin: 0 }}>{featured.tagline}</p>
+                {/* Catalog banner always reads "Luxury Living" — brand-level messaging,
+                    independent of whichever project happens to be featured. */}
+                <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(12px, 1.6vw, 17px)', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.8)', margin: 0 }}>Luxury Living</p>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, marginTop: 22, fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: TEAL }}>
                   Découvrir la résidence <Arrow />
                 </span>
@@ -126,15 +128,19 @@ function ProjectCard({ project: p }: { project: Project }) {
       <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', borderRadius: 5 }}>
         <img src={p.cover} alt={p.name} loading="lazy" decoding="async" className="prj-card-img" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.8s cubic-bezier(0.16,1,0.3,1)' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.12) 55%, transparent 100%)', pointerEvents: 'none' }} />
-        <span style={{ position: 'absolute', top: 18, left: 18, padding: '5px 13px', borderRadius: 2, background: `${statusColor(p.status)}26`, border: `1px solid ${statusColor(p.status)}66`, color: statusColor(p.status), fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
-          {p.status}
-        </span>
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 'clamp(24px, 3vw, 40px)', pointerEvents: 'none' }}>
-          <span style={{ display: 'block', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL, marginBottom: 8 }}>{p.year} · {p.location}</span>
-          <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(24px, 3vw, 38px)', fontWeight: 400, color: '#fff', margin: '0 0 4px' }}>{p.name}</h3>
-          <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12.5, letterSpacing: '0.04em', color: 'rgba(var(--text-rgb),0.6)' }}>{p.tagline}</span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 14, fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: TEAL }}>
-            Découvrir <Arrow />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 10 }}>
+            <span style={{ padding: '6px 14px', borderRadius: 2, background: `${statusColor(p.status)}26`, border: `1px solid ${statusColor(p.status)}66`, color: statusColor(p.status), fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+              {p.status}
+            </span>
+            <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 12, letterSpacing: '0.22em', textTransform: 'uppercase', color: TEAL }}>{p.location}</span>
+          </div>
+          <h3 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 'clamp(24px, 3vw, 38px)', color: '#fff', margin: '0 0 6px', lineHeight: 0.98 }}>{p.name}</h3>
+          {/* Catalog card always reads "Luxury Living" to match the featured banner —
+              independent of the project's own tagline (shown on its detail page). */}
+          <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(12px, 1.6vw, 17px)', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(var(--text-rgb),0.8)', margin: 0 }}>Luxury Living</p>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, marginTop: 22, fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: TEAL }}>
+            Découvrir la résidence <Arrow />
           </span>
         </div>
       </div>
