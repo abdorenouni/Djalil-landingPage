@@ -6,7 +6,6 @@ import ProjectsIntro from '@/sections/ProjectsIntro'
 import Projects from '@/sections/Projects'
 import Chiffres from '@/sections/Chiffres'
 import Processus from '@/sections/Processus'
-import About from '@/sections/About'
 import JournalTeaser from '@/sections/JournalTeaser'
 import FAQ from '@/sections/FAQ'
 import Contact from '@/sections/Contact'
@@ -30,7 +29,6 @@ export default function Home() {
       {/*
         CURTAIN REVEAL: Hero is sticky behind. As you scroll, the content
         sections slide over it. Content uses zIndex > 0 to layer correctly.
-        Order (client request): Projets first, À Propos moved before Contact.
       */}
       <div style={{ position: 'relative' }}>
         {/* Sticky hero — stays pinned at top while content scrolls over */}
@@ -44,7 +42,6 @@ export default function Home() {
           <ProjectsIntro />
           <ScrollSection><Chiffres /></ScrollSection>
           <ScrollSection><Processus /></ScrollSection>
-          <ScrollSection><About /></ScrollSection>
           <ScrollSection><JournalTeaser /></ScrollSection>
           <ScrollSection><FAQ /></ScrollSection>
           <ScrollSection><Contact /></ScrollSection>
