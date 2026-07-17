@@ -62,7 +62,7 @@ export default function Projets() {
         <Reveal>
           <Link to={featured.to} style={{ display: 'block', textDecoration: 'none' }}>
             <div ref={featRef} className="prj-feat prj-feat-banner force-dark" style={{ position: 'relative', maxWidth: 1400, margin: '0 auto', aspectRatio: '21/9', overflow: 'hidden', borderRadius: 6 }}>
-              <motion.img src={featured.slug === 'asteria' ? '/images/asteria/asteria-hero.png' : featured.cover} alt={featured.name} className="prj-feat-img" style={{ position: 'absolute', inset: '-8% 0', width: '100%', height: '116%', objectFit: 'cover', y: featY, scale: featScale }} />
+              <motion.img src={featured.cover} alt={featured.name} className="prj-feat-img" style={{ position: 'absolute', inset: '-8% 0', width: '100%', height: '116%', objectFit: 'cover', y: featY, scale: featScale }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(5,5,5,0.94) 0%, rgba(5,5,5,0.25) 55%, transparent 100%)' }} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 'clamp(28px, 4vw, 60px)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 10 }}>
@@ -124,7 +124,7 @@ function ProjectCard({ project: p }: { project: Project }) {
   return (
     <Link to={p.to} className="prj-card" style={{ display: 'block', textDecoration: 'none' }}>
       <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', borderRadius: 5 }}>
-        <img src={p.slug === 'asteria' ? '/images/asteria/asteria-hero.png' : p.cover} alt={p.name} loading="lazy" decoding="async" className="prj-card-img" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.8s cubic-bezier(0.16,1,0.3,1)' }} />
+        <img src={p.cover} alt={p.name} loading="lazy" decoding="async" className="prj-card-img" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.8s cubic-bezier(0.16,1,0.3,1)' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.12) 55%, transparent 100%)', pointerEvents: 'none' }} />
         <span style={{ position: 'absolute', top: 18, left: 18, padding: '5px 13px', borderRadius: 2, background: `${statusColor(p.status)}26`, border: `1px solid ${statusColor(p.status)}66`, color: statusColor(p.status), fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
           {p.status}

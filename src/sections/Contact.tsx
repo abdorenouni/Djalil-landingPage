@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Phone, Mail, MapPin, MessageCircle, Instagram, Facebook, Send, Check, ArrowUpRight } from 'lucide-react'
+import { Phone, Mail, MapPin, MessageCircle, Instagram, Facebook, Send, Check, ArrowUpRight, Video } from 'lucide-react'
 import { WordReveal, BezelCard, TEAL, GOLD, EASE } from '@/components/custom/lux'
 import { checkRateLimit } from '@/lib/security'
 import { useSiteSettings } from '@/lib/useSiteSettings'
 import SiteFooter from '@/components/custom/SiteFooter'
+import MeetingRequestForm from '@/components/custom/MeetingRequestForm'
 
 const FALLBACK_WHATSAPP = '213550363604'
 const FALLBACK_PHONE_1 = '0550 36 36 04'
@@ -213,8 +214,17 @@ export default function Contact() {
               </div>
             </motion.div>
 
-            {/* ── RIGHT: form in a bezel card ── */}
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}>
+            {/* ── RIGHT: meeting request form, then the email form below it ── */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 4vw, 44px)' }}>
+              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+                  <Video size={18} color={TEAL} />
+                  <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: TEAL }}>Planifier une réunion Zoom</span>
+                </div>
+                <MeetingRequestForm />
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.9, ease: EASE, delay: 0.25 }}>
               <BezelCard padding="clamp(26px, 3.4vw, 48px)">
                 {sent ? (
                   <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, ease: EASE }} style={{ textAlign: 'center', padding: 'clamp(24px, 4vw, 48px) 0' }}>
@@ -298,7 +308,8 @@ export default function Contact() {
                   </form>
                 )}
               </BezelCard>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
 
           {/* Quick reassurance strip */}
