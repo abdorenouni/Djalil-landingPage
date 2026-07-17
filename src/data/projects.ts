@@ -84,7 +84,7 @@ export const PROJECTS: Project[] = [
       {
         src: '/images/magnolia/FD6EFAB0-B423-4189-8B31-FC866BF7E3E1.png',
         caption: 'Vue Panoramique',
-        desc: "Face à la mer, MAGNOLIA s'élève comme une sculpture contemporaine — ses volumes épurés dialoguent avec l'horizon méditerranéen.",
+        desc: "Face à la mer, MAGNOLIA s'élève comme une sculpture contemporaine. Ses volumes épurés dialoguent avec l'horizon méditerranéen.",
         aspect: '16/9',
         wide: true,
       },

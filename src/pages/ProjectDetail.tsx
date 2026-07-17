@@ -283,11 +283,7 @@ export default function ProjectDetail() {
             <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(32px, 6vw, 80px)', fontWeight: 700, margin: '0 0 20px', lineHeight: 1.05, color: '#fff' }}>
               Vivez {project.name}
             </h2>
-            <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(14px, 1.2vw, 18px)', color: 'rgba(var(--text-rgb),0.7)', maxWidth: 540, margin: '0 auto 40px', lineHeight: 1.7 }}>
-              Les résidences sont disponibles sur rendez vous privé. Notre équipe vous accueille
-              pour une visite exclusive.
-            </p>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
               <MagneticCTA label="Réserver une visite privée" to="/contact" variant="solid" />
             </div>
           </div>
