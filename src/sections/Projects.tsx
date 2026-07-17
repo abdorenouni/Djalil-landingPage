@@ -19,9 +19,8 @@ interface ProjectCard {
 const projects: ProjectCard[] = [
   { id: 2, title: 'MAGNOLIA', location: 'Boumerdès', image: '/images/magnolia/3A2C0AAE-608F-4B79-90BE-6B92E97E4C1F.png', year: '2026', to: '/projets/magnolia' },
   { id: 3, title: 'ASTERIA · Les Terrasses', location: 'Alger', image: '/images/asteria/corner-balcony-view.jpg', year: '2025', to: '/projets/asteria' },
-  { id: 4, title: 'MAGNOLIA · Les Jardins', location: 'Boumerdès', image: '/images/magnolia/6A5DB9C9-F082-496D-905F-1142989BEE99.png', year: '2026', to: '/projets/magnolia' },
   { id: 5, title: 'ASTERIA · Les Séjours', location: 'Alger', image: '/images/asteria/living-room-view.jpg', year: '2025', to: '/projets/asteria' },
-  { id: 6, title: 'MAGNOLIA · Les Espaces', location: 'Boumerdès', image: '/images/magnolia/96A19E33-DCA6-48AB-A511-6C701D3C9F55.png', year: '2026', to: '/projets/magnolia' },
+  { id: 6, title: 'MAGNOLIA · Les Espaces', location: 'Boumerdès', image: '/images/magnolia/rooftop-pool-view.jpg', year: '2026', to: '/projets/magnolia' },
 ]
 
 function ProjectCarousel({
@@ -118,8 +117,9 @@ export default function Projects() {
     return () => ctx.revert()
   }, [])
 
-  const row1 = projects.slice(0, 3)
-  const row2 = projects.slice(3, 6)
+  const mid = Math.ceil(projects.length / 2)
+  const row1 = projects.slice(0, mid)
+  const row2 = projects.slice(mid)
 
   return (
     <section
