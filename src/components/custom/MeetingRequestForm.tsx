@@ -216,11 +216,19 @@ export default function MeetingRequestForm() {
 
           <style>{`
             @media (max-width: 640px){ .rv-row{ grid-template-columns:1fr !important; } }
-            input[type="date"], input[type="time"] { color-scheme: dark; min-height: 48px; }
+            /* Native iOS date/time inputs ignore width:100% + box-sizing and
+               keep an intrinsic width, so they overflow the container on
+               mobile. Stripping the native appearance turns them into normal
+               boxes that respect the field width; the tap-to-open picker still
+               works. */
+            input[type="date"], input[type="time"] {
+              -webkit-appearance: none; appearance: none;
+              color-scheme: dark; min-height: 48px; min-width: 0; max-width: 100%;
+            }
             html:not([data-theme="dark"]) input[type="date"], html:not([data-theme="dark"]) input[type="time"] { color-scheme: light; }
-            /* iOS Safari centres the value inside date/time inputs and shows it
-               in a lighter tone than typed text — left-align it and force the
-               theme text colour so the boxes match the other fields. */
+            /* iOS centres the value and renders it (and the empty jj/mm/aaaa
+               placeholder) in a faint tone — left-align it and force the theme
+               text colour so the boxes read like the other fields. */
             input[type="date"]::-webkit-date-and-time-value,
             input[type="time"]::-webkit-date-and-time-value { text-align: left; margin: 0; }
             input[type="date"]::-webkit-datetime-edit,
