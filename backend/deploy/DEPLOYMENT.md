@@ -179,6 +179,9 @@ toujours coller un lien à la main.
 
 ## 11. Odoo (optionnel) — synchronisation CRM
 
+> 📖 **Guide complet et détaillé : `ODOO_INTEGRATION.md`** (dans ce même
+> dossier `deploy/`). La section ci-dessous n'en est qu'un résumé.
+
 Désactivé par défaut (`ODOO_ENABLED=false`) — aucune demande n'est envoyée
 vers Odoo tant que ce n'est pas activé. Principe : chaque nouvelle demande
 de réunion crée automatiquement une **piste (lead) dans Odoo CRM**
