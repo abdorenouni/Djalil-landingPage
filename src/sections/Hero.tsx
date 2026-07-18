@@ -12,6 +12,42 @@ export default function Hero() {
   const settings = useSiteSettings()
   const textRef = useRef<HTMLDivElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // The hero video sits behind the intro curtain and can fail to autoplay on
+  // mobile (iOS Low Power Mode / occluded-while-covered / slow LTE), leaving
+  // the poster image frozen in place. Force playback: retry as the media
+  // buffers, again once the curtain has lifted, and on the first user gesture
+  // (the one case iOS always honours).
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    let cancelled = false
+    const tryPlay = () => { if (!cancelled) v.play().catch(() => {}) }
+
+    tryPlay()
+    v.addEventListener('loadeddata', tryPlay)
+    v.addEventListener('canplay', tryPlay)
+
+    const onGesture = () => tryPlay()
+    window.addEventListener('touchstart', onGesture, { once: true, passive: true })
+    window.addEventListener('pointerdown', onGesture, { once: true })
+    window.addEventListener('scroll', onGesture, { once: true, passive: true })
+
+    // Retry just after the intro curtain lifts (~4.5s) in case the video was
+    // held paused while fully covered.
+    const afterCurtain = window.setTimeout(tryPlay, 4700)
+
+    return () => {
+      cancelled = true
+      v.removeEventListener('loadeddata', tryPlay)
+      v.removeEventListener('canplay', tryPlay)
+      window.removeEventListener('touchstart', onGesture)
+      window.removeEventListener('pointerdown', onGesture)
+      window.removeEventListener('scroll', onGesture)
+      window.clearTimeout(afterCurtain)
+    }
+  }, [])
 
   // The title reveal originally waited ~4.5s for the intro curtain. Returning
   // visitors and reduced-motion users skip that curtain, so shorten the delay
@@ -62,6 +98,7 @@ export default function Hero() {
     >
       {/* Full-bleed hero video background */}
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop

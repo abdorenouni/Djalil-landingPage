@@ -216,8 +216,15 @@ export default function MeetingRequestForm() {
 
           <style>{`
             @media (max-width: 640px){ .rv-row{ grid-template-columns:1fr !important; } }
-            input[type="date"], input[type="time"] { color-scheme: dark; }
+            input[type="date"], input[type="time"] { color-scheme: dark; min-height: 48px; }
             html:not([data-theme="dark"]) input[type="date"], html:not([data-theme="dark"]) input[type="time"] { color-scheme: light; }
+            /* iOS Safari centres the value inside date/time inputs and shows it
+               in a lighter tone than typed text — left-align it and force the
+               theme text colour so the boxes match the other fields. */
+            input[type="date"]::-webkit-date-and-time-value,
+            input[type="time"]::-webkit-date-and-time-value { text-align: left; margin: 0; }
+            input[type="date"]::-webkit-datetime-edit,
+            input[type="time"]::-webkit-datetime-edit { color: var(--text); padding: 0; line-height: 1.2; }
           `}</style>
         </form>
       )}

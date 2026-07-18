@@ -177,7 +177,7 @@ function QuartierMap() {
 const TYPE_ITEMS = [
   { id: 'f3', label: 'F3', sub: '103–110 m² · 3 Pièces', detail: '4 résidences' },
   { id: 'f4', label: 'F4', sub: '154–171 m² · 4 Pièces', detail: '2 résidences' },
-  { id: 'villas', label: 'Villas', sub: 'Duplex · Piscine privée', detail: '4 villas' },
+  { id: 'villas', label: 'Villas', sub: 'Piscine privée', detail: '4 villas' },
 ]
 
 export default function Asteria() {

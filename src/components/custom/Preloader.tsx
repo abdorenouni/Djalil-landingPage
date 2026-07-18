@@ -64,17 +64,28 @@ export default function Preloader() {
     if (skipped) return
     const v = videoRef.current
     if (!v) return
+    let started = false
     const onEnd = () => exit()
     const onErr = () => {
       if (v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE || v.error) exit()
     }
+    const onPlaying = () => { started = true }
     v.addEventListener('ended', onEnd)
     v.addEventListener('error', onErr)
+    v.addEventListener('playing', onPlaying)
     // Fallback immediately if playback can't start (autoplay blocked, etc).
     v.play().catch(() => exit())
+    // If playback hasn't actually begun shortly after mount (blocked or
+    // stalled on mobile / Low Power Mode), lift the curtain now instead of
+    // leaving a frozen black panel until the 5 s hard safety.
+    const startCheck = window.setTimeout(() => {
+      if (!started || v.currentTime === 0) exit()
+    }, 2000)
     return () => {
       v.removeEventListener('ended', onEnd)
       v.removeEventListener('error', onErr)
+      v.removeEventListener('playing', onPlaying)
+      window.clearTimeout(startCheck)
     }
   }, [skipped]) // eslint-disable-line react-hooks/exhaustive-deps
 
