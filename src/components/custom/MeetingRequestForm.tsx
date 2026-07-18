@@ -50,7 +50,7 @@ function buildWaUrl(whatsapp: string, f: FormState): string {
 }
 
 const inputStyle: React.CSSProperties = {
-  width: '100%', padding: '13px 16px', background: 'rgba(var(--line-rgb),0.03)',
+  width: '100%', minWidth: 0, boxSizing: 'border-box', padding: '13px 16px', background: 'rgba(var(--line-rgb),0.03)',
   border: '1px solid rgba(var(--line-rgb),0.12)', borderRadius: 8,
   color: 'var(--text)', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 14.5,
   outline: 'none', transition: 'border-color 0.3s ease',
@@ -125,7 +125,7 @@ export default function MeetingRequestForm() {
   const err = (k: string) => errors[k]?.[0]
 
   const field = (k: keyof FormState, label: string, props: React.InputHTMLAttributes<HTMLInputElement> = {}) => (
-    <div>
+    <div style={{ minWidth: 0 }}>
       <label htmlFor={`rv-${k}`} style={labelStyle}>{label}</label>
       <input
         id={`rv-${k}`} style={{ ...inputStyle, ...(err(k) ? { borderColor: 'rgba(224,106,106,0.6)' } : {}) }}
