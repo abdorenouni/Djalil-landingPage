@@ -72,37 +72,46 @@ const PLANS_F4 = [
   { ref: 'A-171', surface: '171.76', img: '/images/asteria/plan-f4-171.png', pieces: 'F4 · 4 pièces', chambres: 3, sdb: 2, etage: '7ᵉ au 11ᵉ étage', orientation: 'Panoramique · Baie et ville', terrasse: '40 m²', exposition: 'Angle premium' },
 ]
 
+/* Villa display names + total surfaces (fixed brand content, keyed by ref).
+   Shown on the villa selector cards; the CMS keeps the stable V-0x ref. */
+const VILLA_META: Record<string, { name: string; surface: string }> = {
+  'V-01': { name: 'Villa Astraea', surface: '498.45' },
+  'V-02': { name: 'Villa Aether', surface: '515.22' },
+  'V-03': { name: 'Villa Ouranos', surface: '651.45' },
+  'V-04': { name: 'Villa Hypêrion', surface: '613.4' },
+}
+
 /* Les 4 Villas ASTERIA */
 const VILLAS_PLANS = [
   {
-    ref: 'V-01', pieces: 'Villa', chambres: 4, sdb: 3, piscine: 'Piscine privée 36 m²', exposition: 'Plein sud',
+    ref: 'V-01', pieces: 'Villa', name: VILLA_META['V-01'].name, surface: VILLA_META['V-01'].surface, chambres: 4, sdb: 3, piscine: 'Piscine privée 36 m²', exposition: 'Plein sud',
     levels: [
-      { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Piscine', img: '/images/asteria/plan-villa-1-n8.png' },
-      { label: 'Niveau 9 · Nuit', sub: 'Chambres · Dressing · Hammam', img: '/images/asteria/plan-villa-1-n9.png' },
+      { label: 'Niveau 1', sub: 'Séjour · Cuisine · Piscine', img: '/images/asteria/plan-villa-1-n8.png' },
+      { label: 'Niveau 2', sub: 'Chambres · Dressing · Hammam', img: '/images/asteria/plan-villa-1-n9.png' },
       { label: 'Terrasse', sub: 'Toit-terrasse · Piscine · Jardin', img: '/images/asteria/plan-villa-1-terrasse.png' },
     ],
   },
   {
-    ref: 'V-02', pieces: 'Villa', chambres: 4, sdb: 3, piscine: 'Piscine privée 15 m²', exposition: 'Plein ouest',
+    ref: 'V-02', pieces: 'Villa', name: VILLA_META['V-02'].name, surface: VILLA_META['V-02'].surface, chambres: 4, sdb: 3, piscine: 'Piscine privée 15 m²', exposition: 'Plein ouest',
     levels: [
-      { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-2-n8.jpg' },
-      { label: 'Niveau 9 · Nuit', sub: 'Chambres · Dressing · Home Cinéma', img: '/images/asteria/plan-villa-2-n9.png' },
+      { label: 'Niveau 1', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-2-n8.jpg' },
+      { label: 'Niveau 2', sub: 'Chambres · Dressing · Home Cinéma', img: '/images/asteria/plan-villa-2-n9.png' },
       { label: 'Terrasse', sub: 'Toit-terrasse · Piscine · Sport', img: '/images/asteria/plan-villa-2-terrasse.png' },
     ],
   },
   {
-    ref: 'V-03', pieces: 'Villa', chambres: 4, sdb: 3, piscine: 'Piscine privée panoramique', exposition: 'Multi-exposition',
+    ref: 'V-03', pieces: 'Villa', name: VILLA_META['V-03'].name, surface: VILLA_META['V-03'].surface, chambres: 4, sdb: 3, piscine: 'Piscine privée panoramique', exposition: 'Multi-exposition',
     levels: [
-      { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Cheminée', img: '/images/asteria/plan-villa-3-n8.png' },
-      { label: 'Niveau 9 · Nuit', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-3-n9.png' },
+      { label: 'Niveau 1', sub: 'Séjour · Cuisine · Cheminée', img: '/images/asteria/plan-villa-3-n8.png' },
+      { label: 'Niveau 2', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-3-n9.png' },
       { label: 'Terrasse', sub: 'Toit-terrasse · Piscine · Sport', img: '/images/asteria/plan-villa-3-terrasse.png' },
     ],
   },
   {
-    ref: 'V-04', pieces: 'Villa', chambres: 4, sdb: 3, piscine: "Piscine privée Baie d'Alger", exposition: 'Angle premium',
+    ref: 'V-04', pieces: 'Villa', name: VILLA_META['V-04'].name, surface: VILLA_META['V-04'].surface, chambres: 4, sdb: 3, piscine: "Piscine privée Baie d'Alger", exposition: 'Angle premium',
     levels: [
-      { label: 'Niveau 8 · Jour', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-4-n8.png' },
-      { label: 'Niveau 9 · Nuit', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-4-n9.png' },
+      { label: 'Niveau 1', sub: 'Séjour · Cuisine · Aquarium mural', img: '/images/asteria/plan-villa-4-n8.png' },
+      { label: 'Niveau 2', sub: 'Chambres · Sauna · Hammam · Home Cinéma', img: '/images/asteria/plan-villa-4-n9.png' },
       { label: 'Terrasse', sub: 'Toit-terrasse · Piscine · Sport', img: '/images/asteria/plan-villa-4-terrasse.png' },
     ],
   },
@@ -177,7 +186,7 @@ function QuartierMap() {
 const TYPE_ITEMS = [
   { id: 'f3', label: 'F3', sub: '103–110 m² · 3 Pièces', detail: '4 résidences' },
   { id: 'f4', label: 'F4', sub: '154–171 m² · 4 Pièces', detail: '2 résidences' },
-  { id: 'villas', label: 'Villas', sub: 'Piscine privée', detail: '4 villas' },
+  { id: 'villas', label: 'Villas', sub: 'Villa Skyline', detail: '4 villas' },
 ]
 
 export default function Asteria() {
@@ -237,7 +246,9 @@ export default function Asteria() {
   const villasTitle = doc?.villasTitle || 'Les Villas ASTERIA'
   const villasList = doc?.villas?.length
     ? doc.villas.map((v: any) => ({
-        ref: v.ref, pieces: 'Villa', chambres: v.chambres, sdb: v.sdb,
+        ref: v.ref, pieces: 'Villa',
+        name: VILLA_META[v.ref]?.name || v.ref, surface: VILLA_META[v.ref]?.surface || '',
+        chambres: v.chambres, sdb: v.sdb,
         piscine: v.piscine, exposition: v.exposition,
         levels: (v.levels?.length ? v.levels : VILLAS_PLANS[0].levels).map((lv: any) => ({
           label: lv.label, sub: lv.sub, img: img(lv.image, 1200) || VILLAS_PLANS[0].levels[0].img,
@@ -493,7 +504,7 @@ export default function Asteria() {
           )}
 
           {activeType === 'f4' && (
-            <section id="f4" style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', borderTop: '1px solid rgba(var(--line-rgb),0.04)' }}>
+            <section id="f4" style={{ padding: 'clamp(60px, 10vw, 140px) clamp(24px, 5vw, 64px)', background: 'var(--bg-2)', borderTop: '1px solid rgba(var(--line-rgb),0.04)' }}>
               <div style={{ maxWidth: 1400, margin: '0 auto' }}>
                 {/* F4 Floor plans block */}
                 <Reveal delay={0.1}>
@@ -602,8 +613,8 @@ export default function Asteria() {
                           fontFamily: "'Plus Jakarta Sans', sans-serif", borderRadius: 2, transition: 'all 0.3s ease',
                         }}
                       >
-                        <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.75 }}>{v.ref}</span>
-                        <span style={{ display: 'block', fontSize: 13, fontWeight: 600, marginTop: 2 }}>{v.pieces}</span>
+                        <span style={{ display: 'block', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.75 }}>{v.name}</span>
+                        <span style={{ display: 'block', fontSize: 13, fontWeight: 600, marginTop: 2 }}>{v.surface} m²</span>
                       </button>
                     ))}
                   </div>
